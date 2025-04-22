@@ -1,0 +1,51 @@
+
+
+
+<div class="example-container">
+
+  <div >
+    <mat-form-field>
+      <mat-label>Introduce email</mat-label>
+      <input
+        matInput
+        placeholder="nombre@ejemplo.com"
+        [formControl]="email"
+        (blur)="updateErrorMessage()"
+        required
+      />
+      @if (email.invalid) {
+        <mat-error>{{errorMessage()}}</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+    <div >
+        <mat-form-field>
+          <mat-label>Introduce contraseña</mat-label>
+          <input matInput [type]="hide() ? 'password' : 'text'" />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="clickEvent($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()"
+          >
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+      <!-- PARA CONTROLAR ERROR DE LOGIN 
+         @if () {
+          <mat-error>{{}}</mat-error>
+        }-->
+
+     </div>
+        <div>
+        <button mat-flat-button >Iniciar sesión </button>
+        
+      </div>
+
+</div>
+   
+ 
+  
