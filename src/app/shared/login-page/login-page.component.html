@@ -4,16 +4,16 @@
 <div class="example-container">
 
   <div >
-    <mat-form-field>
-      <mat-label>Introduce email</mat-label>
+    <mat-form-field >
+      <mat-label>Introduce usuario</mat-label>
       <input
         matInput
-        placeholder="nombre@ejemplo.com"
-        [formControl]="email"
+        placeholder="usuario123"
+        [formControl]="nombre"
         (blur)="updateErrorMessage()"
         required
       />
-      @if (email.invalid) {
+      @if (nombre.invalid) {
         <mat-error>{{errorMessage()}}</mat-error>
       }
     </mat-form-field>
@@ -22,11 +22,18 @@
     <div >
         <mat-form-field>
           <mat-label>Introduce contraseña</mat-label>
-          <input matInput [type]="hide() ? 'password' : 'text'" />
+          <input matInput [type]="hide() ? 'password' : 'text'" 
+          [formControl]="contrasena"/>
+          
+          @if (contrasena.invalid) {
+            <mat-error>{{errorMessagecontra()}}</mat-error>
+          }
+
           <button
             mat-icon-button
             matSuffix
             (click)="clickEvent($event)"
+          
             [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide()"
           >
@@ -41,7 +48,7 @@
 
      </div>
         <div>
-        <button mat-flat-button >Iniciar sesión </button>
+        <button mat-flat-button (click)="onSubmit()" >Iniciar sesión </button>
         
       </div>
 
