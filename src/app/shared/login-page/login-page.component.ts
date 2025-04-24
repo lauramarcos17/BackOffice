@@ -9,6 +9,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 
@@ -22,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
 export class LoginPageComponent {
 
   http=inject(HttpClient);
+  router = inject(Router);
 
   readonly nombre = new FormControl('', [Validators.required]);
   readonly contrasena= new FormControl('', [Validators.required]);
@@ -29,6 +31,7 @@ export class LoginPageComponent {
   errorMessage = signal('');
   errorMessagecontra = signal('');
   errorMessageFinal = signal('');
+  rol = signal('');
 
   constructor() {
     merge(this.nombre.statusChanges, this.nombre.valueChanges)
@@ -74,19 +77,18 @@ export class LoginPageComponent {
           contrasena: this.contrasena.value //hashear la contraseña antes de enviarla
         }).subscribe((response: any) => {
 
+          this.errorMessageFinal.set(response.errorMsg);
           if (response.success) {
+            this.rol.set(response.rol);
             alert('Login correcto');
-            //PASAR A SIGUIENTE PANTALLA
-
-          } else {
-            alert('Usuario o contraseña incorrectos');
-            this.errorMessageFinal.set(response.errorMsg);
-
+            // alert('Rol: ' + this.rol());
+            //PASAR A SIGUIENTE PANTALLA (llevar el rol (this.rol()), se puede crear otra key para response que coja el num del rol)
+            this.router.navigate(['/main']);
 
           }
         });
 
-        console.log('sssssss');
+
 
 
 
