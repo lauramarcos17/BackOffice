@@ -25,9 +25,10 @@ export class LoginPageComponent {
 
   readonly nombre = new FormControl('', [Validators.required]);
   readonly contrasena= new FormControl('', [Validators.required]);
-  
+
   errorMessage = signal('');
   errorMessagecontra = signal('');
+  errorMessageFinal = signal('');
 
   constructor() {
     merge(this.nombre.statusChanges, this.nombre.valueChanges)
@@ -38,20 +39,20 @@ export class LoginPageComponent {
   updateErrorMessage() {
     if (this.nombre.hasError('required')) {
       this.errorMessage.set('Debes introducir un usuario');
-     }  
+     }
      else{
       this.errorMessage.set('');
     }
 
      if(this.contrasena.invalid){
-        this.errorMessagecontra.set('Debes introducir una contraseña'); 
+        this.errorMessagecontra.set('Debes introducir una contraseña');
       }
       else{
         this.errorMessagecontra.set('');
       }
-     
+
     }
-  
+
 
 
   hide = signal(true);
@@ -66,25 +67,29 @@ export class LoginPageComponent {
     this.contrasena.markAsTouched();
     this.updateErrorMessage();
 
-    
+
         this.http.post('http://localhost:8080/api/login', {
-          
+
           nombre: this.nombre.value,
-          contrasena: this.contrasena.value
+          contrasena: this.contrasena.value //hashear la contraseña antes de enviarla
         }).subscribe((response: any) => {
 
           if (response.success) {
             alert('Login correcto');
+            //PASAR A SIGUIENTE PANTALLA
+
           } else {
             alert('Usuario o contraseña incorrectos');
-            
+            this.errorMessageFinal.set(response.errorMsg);
+
+
           }
         });
 
         console.log('sssssss');
-      
-    
-    
+
+
+
 
  }
 }

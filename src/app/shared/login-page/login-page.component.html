@@ -22,9 +22,9 @@
     <div >
         <mat-form-field>
           <mat-label>Introduce contraseña</mat-label>
-          <input matInput [type]="hide() ? 'password' : 'text'" 
+          <input matInput [type]="hide() ? 'password' : 'text'"
           [formControl]="contrasena"/>
-          
+
           @if (contrasena.invalid) {
             <mat-error>{{errorMessagecontra()}}</mat-error>
           }
@@ -33,7 +33,7 @@
             mat-icon-button
             matSuffix
             (click)="clickEvent($event)"
-          
+
             [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide()"
           >
@@ -41,7 +41,7 @@
           </button>
         </mat-form-field>
 
-      <!-- PARA CONTROLAR ERROR DE LOGIN 
+      <!-- PARA CONTROLAR ERROR DE LOGIN
          @if () {
           <mat-error>{{}}</mat-error>
         }-->
@@ -49,10 +49,11 @@
      </div>
         <div>
         <button mat-flat-button (click)="onSubmit()" >Iniciar sesión </button>
-        
+
       </div>
+      <mat-error>{{errorMessageFinal()}}</mat-error>
 
 </div>
-   
- 
-  
+
+
+
