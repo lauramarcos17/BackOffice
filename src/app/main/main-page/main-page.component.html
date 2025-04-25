@@ -1,0 +1,21 @@
+
+<mat-card appearance="outlined" class="cierresesion">
+    <mat-card-content>Usuario: {{mensaje()}}  {{rolNombre()}}     
+        <button mat-mini-fab aria-label="Example icon button with a menu icon">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+
+<mat-tab-group animationDuration="0ms" >
+    
+    <mat-tab label="Administrar"><app-by-administrar></app-by-administrar></mat-tab>
+    <mat-tab label="Copias"><app-by-copias></app-by-copias></mat-tab>
+    <mat-tab label="Históricos"><app-by-historico></app-by-historico></mat-tab>
+    <mat-tab label="Logs"><app-by-logs></app-by-logs></mat-tab>
+    <mat-tab label="Migrar"><app-by-migrar></app-by-migrar></mat-tab>
+  </mat-tab-group>
+  
+  <router-outlet></router-outlet>
+  
