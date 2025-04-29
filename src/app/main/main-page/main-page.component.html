@@ -1,7 +1,8 @@
 
 <mat-card appearance="outlined" class="cierresesion">
-    <mat-card-content>Usuario: {{mensaje()}}  {{rolNombre()}}     
-        <button mat-mini-fab aria-label="Example icon button with a menu icon">
+    <mat-card-content>Usuario: {{mensaje()}}  {{rolNombre()}}
+       <!-- <button (click)="logout()" mat-mini-fab aria-label="Example icon button with a menu icon">-->
+        <button [routerLink]="['/']" mat-mini-fab aria-label="Example icon button with a menu icon">
         <mat-icon>exit_to_app</mat-icon>
       </button>
     </mat-card-content>
@@ -9,13 +10,21 @@
 
 
 <mat-tab-group animationDuration="0ms" >
-    
-    <mat-tab label="Administrar"><app-by-administrar></app-by-administrar></mat-tab>
-    <mat-tab label="Copias"><app-by-copias></app-by-copias></mat-tab>
-    <mat-tab label="Históricos"><app-by-historico></app-by-historico></mat-tab>
-    <mat-tab label="Logs"><app-by-logs></app-by-logs></mat-tab>
-    <mat-tab label="Migrar"><app-by-migrar></app-by-migrar></mat-tab>
+
+
+    <mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab>
+    @if(rol()<3){
+      <mat-tab label="Copias de seguridad"><app-by-copias></app-by-copias></mat-tab>
+    }
+    <mat-tab label="Visor de logs"><app-by-logs></app-by-logs></mat-tab>
+    @if(rol()<3){
+      <mat-tab label="Migrar usuario"><app-by-migrar></app-by-migrar></mat-tab>
+    }
+    @if(rol()==1){
+      <mat-tab label="Histórico migraciones"><app-by-historico></app-by-historico></mat-tab>
+    }
+
   </mat-tab-group>
-  
+
   <router-outlet></router-outlet>
-  
+

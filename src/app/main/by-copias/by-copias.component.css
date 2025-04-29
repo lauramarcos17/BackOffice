@@ -1,0 +1,38 @@
+.formUsuario{
+
+  display:flex;
+
+  margin-bottom: 24px;
+  width: 98%;
+  margin-top: 24px;
+  margin-left:16px;
+
+
+}
+
+mat-form-field {
+  margin-right: 16px;
+}
+
+.mat-flat-button-form, .mat-flat-button{
+  margin-right: 16px;
+  width: 196px;
+}
+
+.buscador{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  width:100%;
+
+}
+
+.btnCopias{
+  display:flex;
+  justify-content: flex-end;
+  width: 99%;
+  margin-top: 24px;
+  margin-right:16px;
+
+}
+

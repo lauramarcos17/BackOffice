@@ -14,20 +14,23 @@ import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-main-page',
-  imports: [MatTabsModule,MatCardModule,MatIconModule, MatButtonModule,RouterOutlet, ByAdministrarComponent, ByCopiasComponent,ByHistoricoComponent,ByMigrarComponent,ByLogsComponent],
+  imports: [MatTabsModule,MatCardModule,MatIconModule, MatButtonModule,RouterOutlet, RouterLink, ByAdministrarComponent, ByCopiasComponent,ByHistoricoComponent,ByMigrarComponent,ByLogsComponent],
   templateUrl: './main-page.component.html',
   styleUrl:'main-page.component.css'
-  
-  
-})
-export class MainPageComponent { 
-  
-//nombreusuarios=input.required<string |null>();
 
+
+})
+export class MainPageComponent {
+
+//nombreusuarios=input.required<string |null>();
+router = inject(Router);
 misignalService=inject(MiSignalService);
 mensaje= this.misignalService.mensaje;
 rolNombre=this.misignalService.nombrerol;
 rol=this.misignalService.rol;
 
+// logout() {
+//   this.router.navigate(['/']); // Redirige al login
+// }
 
 }

@@ -7,6 +7,13 @@
     margin-top: 48px;
     margin-bottom: 48px;
 }
+
+.title{
+  color: rgb(0, 132, 255);
+  margin-left: 16px;
+  margin-bottom:0px;
+}
+
 html, body { height: 100%;  }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
