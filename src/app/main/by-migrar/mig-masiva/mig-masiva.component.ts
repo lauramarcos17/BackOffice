@@ -10,6 +10,12 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: 'mig-masivo.component.css',
 })
 export class MigMasivaComponent {
-
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
+      console.log('Archivo seleccionado:', file.name);
+      // Aquí puedes procesar el archivo
+    }
+  }
 
  }

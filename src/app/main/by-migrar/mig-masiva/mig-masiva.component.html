@@ -1,5 +1,6 @@
-<mat-form-field class="selectarchivo">
-    <mat-label>Usuario destino</mat-label>
-    <input type="file">
-</mat-form-field>
+ <div class="subir-fichero">
+<mat-label> Selecciona un fichero : 
+<input mat-flat-button  type="file" (change)="onFileSelected($event)">
+</mat-label>
+</div>
     
