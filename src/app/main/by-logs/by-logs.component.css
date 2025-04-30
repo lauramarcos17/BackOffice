@@ -1,0 +1,40 @@
+.formUsuario{
+  margin-bottom: 24px;
+  margin-top: 24px;
+  margin-left:16px;
+
+
+}
+
+mat-form-field {
+  margin-right: 64px;
+  width: 320px;
+}
+
+.fechalog, .botoncargar{
+  margin-left: 16px;
+ 
+}
+.botoncargar{
+  margin-left: 16px;
+  width: 196px;
+}
+
+mat-checkbox{
+  margin-left: 6px;
+}
+
+.mat-flat-button-form, .mat-flat-button{
+  margin-right: 16px;
+  width: 196px;
+}
+
+
+.buscador{
+  align-items: flex-start;
+  width:100%;
+
+}
+
+
+

@@ -1,1 +1,27 @@
-<p>by-migrar works!</p>,
+<h5 class="title">Migracion de usuarios </h5>
+<mat-divider></mat-divider>
+
+
+<section class="example-section">
+<label>Tipo de migración:</label>
+
+
+<mat-radio-group aria-label="option" 
+[value]="tipoMigracion()"
+(change)="tipoMigracion.set($event.value)">
+  
+    
+    <mat-radio-button value="1">Manual</mat-radio-button>
+    <mat-radio-button value="2">Masiva</mat-radio-button>
+  </mat-radio-group>
+</section>
+
+
+@if(tipoMigracion()==1)
+{
+    <app-mig-manual></app-mig-manual>
+}
+@if(tipoMigracion()==2)
+{
+    <app-mig-masiva></app-mig-masiva>
+}

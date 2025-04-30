@@ -94,10 +94,8 @@ export class LoginPageComponent {
             {
               this.nombreusuario.set(this.nombre.value ?? '' );
             }
-           
             console.log(this.nombreusuario());
 
-         
             alert('Login correcto');
             // alert('Rol: ' + this.rol());
             //PASAR A SIGUIENTE PANTALLA (llevar el rol (this.rol()), se puede crear otra key para response que coja el num del rol)

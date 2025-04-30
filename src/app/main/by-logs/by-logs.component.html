@@ -1,1 +1,55 @@
-<p>by-logs works!</p>,
+
+<h5 class="title">Listado de Logs</h5>
+<mat-divider class ="title"></mat-divider>
+<form class="formUsuario">
+
+    <div class="buscador">
+
+            <mat-form-field>
+                <mat-label>Cuaderno</mat-label>
+                <mat-select>
+                @for (food of foods; track food) {
+                    <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Usuario</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+        
+
+
+        <button class="mat-flat-button-form" mat-flat-button>Ver días con actividad</button>
+
+    </div>
+
+
+
+</form>
+
+    <div>
+        <mat-form-field class="fechalog">
+            <mat-label>Fecha con actividad registrada:</mat-label>
+            <mat-select>
+            @for (food of foods; track food) {
+                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+            }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+
+    <div  class="pep">
+        <mat-checkbox> Mostrar sólo querys que alteren base de datos</mat-checkbox>
+        <button class="botoncargar" mat-flat-button>Cargar log</button>
+    </div>
+
+    @if(true){
+        <app-consultas-logs></app-consultas-logs>
+    }
+
+
+
