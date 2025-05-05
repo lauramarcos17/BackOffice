@@ -1,7 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MiSignalService } from '../../../shared/services/mi-signal.service';
+import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { ByLogsComponent } from '../by-logs.component';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+
+
 
 export interface Log{
   error:number;
@@ -21,14 +29,17 @@ const ELEMENT_DATA: Log[] = [
 
 @Component({
   selector: 'app-consultas-logs',
-  imports: [MatPaginatorModule,MatTableModule],
+  imports: [MatPaginatorModule,MatTableModule, MatFormField, MatFormFieldModule, MatLabel, MatInputModule, MatIconModule, MatTooltip, MatTooltipModule, MatCardModule],
   templateUrl: './consultas-logs.component.html',
+  styleUrl: 'consultas-logs.component.css'
 })
 export class ConsultasLogsComponent {
   misignalService = inject(MiSignalService);
   rol=this.misignalService.rol;
   displayedColumns: string[] = ['error', 'fecha', 'rol','cuaderno','accion','query'];
   dataSource = ELEMENT_DATA;
+
+  @Input() mapa!: Map<string, string>;
 
 
 

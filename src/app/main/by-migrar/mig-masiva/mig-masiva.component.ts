@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: 'mig-masivo.component.css',
 })
 export class MigMasivaComponent {
+  @Input() mapa!: Map<string, string>;
+
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement)?.files?.[0];
     if (file) {

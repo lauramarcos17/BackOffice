@@ -8,11 +8,19 @@
 }
 
  .migraformmanual{
-    
+
     margin-right: 64px;
  }
-  
-  .mat-flat-button-form, .mat-flat-button{
-  
-    width: 196px;
+
+ .mat-flat-button-form, .mat-flat-button{
+  margin-right: 16px;
+  width: 196px;
+}
+  .btnCopias{
+    display:flex;
+    justify-content: flex-end;
+    width: 99%;
+    margin-top: 24px;
+    margin-right:16px;
+
   }

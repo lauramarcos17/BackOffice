@@ -1,5 +1,21 @@
-<h5 class="title">Migracion de usuarios </h5>
-<mat-divider></mat-divider>
+
+
+<div class="encabezado">
+
+  <h5 class="title" >Migracion de usuarios
+      <span >
+        <button class="info-btn"   mat-mini-fab (click)="migrarTooltip.toggle()" aria-label="Show/Hide tooltip on the button at the end of this section">
+          <mat-icon>help</mat-icon>
+        </button>
+
+
+
+      </span>
+  </h5>
+</div>
+
+<mat-divider class ="title"></mat-divider>
+<span #migrarTooltip="matTooltip" [matTooltip]="textosGuiaFacil.get('guia')"></span>
 
 
 <section class="example-section">
@@ -11,8 +27,8 @@
 (change)="tipoMigracion.set($event.value)">
 
 
-    <mat-radio-button value="1">Manual</mat-radio-button>
-    <mat-radio-button value="2" [disabled]="!rolEsAdmin()">Masiva</mat-radio-button>
+    <mat-radio-button value="1" [matTooltip]="textosGuiaFacil.get('manual')">Manual</mat-radio-button>
+    <mat-radio-button value="2" [matTooltip]="textosGuiaFacil.get('masiva')" [disabled]="!rolEsAdmin()">Masiva</mat-radio-button>
   </mat-radio-group>
 </section>
 
@@ -20,9 +36,9 @@
 
 @if(tipoMigracion()==1)
 {
-    <app-mig-manual></app-mig-manual>
+    <app-mig-manual [mapa]=textosGuiaFacil></app-mig-manual>
 }
 @if(tipoMigracion()==2)
 {
-    <app-mig-masiva></app-mig-masiva>
+    <app-mig-masiva [mapa]=textosGuiaFacil></app-mig-masiva>
 }

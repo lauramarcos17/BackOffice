@@ -1,0 +1,12 @@
+.cabecera-logs
+{
+  display:flex;
+  justify-content: space-between;
+  align-items: top;
+}
+
+.query{
+  margin-left: 16px;
+  margin-top: 16px;
+  font-family: monospace;
+}

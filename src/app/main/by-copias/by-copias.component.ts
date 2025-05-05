@@ -10,6 +10,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
+import { MatIconModule } from '@angular/material/icon';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 
 export interface CopiasSeguridad {
   usuario:number;
@@ -25,13 +27,26 @@ const ELEMENT_DATA: CopiasSeguridad[] = [
 @Component({
 
   selector: 'app-by-copias',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './by-copias.component.html',
   styleUrl: 'by-copias.component.css',
   providers: [provideNativeDateAdapter()]
 })
 export class ByCopiasComponent implements AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
+
+  textosGuiaFacil = new Map<string, string>([
+    ['guia_copias', 'Desde este menú podrá gestionar las copias de seguridad de AEBWeb. Una copia de seguridad almacena todos los datos que tiene un cliente en los cuadernos SEPA. \n Solamente se permite una copia de seguridad por cliente. Si se hace una segunda copia se machaca la anterior.'],
+    ['buscar_copias', 'Para encontrar una determinada copia de seguridad puede usar los campos de búsqueda por usuario o fecha y pulsar [Buscar].'],
+    ['vertodas_copias', 'Para listar todas las copias almacenadas, pulse [Ver Todas]'],
+    ['restaurar_copias', '[Restaurar copia] le permite restaurar la información de un usuario de AEBWeb utilizando su copia de seguridad. Antes de restaurar la información se le mostrará, a modo de confirmación, un resumen de los datos almacenados en la copia. (Importante: Toda la información del usuario de AEBWeb, en los cuadernos SEPA, se eliminará antes de cargarle los datos de la copia de seguridad).'],
+    ['eliminar_copias', ' [Eliminar copia] borrará toda la información de la copia de seguridad seleccionada.'],
+    ['crear_copias', '[Crear copia] le conducirá a una pantalla donde podrá seleccionar el usuario para el que desea crear una copia de seguridad. En dicha pantalla se mostrará , a modo de confirmación, un resumen de los datos del usuario.']
+
+
+  ]);
+
+
 
   displayedColumns: string[] = ['usuario', 'fecha', 'descripcion'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -52,6 +67,7 @@ export class ByCopiasComponent implements AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+
 
  }
 

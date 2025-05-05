@@ -10,6 +10,16 @@
 
 }
 
+
+
+.info-btn{
+  margin-right:0px;
+  width: auto;
+  height: auto;
+  min-width: 0;
+
+}
+
 mat-form-field {
   margin-right: 16px;
 }

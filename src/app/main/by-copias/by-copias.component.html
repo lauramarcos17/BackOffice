@@ -1,6 +1,18 @@
+<div class="encabezado">
 
-  <h5 class="title">Listado de copias de seguridad</h5>
+  <h5 class="title" >Listado de copias de seguridad
+      <span >
+        <button class="info-btn"   mat-mini-fab (click)="copiasTooltip.toggle()" aria-label="Show/Hide tooltip on the button at the end of this section">
+          <mat-icon>help</mat-icon>
+        </button>
+
+
+
+      </span>
+  </h5>
+</div>
   <mat-divider class ="title"></mat-divider>
+  <span #copiasTooltip="matTooltip" [matTooltip]="textosGuiaFacil.get('guia_copias')"></span>
   <form class="formUsuario">
   <div class="buscador">
 
@@ -27,9 +39,9 @@
 </mat-form-field>
 
 
-  <button class="mat-flat-button-form" mat-flat-button>Buscar</button>
+  <button class="mat-flat-button-form" mat-flat-button [matTooltip]="textosGuiaFacil.get('buscar_copias')">Buscar</button>
 
-  <button class="mat-flat-button-form" mat-flat-button>Ver todas</button>
+  <button class="mat-flat-button-form" mat-flat-button [matTooltip]="textosGuiaFacil.get('vertodas_copias')">Ver todas</button>
 
 
 
@@ -87,7 +99,7 @@
 
 
 <div class="btnCopias">
-  <button class="mat-flat-button" mat-flat-button>Restaurar copias</button>
-  <button class="mat-flat-button" mat-flat-button>Eliminar copias</button>
-  <button class="mat-flat-button" mat-flat-button>Crear copias</button>
+  <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('restaurar_copias')">Restaurar copias</button>
+  <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('eliminar_copias')">Eliminar copias</button>
+  <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('crear_copias')">Crear copias</button>
 </div>
