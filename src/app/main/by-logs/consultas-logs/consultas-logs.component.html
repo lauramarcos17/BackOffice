@@ -1,8 +1,8 @@
 
 <h5 class="title">Mostrando las consultas del día "señal del dia" para el usuario "1"</h5>
 <form class="formRegistros">
-    
-    
+
+
     <div>
       <mat-paginator [length]="100"
                 [pageSize]="10"
@@ -16,8 +16,8 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
          class="mat-elevation-z8"> -->
-  
-  
+
+
     <!-- Name Column -->
     <ng-container matColumnDef="error">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
@@ -25,7 +25,7 @@
       </th>
       <td mat-cell *matCellDef="let elemento"> {{elemento.error}} </td>
     </ng-container>
-  
+
     <!-- Weight Column -->
     <ng-container matColumnDef="fecha">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
@@ -33,29 +33,30 @@
       </th>
       <td mat-cell *matCellDef="let elemento"> {{elemento.fecha}} </td>
     </ng-container>
-  
-    <!-- Symbol Column -->
+
+    <!-- Quien realiza la acción (ROL) solo es visible para ADMIN-->
     <ng-container matColumnDef="rol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-        Descripción
+        Rol
       </th>
-      <td mat-cell *matCellDef="let elemento"> {{elemento.rol}} </td>
+      <td mat-cell *matCellDef="let elemento"> @if (rol()==1){{{elemento.rol}}} </td>
     </ng-container>
+
 
     <ng-container matColumnDef="cuaderno">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-          Descripción
+          Cuaderno
         </th>
         <td mat-cell *matCellDef="let elemento"> {{elemento.cuaderno}} </td>
       </ng-container>
 
       <ng-container matColumnDef="accion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-          Descripción
+          Acción
         </th>
         <td mat-cell *matCellDef="let elemento"> {{elemento.accion}} </td>
       </ng-container>
-  
+
 
 
       <ng-container matColumnDef="query">
@@ -68,10 +69,10 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  
+
   </div>
-  
 
 
-  
+
+
 

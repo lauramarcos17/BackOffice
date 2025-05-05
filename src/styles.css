@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .header{
     margin-left: 8px;
-    color: rgb(0, 132, 255);
+    color: rgb(90,133,215);
     display: flex;
     justify-content: center;
     margin-top: 48px;
@@ -9,7 +9,7 @@
 }
 
 .title{
-  color: rgb(0, 132, 255);
+  color: rgb(90,133,215);
   margin-left: 16px;
   margin-bottom:0px;
 }

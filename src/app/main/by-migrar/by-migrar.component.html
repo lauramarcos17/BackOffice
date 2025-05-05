@@ -6,15 +6,16 @@
 <label>Tipo de migración:</label>
 
 
-<mat-radio-group aria-label="option" 
+<mat-radio-group aria-label="option"
 [value]="tipoMigracion()"
 (change)="tipoMigracion.set($event.value)">
-  
-    
+
+
     <mat-radio-button value="1">Manual</mat-radio-button>
-    <mat-radio-button value="2">Masiva</mat-radio-button>
+    <mat-radio-button value="2" [disabled]="!rolEsAdmin()">Masiva</mat-radio-button>
   </mat-radio-group>
 </section>
+
 
 
 @if(tipoMigracion()==1)
