@@ -14,14 +14,32 @@
   margin-bottom:0px;
   width: 100%;
 }
+.snackbar-pre{
+  white-space: pre-line;
+  width: 640px;
+  background-color: aliceblue !important;
+  --mat-sys-inverse-on-surface:#712c6e;
+  --mat-sys-inverse-surface:white;
+  
+  margin: 0 !important;
+ 
+  max-width: none;
+  border: 2px solid #8e3a8a;
+  border-radius: 8px !important;
+  
+}
+.mat-snack-bar-container{
+  padding: 12px 24px !important;
+  max-width: none;
+  box-sizing: border-box;
+  
+}
 
 
 html{
   height: 100%;
-}
- body {
-
   max-width: 1280px;
 }
+ 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

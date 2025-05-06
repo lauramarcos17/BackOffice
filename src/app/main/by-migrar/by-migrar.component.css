@@ -7,6 +7,12 @@
     height: 60px;
     margin-left:16px
   }
-
+  .info-btn{
+    margin-right:0px;
+    width: auto;
+    height: auto;
+    min-width: 0;
+  
+  }
 
  

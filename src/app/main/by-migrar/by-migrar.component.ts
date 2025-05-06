@@ -8,7 +8,7 @@ import { MiSignalService } from '../../shared/services/mi-signal.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition,} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-by-migrar',
   imports: [MatRadioModule,MatDividerModule,MigManualComponent,MigMasivaComponent, MatIconModule, MatTooltipModule, MatButtonModule],
@@ -19,6 +19,7 @@ export class ByMigrarComponent {
 
   tipoMigracion=signal<number>(0);
   misignalService=inject(MiSignalService);
+  private _snackBar = inject(MatSnackBar);
 
 
   rolEsAdmin = computed(() => this.misignalService.rol() == 1);
@@ -33,5 +34,17 @@ export class ByMigrarComponent {
     ['exportar','Genera un fichero excel con el resultado de la migración.'],
 
   ]);
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  openSnackBar() {
+    this._snackBar.open(this.textosGuiaFacil.get("guia")!, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration:5000,
+      panelClass: ['snackbar-pre']
+    });
+  }
 
  }

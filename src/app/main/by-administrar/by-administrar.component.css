@@ -1,0 +1,44 @@
+.formUsuario{
+
+  display:flex;
+
+  margin-bottom: 24px;
+  width: 98%;
+  margin-top: 24px;
+  
+
+
+}
+
+.info-btn{
+  margin-right:0px;
+  width: auto;
+  height: auto;
+  min-width: 0;
+
+}
+#errorbusqueda{
+  color: red ;
+  
+}
+
+
+mat-form-field {
+  margin-right: 16px;
+}
+
+.mat-flat-button-form, .mat-flat-button{
+  margin-right: 16px;
+  width: 196px;
+}
+
+.buscador{
+  display:flex;
+  align-items: center;
+  margin-left: 16px;
+  width:100%;
+
+}
+
+
+

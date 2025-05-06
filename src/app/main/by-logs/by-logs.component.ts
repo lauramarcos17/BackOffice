@@ -1,5 +1,5 @@
 import { ConsultasLogsComponent } from './consultas-logs/consultas-logs.component';
-import {  Component} from '@angular/core';
+import {  Component, inject} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition,} from '@angular/material/snack-bar';
 
 
 
@@ -29,6 +30,8 @@ interface Food {
 })
 export class ByLogsComponent {
 
+  private _snackBar = inject(MatSnackBar);
+
   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},
     {value: 'pizza-1', viewValue: 'Pizza'},
@@ -46,7 +49,17 @@ export class ByLogsComponent {
     ['accion','El campo "Acción" indica la acción del usuario que desencadenó esa operación de base de datos. \n Seleccione la fila correspondiente a una acción para ver la consulta completa en el cuadro bajo la tabla.']
   ]);
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  openSnackBar() {
+    this._snackBar.open(this.textosGuiaFacil.get("guia")!, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration:5000,
+      panelClass: ['snackbar-pre']
+    });
+  }
 
  }
 

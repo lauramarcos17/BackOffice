@@ -10,12 +10,8 @@
 
   mat-form-field {
     margin-bottom: 24px;
-  
       width: 480px;
     }
-  
-
-
   
   .example-right-align {
     text-align: right;
@@ -25,7 +21,6 @@
   input.example-right-align::-webkit-inner-spin-button {
     display: none;
   }
-
 
   section {
   display: table;

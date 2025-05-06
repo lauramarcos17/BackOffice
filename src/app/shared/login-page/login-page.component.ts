@@ -82,7 +82,7 @@ export class LoginPageComponent {
 
           nombre: this.nombre.value,
          
-          contrasena: this.contrasena.value //hashear la contraseña antes de enviarla
+          contrasena: this.contrasena.value 
         }).subscribe((response: any) => {
 
           this.errorMessageFinal.set(response.errorMsg);

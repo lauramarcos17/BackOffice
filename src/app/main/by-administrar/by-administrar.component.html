@@ -1,1 +1,36 @@
-<p>by-administrar works!</p>,
+<div class="encabezado">
+
+    <h5 class="title" >Listado de copias de seguridad
+        <span >
+  
+          <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+            <mat-icon>help</mat-icon>
+          </button>
+  
+  
+  
+        </span>
+    </h5>
+  </div>
+    <mat-divider class ="title"></mat-divider>
+    
+    <form class="formUsuario">
+    <div class="buscador">
+  
+  
+      <mat-form-field class="example-full-width">
+        <mat-label>Nombre o ID</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <button class="mat-flat-button-form" mat-flat-button >Ver todas</button>
+    </div>
+    </form>
+
+    @if(false){
+    <h5 class="title" id="errorbusqueda"> Error de Usuario</h5>
+    }
+    @else{
+        <app-cuadernos-administrar></app-cuadernos-administrar>
+    }
+    
+

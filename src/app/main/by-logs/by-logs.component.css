@@ -28,7 +28,13 @@ mat-checkbox{
   margin-right: 16px;
   width: 196px;
 }
+.info-btn{
+  margin-right:0px;
+  width: auto;
+  height: auto;
+  min-width: 0;
 
+}
 
 .buscador{
   align-items: flex-start;

@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-mig-masiva',
-  imports: [MatLabel,MatFormField,MatInputModule,MatFormFieldModule,MatButtonModule],
+  imports: [MatLabel,MatInputModule,MatFormFieldModule,MatButtonModule],
   templateUrl: './mig-masiva.component.html',
   styleUrl: 'mig-masivo.component.css',
 })

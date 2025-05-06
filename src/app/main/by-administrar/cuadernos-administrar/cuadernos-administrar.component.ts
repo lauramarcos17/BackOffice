@@ -1,24 +1,19 @@
-import { CuadernosAdministrarComponent } from './cuadernos-administrar/cuadernos-administrar.component';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule, MatTooltip } from '@angular/material/tooltip';
 
 
 
@@ -39,15 +34,14 @@ const ELEMENT_DATA: infoCuaderno[] = [
 
 ];
 
-
 @Component({
-  selector: 'app-by-administrar',
-  imports: [CuadernosAdministrarComponent,FormsModule, MatFormFieldModule,MatCardModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule,MatSelectModule,MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDividerModule,  MatButton, MatButtonModule, MatTooltip, MatIconModule],
-  templateUrl: './by-administrar.component.html',
-  styleUrl: 'by-administrar.component.css',
+  selector: 'app-cuadernos-administrar',
+  imports: [FormsModule, MatFormFieldModule,MatCardModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule,MatSelectModule,MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDividerModule,  MatButton, MatButtonModule, MatTooltip, MatIconModule],
+  templateUrl: './cuadernos-administrar.component.html',
 })
-export class ByAdministrarComponent { 
-  private _snackBar = inject(MatSnackBar);
+export class CuadernosAdministrarComponent { 
+
+ 
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -57,22 +51,16 @@ export class ByAdministrarComponent {
    
   ]);
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
-  openSnackBar() {
-    this._snackBar.open(this.textosGuiaFacil.get("guia")!, 'X', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration:5000,
-      panelClass: ['snackbar-pre']
-    });
-  }
 
   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},
     {value: 'pizza-1', viewValue: 'Pizza'},
     {value: 'tacos-2', viewValue: 'Tacos'},
   ];
+ 
+  }
 
-}
+  
+
+
+

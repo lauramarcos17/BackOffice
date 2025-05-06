@@ -1,1 +1,102 @@
-<p>by-historico works!</p>,
+<div class="encabezado">
+
+    <h5 class="title" >Migracion de usuarios
+        <span >
+          <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+            <mat-icon>help</mat-icon>
+          </button>
+  
+  
+  
+        </span>
+    </h5>
+  </div>
+  
+  <mat-divider class ="title"></mat-divider>
+
+
+  <form class="formRegistros">
+
+
+    <div class="cabecera-logs">
+
+      <mat-paginator [length]="100"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page">
+        </mat-paginator>
+
+        <mat-form-field  class="example-full-width">
+          <mat-label>Buscar</mat-label>
+          <input matInput>
+          <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <div class="tablaCopias">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"  mat-sort>
+    <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
+         class="mat-elevation-z8"> -->
+
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="error">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+        Usuario
+      </th>
+      <td mat-cell *matCellDef="let elemento"> {{elemento.error}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+        Fecha
+      </th>
+      <td mat-cell *matCellDef="let elemento"> {{elemento.fecha}} </td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="rol">
+      <th mat-header-cell  *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+        Rol
+      </th>
+      <td mat-cell *matCellDef="let elemento"> </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="cuaderno">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+          Cuaderno
+        </th>
+        <td mat-cell *matCellDef="let elemento"> {{elemento.cuaderno}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+          Acción
+        </th>
+        <td mat-cell *matCellDef="let elemento"> {{elemento.accion}} </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="query">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+          Descripción
+        </th>
+        <td mat-cell *matCellDef="let elemento"> {{elemento.query}} </td>
+      </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  </div>
+
+  <div class="btnCopias">
+    <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>
+    <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar operaciones</button>
+    <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('restaurar')">Restarurar migraciones</button>
+    <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('exportar')">Exportar operaciones</button>
+  </div>

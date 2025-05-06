@@ -12,6 +12,11 @@ import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 export interface CopiasSeguridad {
   usuario:number;
@@ -34,6 +39,7 @@ const ELEMENT_DATA: CopiasSeguridad[] = [
 })
 export class ByCopiasComponent implements AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
+  private _snackBar = inject(MatSnackBar);
 
   textosGuiaFacil = new Map<string, string>([
     ['guia_copias', 'Desde este menú podrá gestionar las copias de seguridad de AEBWeb. Una copia de seguridad almacena todos los datos que tiene un cliente en los cuadernos SEPA. \n Solamente se permite una copia de seguridad por cliente. Si se hace una segunda copia se machaca la anterior.'],
@@ -66,6 +72,18 @@ export class ByCopiasComponent implements AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  openSnackBar() {
+    this._snackBar.open(this.textosGuiaFacil.get("guia_copias")!, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration:5000,
+      panelClass: ['snackbar-pre']
+    });
   }
 
 
