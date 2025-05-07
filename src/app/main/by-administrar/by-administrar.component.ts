@@ -22,7 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 
 
 
-interface Food {
+interface Cuaderno {
   value: string;
   viewValue: string;
 }
@@ -35,7 +35,7 @@ export interface infoCuaderno {
 }
 const ELEMENT_DATA: infoCuaderno[] = [
   { ordenantes:'1',cuenta:'123455', nif:'07829',  estado: 'Activo'},
-  
+
 
 ];
 
@@ -46,15 +46,15 @@ const ELEMENT_DATA: infoCuaderno[] = [
   templateUrl: './by-administrar.component.html',
   styleUrl: 'by-administrar.component.css',
 })
-export class ByAdministrarComponent { 
+export class ByAdministrarComponent {
   private _snackBar = inject(MatSnackBar);
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  
+
   textosGuiaFacil = new Map<string, string>([
     ['guia', 'Este menú permite administrar los datos de un cliente en AEBWeb, accediendo a todas las funciones disponibles en el front-end. Debe usarse con precaución ya que permite modificar y eliminar los datos introducidos por el cliente.\n Para acceder a AEBWeb con la cuenta de un cliente, elija un cuaderno, introduzca un identificador de usuario y pulse [Acceder].\n No se permite el acceso simultáneo del cliente cuando se está administrando su cuenta desde back-office.\n Si el cliente está conectado a AEBWeb, se interrumpirá su sesión. Si el cliente intenta acceder mientras se le está administrando se le redirigirá a una pantalla explicativa. No olvide salir de forma controlada de la sesión de administración. Para ello debe usar el botón "Salir" que verá en la parte superior de la pantalla. En otro caso el usuario no podrá acceder hasta que la sesión de administración caduque.\n Cada vez que acceda a administrar un usuario se le ofrecerá la posibilidad de crear una copia de seguridad completa de los datos del usuario. Esta copia le permitirá restaurar, en caso necesario, los datos originales del cliente tras la sesión de administración. Recuerde que sólo se mantiene una copia de seguridad por cliente. Si crea una nueva copia se machacará la existente.'],
-   
+
   ]);
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
@@ -69,10 +69,10 @@ export class ByAdministrarComponent {
     });
   }
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
+  cuadernos: Cuaderno[] = [
+    {value: 'sct', viewValue: 'Transferencias'},
+    {value: 'sdd', viewValue: 'Adeudos'},
+    {value: 'chk', viewValue: 'Cheques'},
   ];
 
 }

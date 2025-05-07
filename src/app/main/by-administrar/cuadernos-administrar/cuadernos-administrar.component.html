@@ -2,9 +2,9 @@
 
     <mat-form-field>
         <mat-label>Cuaderno</mat-label>
-        <mat-select>
-        @for (food of foods; track food) {
-            <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+        <mat-select #cuadernoSelect (selectionChange)="busqueda('1', $event.value)">
+        @for (cuaderno of cuadernos; track cuaderno) {
+            <mat-option [value]="cuaderno.value">{{cuaderno.viewValue}}</mat-option>
         }
         </mat-select>
     </mat-form-field>
@@ -12,12 +12,12 @@
     </div>
 
     <div class="tablaCopias">
-        <table mat-table [dataSource]="dataSource" matSort 
+        <table mat-table [dataSource]="dataSource" matSort
              class="mat-elevation-z8">
         <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
              class="mat-elevation-z8"> -->
-      
-      
+
+
         <!-- Name Column -->
         <ng-container matColumnDef="ordenantes">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
@@ -25,7 +25,7 @@
           </th>
           <td mat-cell *matCellDef="let element"> {{element.ordenantes}} </td>
         </ng-container>
-      
+
         <!-- Weight Column -->
         <ng-container matColumnDef="cuenta">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
@@ -33,7 +33,7 @@
           </th>
           <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
         </ng-container>
-      
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="nif">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
@@ -48,9 +48,9 @@
             </th>
             <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
           </ng-container>
-      
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-   
-    
+
+
