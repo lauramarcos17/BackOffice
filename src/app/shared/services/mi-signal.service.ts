@@ -7,6 +7,7 @@ export class MiSignalService {
   mensaje = signal<string >('');
   nombrerol=signal<string>('');
   rol=signal<number>(0);
+  primeraBusqueda = signal<boolean>(false);
 
   setMensaje(nuevo: string ) {
     this.mensaje.set(nuevo);
@@ -18,6 +19,10 @@ export class MiSignalService {
 
   setNumRol(nuevo:number ){
     this.rol.set(nuevo);
+  }
+
+  setPrimeraBusqueda(nuevo: boolean){
+    this.primeraBusqueda.set(nuevo);
   }
 
 

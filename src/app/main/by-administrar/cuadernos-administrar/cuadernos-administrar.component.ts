@@ -61,10 +61,10 @@ export class CuadernosAdministrarComponent {
     {value: 'chk', viewValue: 'Cheques'},
   ];
 
-  busqueda(usuario:string, tipoCuaderno:string){
-    console.log(tipoCuaderno);
-    this.jsonDatoService.buscarPorCliente(usuario).subscribe((resp)=>console.log(resp));
-  }
+  // busqueda(usuario:string, tipoCuaderno:string){
+  //   console.log(tipoCuaderno);
+  //   this.jsonDatoService.buscarPorCliente(usuario).subscribe((resp)=>console.log(resp));
+  // }
 
 
   }

@@ -20,17 +20,18 @@
 
       <mat-form-field class="example-full-width">
         <mat-label>Nombre o ID</mat-label>
-        <input matInput>
+        <input matInput #nombreID>
       </mat-form-field>
-      <button class="mat-flat-button-form" mat-flat-button >Ver todas</button>
+      <button (click)="busqueda(nombreID.value)" class="mat-flat-button-form" mat-flat-button >Ver todas</button>
     </div>
     </form>
-
-    @if(false){ <!--PTE AÑADIR LA CONDICION DE BUSQUEDA PREVIA DEL USUARIO, por defecto vemos cliente 1-->
-    <h5 class="title" id="errorbusqueda"> Error de Usuario</h5>
-    }
-    @else{
-        <app-cuadernos-administrar></app-cuadernos-administrar>
-    }
+    @if(primeraBusqueda()){
+      @if(!usuarioEncontrado()){ <!--PTE AÑADIR LA CONDICION DE BUSQUEDA PREVIA DEL USUARIO, por defecto vemos cliente 1-->
+      <h5 class="title" id="errorbusqueda"> ERROR {{tipoError()}}</h5>
+      }
+      @else{
+          <app-cuadernos-administrar></app-cuadernos-administrar>
+      }
+  }
 
 

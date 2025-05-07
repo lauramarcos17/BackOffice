@@ -29,8 +29,16 @@ mensaje= this.misignalService.mensaje;
 rolNombre=this.misignalService.nombrerol;
 rol=this.misignalService.rol;
 
+
 // logout() {
 //   this.router.navigate(['/']); // Redirige al login
 // }
+
+onTabChange(event: any) {
+  console.log('Se cambió a la pestaña:', event.index);
+  // Puedes actualizar la señal o realizar otras acciones
+  this.misignalService.setPrimeraBusqueda(false); // Resetea la señal al cambiar de pestaña
+  console.log(this.misignalService.primeraBusqueda());
+}
 
 }

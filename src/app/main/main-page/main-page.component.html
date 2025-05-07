@@ -9,7 +9,7 @@
   </mat-card>
 
 
-<mat-tab-group animationDuration="0ms" >
+<mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChange($event)" >
 
 
     <mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab>

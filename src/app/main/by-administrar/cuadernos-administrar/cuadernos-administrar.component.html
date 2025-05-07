@@ -2,7 +2,8 @@
 
     <mat-form-field>
         <mat-label>Cuaderno</mat-label>
-        <mat-select #cuadernoSelect (selectionChange)="busqueda('1', $event.value)">
+        <mat-select> <!-- AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
+        <!-- <mat-select #cuadernoSelect (selectionChange)="busqueda('1', $event.value)"> -->
         @for (cuaderno of cuadernos; track cuaderno) {
             <mat-option [value]="cuaderno.value">{{cuaderno.viewValue}}</mat-option>
         }
