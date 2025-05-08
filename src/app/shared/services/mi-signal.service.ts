@@ -1,4 +1,6 @@
 import { Injectable, signal } from '@angular/core';
+import { ClienteJsonInterface } from '../interfaces/ClienteJson.interface';
+
 
 @Injectable({ providedIn: 'root' })
 
@@ -8,6 +10,8 @@ export class MiSignalService {
   nombrerol=signal<string>('');
   rol=signal<number>(0);
   primeraBusqueda = signal<boolean>(false);
+  objetoCliente = signal<ClienteJsonInterface|null>(null);
+
 
   setMensaje(nuevo: string ) {
     this.mensaje.set(nuevo);
@@ -24,6 +28,11 @@ export class MiSignalService {
   setPrimeraBusqueda(nuevo: boolean){
     this.primeraBusqueda.set(nuevo);
   }
+  
+  setObjetoCliente(nuevo: ClienteJsonInterface){
+    this.objetoCliente.set(nuevo);
+  }
 
-
+  
+  
 }

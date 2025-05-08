@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { ClienteJsonInterface, SctOrdenante, ChkOrdenante, Acreedores } from './../../../shared/interfaces/ClienteJson.interface';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule, MatTooltip } from '@angular/material/tooltip';
 import { JsonDatoService } from '../../../shared/services/jsonDato.service';
+import { MiSignalService } from '../../../shared/services/mi-signal.service';
 
 
 
@@ -30,9 +32,7 @@ export interface infoCuaderno {
   estado:string;
 }
 const ELEMENT_DATA: infoCuaderno[] = [
-  { ordenantes:'1',cuenta:'123455', nif:'07829',  estado: 'Activo'},
-
-
+ 
 ];
 
 @Component({
@@ -42,11 +42,14 @@ const ELEMENT_DATA: infoCuaderno[] = [
   styleUrl: '../by-administrar.component.css'
 })
 export class CuadernosAdministrarComponent {
-
+  
+   misignalService=inject(MiSignalService);
   jsonDatoService = inject(JsonDatoService);
+  tipoCuadernoSignal=signal('');
 
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
+  
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   textosGuiaFacil = new Map<string, string>([
@@ -54,20 +57,68 @@ export class CuadernosAdministrarComponent {
 
   ]);
 
-
+  // En by-administrar llamar al objeto y mirar que cuadernos tiene para luego rellenar el array de cuaderno.
   cuadernos: Cuaderno[] = [
     {value: 'sct', viewValue: 'Transferencias'},
     {value: 'sdd', viewValue: 'Adeudos'},
     {value: 'chk', viewValue: 'Cheques'},
   ];
 
-  // busqueda(usuario:string, tipoCuaderno:string){
-  //   console.log(tipoCuaderno);
-  //   this.jsonDatoService.buscarPorCliente(usuario).subscribe((resp)=>console.log(resp));
-  // }
+    
+    cargarTablaInicio(tipoCuaderno: string) {
+      
+      const cliente = this.misignalService.objetoCliente();
+      console.log('hola'+cliente?.nombre);
+      this.tipoCuadernoSignal.set(tipoCuaderno);
 
+      //si lo dejo solo con ordenantes=[] error
+      let ordenantes : (SctOrdenante | Acreedores | ChkOrdenante)[] = [];
+      switch(tipoCuaderno){
+        case 'sct':
+          //cliente?.sct.ordenantes[0].nombre;
+          //cliente?.sct.ordenantes[0].cuenta;
+          //cliente?.sct.ordenantes[0].nif ;
+          //cliente?.sct.ordenantes[0].sufijo;
+          ordenantes=cliente?.sct.ordenantes ?? [];
+          break;
 
-  }
+          case 'sdd':
+          ordenantes = cliente?.sdd?.acreedores ?? [];
+            break;
+
+          case 'chk':
+          ordenantes = cliente?.chk?.ordenantes ?? [];
+          break;
+      }
+
+      //mapeo los datos y convierto en formato
+      const data: infoCuaderno[] = ordenantes.map((o: any) => ({
+        ordenantes: o.nombre,
+        cuenta: o.cuenta,
+        nif:`${o.nif} ${o.sufijo? o.sufijo:''}`,
+        estado: o.existeCuentaEnEntidad ? 'Activo' : 'Inactivo'
+
+      }));
+
+      this.dataSource.data = data;
+
+      }
+
+      isCuadernoAvailable(tipoCuaderno: string): boolean {
+        const cliente = this.misignalService.objetoCliente();
+        switch (tipoCuaderno) {
+          case 'sct':
+            return !!cliente?.sct?.ordenantes?.length;
+          case 'sdd':
+            return !!cliente?.sdd?.acreedores?.length;
+          case 'chk':
+            return !!cliente?.chk?.ordenantes?.length;
+          default:
+            return false;
+        }
+      }
+    }
+  
 
 
 

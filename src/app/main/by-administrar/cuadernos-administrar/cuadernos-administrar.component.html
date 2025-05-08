@@ -2,16 +2,18 @@
 
     <mat-form-field>
         <mat-label>Cuaderno</mat-label>
-        <mat-select> <!-- AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
-        <!-- <mat-select #cuadernoSelect (selectionChange)="busqueda('1', $event.value)"> -->
+         <!-- AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
+         <mat-select #cuadernoSelect (selectionChange)="cargarTablaInicio($event.value)"> 
         @for (cuaderno of cuadernos; track cuaderno) {
-            <mat-option [value]="cuaderno.value">{{cuaderno.viewValue}}</mat-option>
+            <mat-option [value]="cuaderno.value"
+            [disabled]="!isCuadernoAvailable(cuaderno.value)">{{cuaderno.viewValue}}</mat-option>
         }
         </mat-select>
     </mat-form-field>
 
     </div>
 
+    @if(tipoCuadernoSignal()!=''){
     <div class="tablaCopias">
         <table mat-table [dataSource]="dataSource" matSort
              class="mat-elevation-z8">
@@ -28,12 +30,17 @@
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="cuenta">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-           Cuenta
-          </th>
-          <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
-        </ng-container>
+        
+          <ng-container matColumnDef="cuenta">
+          
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+             Cuenta
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
+          
+          </ng-container>
+       
+        
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="nif">
@@ -53,5 +60,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-
+    </div>
+  }
 
