@@ -1,6 +1,6 @@
 
 .buscador{
-  margin-top: 16px;
+
   display:flex;
   align-items: center;
   margin-left: 16px;
@@ -10,6 +10,9 @@
  .migraformmanual{
 
     margin-right: 64px;
+ }
+ .container{
+  height:auto;
  }
 
  .mat-flat-button-form, .mat-flat-button{

@@ -6,8 +6,10 @@
   width: 98%;
   margin-top: 24px;
 
-
-
+}
+.container{
+  height:auto;
+  overflow: hidden;
 }
 
 .info-btn{
@@ -37,7 +39,7 @@ mat-form-field {
   align-items: center;
   margin-left: 16px;
   width:100%;
-  
+
 
 }
 

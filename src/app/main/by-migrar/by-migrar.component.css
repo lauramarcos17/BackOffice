@@ -1,5 +1,8 @@
 
-
+.container{
+  height:auto;
+  overflow: hidden; 
+}
 .example-section {
     display: flex;
     align-content: center;
@@ -12,7 +15,6 @@
     width: auto;
     height: auto;
     min-width: 0;
-  
+
   }
 
- 

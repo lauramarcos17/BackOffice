@@ -1,16 +1,16 @@
 .formUsuario{
 
   display:flex;
-
   margin-bottom: 24px;
   width: 98%;
   margin-top: 24px;
   margin-left:16px;
-
-
 }
 
-
+.container{
+  height:auto;
+  overflow: hidden;
+}
 
 .info-btn{
   margin-right:0px;

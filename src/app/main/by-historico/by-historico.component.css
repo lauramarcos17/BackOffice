@@ -3,24 +3,30 @@
     width: auto;
     height: auto;
     min-width: 0;
-  
+
+  }
+
+  .container{
+    height:auto;
+    overflow: hidden;
   }
 .cabecera-logs
 {
   display:flex;
   justify-content: space-between;
   align-items: top;
+  margin-top:16px;
 }
-  
+
 .btnCopias{
     display:flex;
     justify-content: flex-end;
     width: 99%;
     margin-top: 24px;
     margin-right:16px;
-  
+
   }
- 
+
   .mat-flat-button-form, .mat-flat-button{
     margin-right: 16px;
     width: 196px;

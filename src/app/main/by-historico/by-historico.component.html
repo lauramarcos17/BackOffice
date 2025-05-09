@@ -1,3 +1,4 @@
+<div class="container">
 <div class="encabezado">
 
     <h5 class="title" >Migracion de usuarios
@@ -5,14 +6,14 @@
           <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
             <mat-icon>help</mat-icon>
           </button>
-  
-  
-  
+
+
+
         </span>
     </h5>
   </div>
-  
-  <mat-divider class ="title"></mat-divider>
+
+  <mat-divider></mat-divider>
 
 
   <form class="formRegistros">
@@ -56,7 +57,7 @@
       <td mat-cell *matCellDef="let elemento"> {{elemento.fecha}} </td>
     </ng-container>
 
-    
+
     <ng-container matColumnDef="rol">
       <th mat-header-cell  *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
         Rol

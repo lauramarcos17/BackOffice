@@ -32,7 +32,7 @@ export interface infoCuaderno {
   estado:string;
 }
 const ELEMENT_DATA: infoCuaderno[] = [
- 
+
 ];
 
 @Component({
@@ -42,14 +42,14 @@ const ELEMENT_DATA: infoCuaderno[] = [
   styleUrl: '../by-administrar.component.css'
 })
 export class CuadernosAdministrarComponent {
-  
+
    misignalService=inject(MiSignalService);
   jsonDatoService = inject(JsonDatoService);
   tipoCuadernoSignal=signal('');
 
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
-  
+
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   textosGuiaFacil = new Map<string, string>([
@@ -64,9 +64,9 @@ export class CuadernosAdministrarComponent {
     {value: 'chk', viewValue: 'Cheques'},
   ];
 
-    
+
     cargarTablaInicio(tipoCuaderno: string) {
-      
+
       const cliente = this.misignalService.objetoCliente();
       console.log('hola'+cliente?.nombre);
       this.tipoCuadernoSignal.set(tipoCuaderno);
@@ -75,10 +75,6 @@ export class CuadernosAdministrarComponent {
       let ordenantes : (SctOrdenante | Acreedores | ChkOrdenante)[] = [];
       switch(tipoCuaderno){
         case 'sct':
-          //cliente?.sct.ordenantes[0].nombre;
-          //cliente?.sct.ordenantes[0].cuenta;
-          //cliente?.sct.ordenantes[0].nif ;
-          //cliente?.sct.ordenantes[0].sufijo;
           ordenantes=cliente?.sct.ordenantes ?? [];
           break;
 
@@ -96,7 +92,8 @@ export class CuadernosAdministrarComponent {
         ordenantes: o.nombre,
         cuenta: o.cuenta,
         nif:`${o.nif} ${o.sufijo? o.sufijo:''}`,
-        estado: o.existeCuentaEnEntidad ? 'Activo' : 'Inactivo'
+        estado: 'Inactivo'
+        // estado: o.existeCuentaEnEntidad ? 'Activo' : 'Inactivo'
 
       }));
 
@@ -104,6 +101,7 @@ export class CuadernosAdministrarComponent {
 
       }
 
+      //Intento de mostrar en el input solo los cuadernos existentes
       isCuadernoAvailable(tipoCuaderno: string): boolean {
         const cliente = this.misignalService.objetoCliente();
         switch (tipoCuaderno) {
@@ -118,7 +116,7 @@ export class CuadernosAdministrarComponent {
         }
       }
     }
-  
+
 
 
 
