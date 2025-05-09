@@ -69,19 +69,21 @@ export class ByAdministrarComponent {
     });
   }
 
- 
+
 
   busqueda(usuario:string){ //Controlar que no sea un number.
     this.misignalService.setPrimeraBusqueda(true);
     if(usuario=='0'||usuario=='1'){
       this.usuarioEncontrado.set(true);
+      this.misignalService.setClienteElegido(true);
       this.jsonDatoService.buscarPorCliente(usuario).subscribe((resp:ClienteJsonInterface)=>
         {console.log(resp),
-        
+
           this.misignalService.objetoCliente.set(resp);
         });
     }else{
       this.usuarioEncontrado.set(false);
+      this.misignalService.setClienteElegido(false);
       if(usuario=='2'){
         this.tipoError.set("404 Not Found: Usuario no encontrado.");
       }else{
@@ -92,7 +94,7 @@ export class ByAdministrarComponent {
         }
 
       }
-      
+
 
     }
 

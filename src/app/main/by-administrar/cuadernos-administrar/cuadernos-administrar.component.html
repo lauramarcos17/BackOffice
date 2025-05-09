@@ -1,9 +1,13 @@
+
+<p class="title">{{nombreCliente()}} {{nifCliente()}}</p><p class="title">{{dirCliente1()}} {{dirCliente2()}} {{dirCliente3()}} {{dirCliente4()}} {{dirCliente5()}} {{dirCliente6()}} {{dirCliente7()}}</p>
+<!-- <p class="title">{{dirCliente()}}</p> -->
+<br>
 <div class="buscador">
 
     <mat-form-field>
         <mat-label>Cuaderno</mat-label>
-         <!-- AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
-         <mat-select #cuadernoSelect (selectionChange)="cargarTablaInicio($event.value)"> 
+          <!--AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
+         <mat-select #cuadernoSelect (selectionChange)="cargarTablaInicio($event.value)">
         @for (cuaderno of cuadernos; track cuaderno) {
             <mat-option [value]="cuaderno.value"
             [disabled]="!isCuadernoAvailable(cuaderno.value)">{{cuaderno.viewValue}}</mat-option>
@@ -30,17 +34,17 @@
         </ng-container>
 
         <!-- Weight Column -->
-        
+
           <ng-container matColumnDef="cuenta">
-          
+
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
              Cuenta
             </th>
             <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
-          
+
           </ng-container>
-       
-        
+
+
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="nif">

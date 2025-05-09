@@ -1,7 +1,6 @@
 .formUsuario{
 
   display:flex;
-
   margin-bottom: 24px;
   width: 98%;
   margin-top: 24px;
@@ -11,7 +10,11 @@
   height:auto;
   overflow: hidden;
 }
+.tarjetaContacto{
+  width: 320px;
+  margin-left: 320px;
 
+}
 .info-btn{
   margin-right:0px;
   width: auto;

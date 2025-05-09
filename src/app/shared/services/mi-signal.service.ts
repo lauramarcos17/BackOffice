@@ -11,6 +11,8 @@ export class MiSignalService {
   rol=signal<number>(0);
   primeraBusqueda = signal<boolean>(false);
   objetoCliente = signal<ClienteJsonInterface|null>(null);
+  clienteElegido =  signal(false);
+
 
 
   setMensaje(nuevo: string ) {
@@ -28,11 +30,13 @@ export class MiSignalService {
   setPrimeraBusqueda(nuevo: boolean){
     this.primeraBusqueda.set(nuevo);
   }
-  
+
   setObjetoCliente(nuevo: ClienteJsonInterface){
     this.objetoCliente.set(nuevo);
   }
+  setClienteElegido(nuevo: boolean){
+    this.clienteElegido.set(nuevo);
+  }
 
-  
-  
+
 }

@@ -20,18 +20,21 @@
 
 
       <mat-form-field class="example-full-width">
-        <mat-label>Nombre o ID</mat-label>
+        <mat-label>ID de cliente</mat-label>
         <input matInput #nombreID>
       </mat-form-field>
       <button (click)="busqueda(nombreID.value)" class="mat-flat-button-form" [matTooltip]="textosGuiaFacil.get('Buscar')" mat-flat-button >Buscar</button>
+
     </div>
     </form>
+
     @if(primeraBusqueda()){
       @if(!usuarioEncontrado()){ <!--PTE AÑADIR LA CONDICION DE BUSQUEDA PREVIA DEL USUARIO, por defecto vemos cliente 1-->
       <h5 class="title" id="errorbusqueda"> ERROR {{tipoError()}}</h5>
       }
       @else{
-          <app-cuadernos-administrar></app-cuadernos-administrar>
+
+         <app-cuadernos-administrar></app-cuadernos-administrar>
       }
   }
 

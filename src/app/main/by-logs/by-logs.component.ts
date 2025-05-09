@@ -11,6 +11,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition,} from '@angular/material/snack-bar';
+import { MiSignalService } from '../../shared/services/mi-signal.service';
 
 
 
@@ -31,6 +32,7 @@ interface Food {
 export class ByLogsComponent {
 
   private _snackBar = inject(MatSnackBar);
+  misignalService=inject(MiSignalService);
 
   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},

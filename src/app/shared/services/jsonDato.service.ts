@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ClienteJsonInterface } from '../interfaces/ClienteJson.interface';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError, timeout } from 'rxjs';
 
 
 
@@ -26,7 +26,10 @@ export class JsonDatoService {
        responseType: 'text'
        // Incluye cookies o credenciales si es necesario
     }).pipe(
-      map(res => JSON.parse(res) as ClienteJsonInterface) // 👈 Parseas manualmente
+      timeout(3000),
+      map(res => JSON.parse(res) as ClienteJsonInterface), // 👈 Parseas manualmente
+      catchError(error => {console.error("error de conexion al servidor ", error); alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");return throwError(()=>new Error ("No se pudo conectar al serv"))})
+
     );
   }
 

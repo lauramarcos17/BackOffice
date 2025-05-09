@@ -15,6 +15,7 @@ import {
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MiSignalService } from '../../shared/services/mi-signal.service';
 
 
 
@@ -42,8 +43,9 @@ const ELEMENT_DATA: Log[] = [
   styleUrl: 'by-historico.component.css',
 
 })
-export class ByHistoricoComponent { 
+export class ByHistoricoComponent {
   private _snackBar = inject(MatSnackBar);
+  misignalService=inject(MiSignalService);
   displayedColumns: string[] = ['error', 'fecha', 'rol','cuaderno','accion','query'];
   dataSource = ELEMENT_DATA;
 

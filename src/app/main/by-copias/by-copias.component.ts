@@ -17,6 +17,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { MiSignalService } from '../../shared/services/mi-signal.service';
 
 export interface CopiasSeguridad {
   usuario:number;
@@ -40,6 +41,9 @@ const ELEMENT_DATA: CopiasSeguridad[] = [
 export class ByCopiasComponent implements AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   private _snackBar = inject(MatSnackBar);
+  misignalService = inject(MiSignalService)
+
+
 
   textosGuiaFacil = new Map<string, string>([
     ['guia_copias', 'Desde este menú podrá gestionar las copias de seguridad de AEBWeb. Una copia de seguridad almacena todos los datos que tiene un cliente en los cuadernos SEPA. \n Solamente se permite una copia de seguridad por cliente. Si se hace una segunda copia se machaca la anterior.'],
@@ -78,6 +82,8 @@ export class ByCopiasComponent implements AfterViewInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   openSnackBar() {
+    console.log("Se imprime?" +this.misignalService.objetoCliente()!.nombre); //borrar
+
     this._snackBar.open(this.textosGuiaFacil.get("guia_copias")!, 'X', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,

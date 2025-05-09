@@ -43,10 +43,18 @@ const ELEMENT_DATA: infoCuaderno[] = [
 })
 export class CuadernosAdministrarComponent {
 
-   misignalService=inject(MiSignalService);
+  misignalService=inject(MiSignalService);
   jsonDatoService = inject(JsonDatoService);
   tipoCuadernoSignal=signal('');
-
+  nombreCliente = computed(() => this.misignalService.objetoCliente()?.nombre || '');
+  nifCliente = computed(() => this.misignalService.objetoCliente()?.nif || '');
+  dirCliente1 = computed(() => this.misignalService.objetoCliente()?.dirTipoVia || '');
+  dirCliente2 = computed(() => this.misignalService.objetoCliente()?.dirNumeroEdificio || '');
+  dirCliente3 = computed(() => this.misignalService.objetoCliente()?.dirRestoDireccion || '');
+  dirCliente4 = computed(() => this.misignalService.objetoCliente()?.dirCodigoPostal || '');
+  dirCliente5 = computed(() => this.misignalService.objetoCliente()?.dirLocalidad || '');
+  dirCliente6 = computed(() => this.misignalService.objetoCliente()?.dirProvincia || '');
+  dirCliente7 = computed(() => this.misignalService.objetoCliente()?.dirIsoPais || '');
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
 
@@ -65,10 +73,12 @@ export class CuadernosAdministrarComponent {
   ];
 
 
+
     cargarTablaInicio(tipoCuaderno: string) {
 
       const cliente = this.misignalService.objetoCliente();
       console.log('hola'+cliente?.nombre);
+
       this.tipoCuadernoSignal.set(tipoCuaderno);
 
       //si lo dejo solo con ordenantes=[] error
