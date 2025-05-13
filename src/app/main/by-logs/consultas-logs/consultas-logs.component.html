@@ -1,5 +1,5 @@
 
-<h5 class="title">Mostrando las consultas del día "señal del dia" para el usuario "1"</h5>
+<!--<h5 class="title">Mostrando las consultas del día "señal del dia" para el usuario "1"</h5>-->
 <form class="formRegistros">
 
 
@@ -19,7 +19,7 @@
   </form>
 
   <div class="tablaCopias">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
     <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
          class="mat-elevation-z8"> -->
 

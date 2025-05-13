@@ -86,6 +86,7 @@ export class LoginPageComponent {
         }).subscribe((response: any) => {
 
           this.errorMessageFinal.set(response.errorMsg);
+          //obtiene la info de spring de la base de datos y la guarda en las señales 
           if (response.success) {
             this.rol.set(response.rol);
             this.nombreRol.set(response.rolnombre);
@@ -97,12 +98,12 @@ export class LoginPageComponent {
             console.log(this.nombreusuario());
 
             alert('Login correcto');
-            // alert('Rol: ' + this.rol());
-            //PASAR A SIGUIENTE PANTALLA (llevar el rol (this.rol()), se puede crear otra key para response que coja el num del rol)
+           
+            //PASAR A SIGUIENTE PANTALLA (llevar el rol (this.rol()) que ha recogido y lo envia al servicio para utilizarlo en la siguientes pantalla)
             this.misignalService.setMensaje(this.nombreusuario());
             this.misignalService.setNumRol(Number(this.rol()));
             this.misignalService.setNombrerol(this.nombreRol());
-            this.router.navigate(['/main']);
+            this.router.navigate(['/main']);  //usuario correcto por lo que llevo a la siguiente pantalla de main
 
           }
         });

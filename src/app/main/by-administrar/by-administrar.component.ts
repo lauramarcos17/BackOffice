@@ -79,7 +79,8 @@ export class ByAdministrarComponent {
       this.jsonDatoService.buscarPorCliente(usuario).subscribe((resp:ClienteJsonInterface)=>
         {console.log(resp),
 
-          this.misignalService.objetoCliente.set(resp);
+
+          this.misignalService.objetoCliente.set(resp);//enviamos el objeto obtenido del json a la señal 
         });
     }else{
       this.usuarioEncontrado.set(false);

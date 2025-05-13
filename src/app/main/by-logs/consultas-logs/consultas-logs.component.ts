@@ -1,6 +1,6 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ViewChild } from '@angular/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MiSignalService } from '../../../shared/services/mi-signal.service';
 import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { ByLogsComponent } from '../by-logs.component';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 
 
@@ -29,20 +32,32 @@ const ELEMENT_DATA: Log[] = [
 
 @Component({
   selector: 'app-consultas-logs',
-  imports: [MatPaginatorModule,MatTableModule, MatFormField, MatFormFieldModule, MatLabel, MatInputModule, MatIconModule, MatTooltip, MatTooltipModule, MatCardModule],
+  imports: [MatPaginatorModule,MatTableModule, MatFormField,MatSortModule , MatFormFieldModule, MatLabel, MatInputModule, MatIconModule, MatTooltip, MatTooltipModule, MatCardModule],
   templateUrl: './consultas-logs.component.html',
-  styleUrl: 'consultas-logs.component.css'
+  styleUrl: 'consultas-logs.component.css',
+  providers: [provideNativeDateAdapter()]
 })
 export class ConsultasLogsComponent {
   misignalService = inject(MiSignalService);
   rol=this.misignalService.rol;
   displayedColumns: string[] = ['error', 'fecha', 'rol','cuaderno','accion','query'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<Log>(ELEMENT_DATA);
+  private _liveAnnouncer = inject(LiveAnnouncer);
 
   @Input() mapa!: Map<string, string>;
 
-
-
+   @ViewChild(MatSort) sort!: MatSort;
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+   announceSortChange(sortState: Sort) {
+   //para ordenar columnas de la tabla 
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
 
 
  }

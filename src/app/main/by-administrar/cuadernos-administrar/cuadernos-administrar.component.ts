@@ -15,8 +15,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule, MatTooltip } from '@angular/material/tooltip';
-import { JsonDatoService } from '../../../shared/services/jsonDato.service';
-import { MiSignalService } from '../../../shared/services/mi-signal.service';
+import { JsonDatoService } from 'app/shared/services/jsonDato.service';
+import { MiSignalService } from 'app/shared/services/mi-signal.service';
 
 
 
@@ -102,11 +102,12 @@ export class CuadernosAdministrarComponent {
         ordenantes: o.nombre,
         cuenta: o.cuenta,
         nif:`${o.nif} ${o.sufijo? o.sufijo:''}`,
-        estado: 'Inactivo'
-        // estado: o.existeCuentaEnEntidad ? 'Activo' : 'Inactivo'
+        estado: 'Inactivo' //lo dejamos como inactivo por defecto
+        
 
       }));
 
+      //Vinculamos con html 
       this.dataSource.data = data;
 
       }

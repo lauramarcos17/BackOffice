@@ -18,17 +18,38 @@ export class JsonDatoService {
 
   private apiUrl = 'http://localhost:8080/api'; // URL base del backend Spring Boot
 
+  
   buscarPorCliente(idCliente: string): Observable<ClienteJsonInterface> {
-    // Realiza una solicitud GET al endpoint /api/clientes con el parámetro id
+    // Realizamos una solicitud GET al endpoint /api/clientes con el parámetro id
     return this.http.get(`${this.apiUrl}/clientes`, {
       params: { id: idCliente.toString() }, // Pasa el parámetro id como query param
       withCredentials: true,
        responseType: 'text'
        // Incluye cookies o credenciales si es necesario
     }).pipe(
-      timeout(3000),
-      map(res => JSON.parse(res) as ClienteJsonInterface), // 👈 Parseas manualmente
-      catchError(error => {console.error("error de conexion al servidor ", error); alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");return throwError(()=>new Error ("No se pudo conectar al serv"))})
+      
+      timeout(3000),//tiempo para que saque el alert si hay error de conexión
+      map(res => JSON.parse(res) as ClienteJsonInterface), // Parseamos manualmente
+      catchError(error => {console.error("error de conexion al servidor ", error); 
+        alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        return throwError(()=>new Error ("No se pudo conectar al serv"))})
+
+    );
+  }
+
+  crearCopiaSeguridad(idCliente: number):Observable<ClienteJsonInterface>{
+     return this.http.get(`${this.apiUrl}/generarCopiaSeguridad`, {
+      params: { id: idCliente.toString() }, // Pasa el parámetro id como query param
+      withCredentials: true,
+       responseType: 'text'
+       // Incluye cookies o credenciales si es necesario
+    }).pipe(
+      
+      timeout(3000),//tiempo para que saque el alert si hay error de conexión
+      map(res => JSON.parse(res) as ClienteJsonInterface), // Parseamos manualmente
+      catchError(error => {console.error("error de conexion al servidor ", error); 
+        alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        return throwError(()=>new Error ("No se pudo conectar al serv"))})
 
     );
   }

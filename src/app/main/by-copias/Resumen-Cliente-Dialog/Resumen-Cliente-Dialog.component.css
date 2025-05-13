@@ -1,0 +1,19 @@
+
+.mat-flat-button-form, .mat-flat-button{
+  margin-right: 16px;
+  width: 196px;
+  
+}
+.botonesInferiorModal{
+    display: flex;
+   flex-direction: row;
+    justify-content: flex-end;
+    
+
+}
+
+.dialogo{
+    display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
