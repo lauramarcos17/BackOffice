@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { ClienteJsonInterface } from '../interfaces/ClienteJson.interface';
+import { CopiaSeguridadJson } from '../interfaces/CopiaSeguridadJson.interface';
 
 
 @Injectable({ providedIn: 'root' })
@@ -12,6 +13,7 @@ export class MiSignalService {
   primeraBusqueda = signal<boolean>(false);
   objetoCliente = signal<ClienteJsonInterface|null>(null);
   clienteElegido =  signal(false);
+  copiaSeguridad = signal<CopiaSeguridadJson|null>(null);
 
 
 
