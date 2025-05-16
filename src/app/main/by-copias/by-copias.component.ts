@@ -45,9 +45,9 @@ export class ByCopiasComponent implements AfterViewInit {
   misignalService = inject(MiSignalService)
   cliente= this.misignalService.objetoCliente();
   clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? '');
-  
+
   clienteElegido = computed (()=> this.misignalService.clienteElegido());
- 
+
 
   jsonDatoService = inject(JsonDatoService);
 
@@ -73,10 +73,11 @@ export class ByCopiasComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.cargarBackups();
   }
 
   announceSortChange(sortState: Sort) {
-   //para ordenar columnas de la tabla 
+   //para ordenar columnas de la tabla
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -101,7 +102,7 @@ export class ByCopiasComponent implements AfterViewInit {
   constructor(private dialog: MatDialog) {
     effect(() => {
       const cliente = this.misignalService.objetoCliente();
-      if (cliente && cliente.id) {
+      if (cliente && cliente.id !== undefined && cliente.id !== null) {
         this.cargarBackups();
       }
     });
@@ -109,9 +110,9 @@ export class ByCopiasComponent implements AfterViewInit {
 
   abrirDialogo() {
 
-   
-  
-    
+
+
+
    const dialogRef= this.dialog.open(ResumenClienteDialogComponent, {
       //aqui pasarle el objeto cliente
       width: '80%',
@@ -124,12 +125,12 @@ export class ByCopiasComponent implements AfterViewInit {
   });
 
   }
-//para obtener datos de Backup 
+//para obtener datos de Backup
     ngOnInit() {
      const id = this.clienteId().toString;
        this.cargarBackups();
-       
-    
+
+
     }
 
     ngOnChanges() {
@@ -141,10 +142,10 @@ export class ByCopiasComponent implements AfterViewInit {
     }
 
     cargarBackups() {
-      
+
       const clienteobjeto = this.misignalService.objetoCliente();
       const cliente = clienteobjeto?.id?.toString() ?? '';
-    
+
       console.log('Cliente ID usado para buscar backups:', cliente);
       this.jsonDatoService.getBackups(cliente).subscribe({
         next: (backups) => {
