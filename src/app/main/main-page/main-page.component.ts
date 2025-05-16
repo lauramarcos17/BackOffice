@@ -21,8 +21,6 @@ import {MatButtonModule} from '@angular/material/button';
 
 })
 export class MainPageComponent {
-
-//nombreusuarios=input.required<string |null>();
   router = inject(Router);
   misignalService=inject(MiSignalService);
   mensaje= this.misignalService.mensaje;
@@ -33,9 +31,6 @@ export class MainPageComponent {
 
 
 
-// logout() {
-//   this.router.navigate(['/']); // Redirige al login
-// }
 
 
 // Se actualiza el estado de la señal primeraBusqueda

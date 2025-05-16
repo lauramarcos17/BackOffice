@@ -33,43 +33,18 @@ export class ResumenClienteDialogComponent {
 
   crearCopiaSeguridad(){
 
-    // this.jsonDatoService.crearCopiaSeguridad(this.idCliente).subscribe((resp:ClienteJsonInterface)=>
-    //         {console.log(resp),
-    //           this.jsonDatoService.guardarCopiaSeguridad(resp);
-
-
-    //           this.misignalService.objetoCliente.set(resp);//enviamos el objeto obtenido del json a la señal
-    //         });
+  
 
       this.jsonDatoService.crearCopiaSeguridad(this.idCliente).subscribe((resp: CopiaSeguridadJson) => {
         console.log(resp),
         this.misignalService.copiaSeguridad.set(resp);
 
         alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
-    // Creamos el objeto de copia de seguridad
-        // const copia: CopiaSeguridadJson = {
-        //   idCliente: resp.idCliente,
-        //   fecha: new Date(), // formato yyyy-MM-dd
-        //   descripcion: "Copia creada desde Angular" //***** */
-        // };
-
-  //    Guardamos la copia en el backend EL BUENO
-        // this.jsonDatoService.guardarCopiaSeguridad(resp).subscribe({
-        //   next: () => console.log("Copia guardada correctamente"),
-        //   error: err => console.error("Error al guardar la copia", err)
-        // });
-        // this.jsonDatoService.guardarCopiaSeguridad(resp).subscribe({
-        //   next: () => console.log("Copia guardada correctamente"),
-        //   error: err => console.error("Error al guardar la copia", err),
-
-        // })
-
-  //   // Actualizamos el cliente en la señal
-  //   this.misignalService.objetoCliente.set(resp);
+   
    });
 
    }
-  //PENDIENTE PROBAR***
+  
 
 
 }

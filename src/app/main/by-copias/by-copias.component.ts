@@ -1,5 +1,5 @@
 import { ResumenClienteDialogComponent } from './Resumen-Cliente-Dialog/Resumen-Cliente-Dialog.component';
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,35 +20,13 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { MiSignalService } from '../../shared/services/mi-signal.service';
-
-export interface CopiasSeguridad {
-  idCliente:string;
-  fecha: Date;
-  descripcion: string;
-}
-const ELEMENT_DATA: CopiasSeguridad[] = [
-  {idCliente: "1", fecha: new Date(1991, 10, 30), descripcion: 'Copia de seguridad 98293'},
-  {idCliente: "2", fecha: new Date(1991, 10, 30), descripcion: 'Copia de seguridad 98293'}
-
-];
+import { Backup } from 'app/shared/interfaces/Backup.interface';
+import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 
 
 
-
-//creo aqui esto para ver datos inventados, luego coger los reales
-interface Cuad {
-  value: string;
-  viewValue: string;
-}
-
-export interface infoCuad {
-  ordenantes:string;
-  cuenta: string;
-  nif: string;
-  estado:string;
-}
-
-
+const ELEMENT_DATA: Backup[] = [
+]
 
 
 @Component({
@@ -60,10 +38,17 @@ export interface infoCuad {
   providers: [provideNativeDateAdapter()]
 })
 export class ByCopiasComponent implements AfterViewInit {
+
   private _liveAnnouncer = inject(LiveAnnouncer);
   private _snackBar = inject(MatSnackBar);
   misignalService = inject(MiSignalService)
   cliente= this.misignalService.objetoCliente();
+  
+ 
+
+  jsonDatoService = inject(JsonDatoService);
+
+
 
 
   textosGuiaFacil = new Map<string, string>([
@@ -79,7 +64,7 @@ export class ByCopiasComponent implements AfterViewInit {
 
 
 
-  displayedColumns: string[] = ['idCliente', 'fecha', 'descripcion'];
+  displayedColumns: string[] = ['cliente', 'fechaHora', 'descripcion'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -114,16 +99,45 @@ export class ByCopiasComponent implements AfterViewInit {
 
   abrirDialogo() {
 
-    //creo aqui para ver datos inventados, luego coger los reales 
+   
   
-
-      this.dialog.open(ResumenClienteDialogComponent, {
-      //aqui pasarle el objeto cliente, por ahora datos ficticios
+    
+   const dialogRef= this.dialog.open(ResumenClienteDialogComponent, {
+      //aqui pasarle el objeto cliente
       width: '80%',
       height: '80%',
   });
 
+   dialogRef.afterClosed().subscribe(result => {
+    // Cuando se cierra el diálogo, actualiza la tabla backups
+    this.cargarBackups();
+  });
+
   }
- }
+//para obtener datos de Backup 
+    ngOnInit() {
+     
+      this.cargarBackups();
+    }
+
+    ngOnChanges() {
+       this.dataSource.data=[];
+       this.cargarBackups();
+    }
+
+    cargarBackups() {
+      //const clienteId=this.cliente?.id?.toString() ?? '';
+      //const cliente = this.misignalService.objetoCliente()!.id.toString();
+    // console.log("Cliente ID: " + clienteId);
+      this.jsonDatoService.getBackups().subscribe({
+        next: (backups) => {
+          this.dataSource.data = backups;
+        },
+        error: (err) => {
+          console.error('Error cargando backups', err);
+        }
+      });
+    }
+}
 
 

@@ -10,7 +10,6 @@
 
 <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPantalla()" >
 
-
     <mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab>
     @if(rol()<3){
       <mat-tab [disabled]="!clienteElegido()" label="Copias de seguridad"><app-by-copias></app-by-copias></mat-tab>

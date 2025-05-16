@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ClienteJsonInterface } from '../interfaces/ClienteJson.interface';
 import { catchError, map, Observable, throwError, timeout } from 'rxjs';
 import { CopiaSeguridadJson } from '../interfaces/CopiaSeguridadJson.interface';
+import { Backup } from '../interfaces/Backup.interface';
 
 
 
@@ -49,24 +50,19 @@ export class JsonDatoService {
       timeout(3000),//tiempo para que saque el alert si hay error de conexión
       //map(res => JSON.parse(res) as ClienteJsonInterface), // Parseamos manualmente
       catchError(error => {console.error("error de conexion al servidor ", error);
-        alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        //alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
         return throwError(()=>new Error ("No se pudo conectar al serv"))})
 
     );
   }
+    getBackups(): Observable<Backup[]> {
+    return this.http.get<Backup[]>('http://localhost:8080/api/backups', { 
+       // Pasa el parámetro id como query param
+      withCredentials: true,
 
-  // guardarCopiaSeguridad(objeto: CopiaSeguridadJson): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/obtenerCopiasSeguridad`, objeto, {
-  //     withCredentials: true
-  //   }).pipe(
-  //     timeout(3000),
-
-  //     catchError(error => {
-  //       console.error("Error de conexión al servidor", error);
-  //       alert("Error de conexión al servidor. Vuelve a intentarlo en unos minutos.");
-  //       return throwError(() => new Error("No se pudo conectar al servidor"));
-  //     })
-  //   );
-  // }
+       // Incluye cookies o credenciales si es necesario
+    });
+  }
+  
 
 }
