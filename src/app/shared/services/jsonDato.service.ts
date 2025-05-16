@@ -55,9 +55,10 @@ export class JsonDatoService {
 
     );
   }
-    getBackups(): Observable<Backup[]> {
+    getBackups(cliente:string): Observable<Backup[]> {
     return this.http.get<Backup[]>('http://localhost:8080/api/backups', { 
        // Pasa el parámetro id como query param
+         params: { cliente },
       withCredentials: true,
 
        // Incluye cookies o credenciales si es necesario

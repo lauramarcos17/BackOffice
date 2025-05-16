@@ -1,5 +1,5 @@
 import { ResumenClienteDialogComponent } from './Resumen-Cliente-Dialog/Resumen-Cliente-Dialog.component';
-import { AfterViewInit, Component, inject, ViewChild, computed } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild, computed, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,6 +25,7 @@ import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 
 
 
+
 const ELEMENT_DATA: Backup[] = [
 ]
 
@@ -43,7 +44,9 @@ export class ByCopiasComponent implements AfterViewInit {
   private _snackBar = inject(MatSnackBar);
   misignalService = inject(MiSignalService)
   cliente= this.misignalService.objetoCliente();
+  clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? '');
   
+  clienteElegido = computed (()=> this.misignalService.clienteElegido());
  
 
   jsonDatoService = inject(JsonDatoService);
@@ -95,7 +98,14 @@ export class ByCopiasComponent implements AfterViewInit {
     });
   }
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+    effect(() => {
+      const cliente = this.misignalService.objetoCliente();
+      if (cliente && cliente.id) {
+        this.cargarBackups();
+      }
+    });
+  }
 
   abrirDialogo() {
 
@@ -116,20 +126,27 @@ export class ByCopiasComponent implements AfterViewInit {
   }
 //para obtener datos de Backup 
     ngOnInit() {
-     
-      this.cargarBackups();
+     const id = this.clienteId().toString;
+       this.cargarBackups();
+       
+    
     }
 
     ngOnChanges() {
        this.dataSource.data=[];
-       this.cargarBackups();
+      const id = this.clienteId();
+       if (id) {
+      this.cargarBackups();
+    }
     }
 
     cargarBackups() {
-      //const clienteId=this.cliente?.id?.toString() ?? '';
-      //const cliente = this.misignalService.objetoCliente()!.id.toString();
-    // console.log("Cliente ID: " + clienteId);
-      this.jsonDatoService.getBackups().subscribe({
+      
+      const clienteobjeto = this.misignalService.objetoCliente();
+      const cliente = clienteobjeto?.id?.toString() ?? '';
+    
+      console.log('Cliente ID usado para buscar backups:', cliente);
+      this.jsonDatoService.getBackups(cliente).subscribe({
         next: (backups) => {
           this.dataSource.data = backups;
         },
