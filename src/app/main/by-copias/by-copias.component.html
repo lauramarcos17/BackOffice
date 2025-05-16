@@ -26,24 +26,22 @@
 
     <mat-form-field>
       <mat-label>Fecha desde</mat-label>
-      <input matInput [matDatepicker]="picker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <input matInput [matDatepicker]="picker" [value]="fechaDesde()" (dateChange)="fechaDesde.set($event.value)">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Fecha desde</mat-label>
-    <input matInput [matDatepicker]="picker2">
-    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-label>Fecha hasta</mat-label>
+    <input matInput [matDatepicker]="picker2" [value]="fechaHasta()" (dateChange)="fechaHasta.set($event.value)">
     <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
 </mat-form-field>
 
 
-  <button class="mat-flat-button-form" mat-flat-button [matTooltip]="textosGuiaFacil.get('buscar_copias')">Buscar</button>
+  <button class="mat-flat-button-form" mat-flat-button (click)="aplicarFiltroFechas()" [matTooltip]="textosGuiaFacil.get('buscar_copias')">Buscar</button>
 
-  <button class="mat-flat-button-form" mat-flat-button [matTooltip]="textosGuiaFacil.get('vertodas_copias')">Ver todas</button>
+  <button class="mat-flat-button-form" mat-flat-button (click)="verTodasFechas()" [matTooltip]="textosGuiaFacil.get('vertodas_copias')">Ver todas</button>
 
 
 
@@ -67,7 +65,7 @@
        class="mat-elevation-z8">
   <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
        class="mat-elevation-z8"> -->
-  
+
 
   <!-- Name Column -->
   <ng-container matColumnDef="cliente">

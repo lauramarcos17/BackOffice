@@ -1,5 +1,5 @@
 import { ResumenClienteDialogComponent } from './Resumen-Cliente-Dialog/Resumen-Cliente-Dialog.component';
-import { AfterViewInit, Component, inject, ViewChild, computed, effect } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -43,13 +43,34 @@ export class ByCopiasComponent implements AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   private _snackBar = inject(MatSnackBar);
   misignalService = inject(MiSignalService)
-  cliente= this.misignalService.objetoCliente();
-  clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? '');
-
-  clienteElegido = computed (()=> this.misignalService.clienteElegido());
-
-
   jsonDatoService = inject(JsonDatoService);
+
+  cliente= this.misignalService.objetoCliente(); //json completo del cliente
+  clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? ''); //id numerico del cliente en String
+  clienteElegido = computed (()=> this.misignalService.clienteElegido()); //booleano que muestra si se ha elegido cliente. No usado en este componente?
+
+  fechaDesde = signal<Date | null>(null);
+  fechaHasta = signal<Date | null>(null);
+
+  backups = signal<Backup[]>([]);
+
+  //aplica un filtro parseando la fecha tipo String de SQL a tipo Date para comparar
+  backupsFiltrados = computed(() => {
+    const desde = this.fechaDesde();
+    const hasta = this.fechaHasta();
+    let hastaFin: Date | null = null;
+    if (hasta) {
+      hastaFin = new Date(hasta);
+      hastaFin.setHours(23, 59, 59, 999);
+    }
+    return this.backups().filter(b => {
+      const fecha = this.parseFecha(b.fechaHora);
+      if (!fecha) return false;
+      return (!desde || fecha >= desde) && (!hastaFin || fecha <= hastaFin);
+    });
+  });
+
+
 
 
 
@@ -149,13 +170,49 @@ export class ByCopiasComponent implements AfterViewInit {
       console.log('Cliente ID usado para buscar backups:', cliente);
       this.jsonDatoService.getBackups(cliente).subscribe({
         next: (backups) => {
-          this.dataSource.data = backups;
+          this.backups.set(backups);
+            this.dataSource.data = this.backupsFiltrados(); // Inicializa la tabla con los filtrados
+
         },
         error: (err) => {
           console.error('Error cargando backups', err);
         }
       });
     }
+
+    aplicarFiltroFechas() {
+      const desde = this.fechaDesde();
+      let hasta = this.fechaHasta();
+
+      // Si hay fecha hasta, ajústala al final del día
+      let hastaFin: Date | null = null;
+      if (hasta) {
+        hastaFin = new Date(hasta);
+        hastaFin.setHours(23, 59, 59, 999);
+      }
+
+      this.dataSource.data = this.backups().filter(b => {
+        const fecha = this.parseFecha(b.fechaHora);
+        if (!fecha) return false;
+        return (!desde || fecha >= desde) && (!hastaFin || fecha <= hastaFin);
+      });
+    }
+
+    verTodasFechas() {
+      this.fechaDesde.set(null);
+      this.fechaHasta.set(null);
+      this.dataSource.data = this.backups();
+    }
+
+    private parseFecha(fechaStr: string): Date | null {
+      // Espera formato: "14/05/2025 - 14:13:30" segun el String de SQL
+      const [fecha, hora] = fechaStr.split(' - ');
+      if (!fecha || !hora)
+        return null;
+      const [dia, mes, anio] = fecha.split('/').map(Number);
+      const [h, m, s] = hora.split(':').map(Number);
+      return new Date(anio, mes - 1, dia, h, m, s);
+}
 }
 
 
