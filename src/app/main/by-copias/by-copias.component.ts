@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatButton, MatButtonModule} from '@angular/material/button';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorModule, MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -92,7 +92,10 @@ export class ByCopiasComponent implements AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.cargarBackups();
   }
@@ -171,7 +174,7 @@ export class ByCopiasComponent implements AfterViewInit {
       this.jsonDatoService.getBackups(cliente).subscribe({
         next: (backups) => {
           this.backups.set(backups);
-            this.dataSource.data = this.backupsFiltrados(); // Inicializa la tabla con los filtrados
+          this.dataSource.data = this.backupsFiltrados(); // Inicializa la tabla con los filtrados
 
         },
         error: (err) => {

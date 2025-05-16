@@ -33,18 +33,20 @@ export class ResumenClienteDialogComponent {
 
   crearCopiaSeguridad(){
 
-  
+
 
       this.jsonDatoService.crearCopiaSeguridad(this.idCliente).subscribe((resp: CopiaSeguridadJson) => {
         console.log(resp),
         this.misignalService.copiaSeguridad.set(resp);
 
         alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
-   
+
    });
 
    }
-  
+
+   
+
 
 
 }
