@@ -7,17 +7,33 @@
     margin-right: 8px;
     width: fit-content;
     margin-bottom: 40px;
-    margin-left:auto;
+  
 
   }
-
+  .cabecera{
+    display: flex;
+  justify-content: space-between; /* o space-around / flex-start según lo que prefieras */
+  align-items: center;
+  width: 100%;
+    gap: 40px;               /* espacio entre los dos bloques */
+  padding: 10px;
+  
+  }
   .cargarCliente{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 16px;
+     
 
   }
+.btnCargaCliente{
+  margin-bottom: 16px;
+ 
+  
+  
+}
+
 
 
 
@@ -61,7 +77,13 @@ mat-form-field {
 
 }
 
+.mat-tab-labels, .mat-tab-label, .mat-tab-link {
+  color: white;
+  font-size: 16px;
+  background-color: #804A71;
+}
 
-::ng-deep .mat-tab-label {
-  color: rgb(90,133,215) !important; /* Cambia este color según tu preferencia */
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+  background: white;
+  height: 5px; 
 }

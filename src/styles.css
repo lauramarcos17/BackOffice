@@ -48,4 +48,15 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-mdc-tab-label {
+  color: rgb(90,133,215) !important;
+}
+.mat-mdc-tab-label.mat-mdc-tab-label-active {
+  color: rgb(90,133,215) !important;
+}
 
+/* Opcional: cambiar el color de la línea inferior activa */
+.mat-mdc-tab-indicator {
+  background-color: rgb(90,133,215) !important;
+   color: red;
+}

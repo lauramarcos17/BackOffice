@@ -1,6 +1,6 @@
 import { MiSignalService } from './../../shared/services/mi-signal.service';
 import { mainroutes } from './../main.routes';
-import { ChangeDetectionStrategy, Component, computed, inject, input, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, Input, signal, ViewEncapsulation } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ByAdministrarComponent } from '../by-administrar/by-administrar.component';
@@ -20,8 +20,8 @@ import { MatInputModule } from '@angular/material/input';
   selector: 'app-main-page',
   imports: [MatInputModule, MatFormFieldModule, MatTabsModule,MatCardModule,MatIconModule, MatButtonModule,RouterOutlet, RouterLink, ByAdministrarComponent, ByCopiasComponent,ByHistoricoComponent,ByMigrarComponent,ByLogsComponent],
   templateUrl: './main-page.component.html',
-  styleUrl:'main-page.component.css'
-
+  styleUrl:'main-page.component.css',
+ 
 
 })
 export class MainPageComponent {

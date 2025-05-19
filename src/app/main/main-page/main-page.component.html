@@ -1,4 +1,12 @@
+<div class="cabecera">
+  <div class="cargarCliente">
+  <mat-form-field>
+    <mat-label>ID Cliente</mat-label>
+    <input matInput #idClienteMain >
+  </mat-form-field>
 
+  <button class="btnCargaCliente" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
+</div>
 <div class="cierresesion">
   <p>Usuario: {{mensaje()}}  ({{rolNombre()}}) </p>
 
@@ -7,13 +15,7 @@
   </button>
 
 </div>
-<div class="cargarCliente">
-  <mat-form-field>
-    <mat-label>ID Cliente</mat-label>
-    <input matInput #idClienteMain >
-  </mat-form-field>
 
-  <button class="btnCargaCliente" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
 </div>
 <mat-tab-group class="texto-azul" animationDuration="0ms" [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
   <!-- <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPantalla()" > -->
