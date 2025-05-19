@@ -1,17 +1,26 @@
 
-<mat-card appearance="outlined" class="cierresesion">
-    <mat-card-content>Usuario: {{mensaje()}}  {{rolNombre()}}
-        <button [routerLink]="['/']" (click)="resetPantalla()" mat-mini-fab aria-label="Example icon button with a menu icon">
-        <mat-icon>exit_to_app</mat-icon>
-      </button>
-    </mat-card-content>
-  </mat-card>
+<div class="cierresesion">
+  <p>Usuario: {{mensaje()}}  ({{rolNombre()}}) </p>
+
+  <button class="btnSalir" [routerLink]="['/']" (click)="resetPantalla()" mat-mini-fab aria-label="Example icon button with a menu icon">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+
+</div>
+<div class="cargarCliente">
+  <mat-form-field>
+    <mat-label>ID Cliente</mat-label>
+    <input matInput #idClienteMain >
+  </mat-form-field>
+
+  <button class="btnCargaCliente" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
+</div>
+<mat-tab-group class="texto-azul" animationDuration="0ms" [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
+  <!-- <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPantalla()" > -->
 
 
-<mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPantalla()" >
-
-    <mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab>
-    @if(rol()<3){
+    <!-- <mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab> -->
+    <!-- @if(rol()<3){
       <mat-tab [disabled]="!clienteElegido()" label="Copias de seguridad"><app-by-copias></app-by-copias></mat-tab>
     }
     <mat-tab [disabled]="!clienteElegido()" label="Visor de logs"><app-by-logs></app-by-logs></mat-tab>
@@ -20,9 +29,20 @@
     }
     @if(rol()==1){
       <mat-tab [disabled]="!clienteElegido()" label="Histórico migraciones"><app-by-historico></app-by-historico></mat-tab>
-    }
+    } -->
+<mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab>
 
-  </mat-tab-group>
+<mat-tab label="Copias de seguridad" [disabled]="!clienteEncontradoDesdeMain()"><app-by-copias></app-by-copias></mat-tab>
 
-  <router-outlet></router-outlet>
+<mat-tab label="Visor de logs" [disabled]="!clienteEncontradoDesdeMain()"><app-by-logs></app-by-logs></mat-tab>
+
+<mat-tab label="Migrar usuario" [disabled]="!clienteEncontradoDesdeMain()"><app-by-migrar></app-by-migrar></mat-tab>
+
+<mat-tab label="Histórico migraciones" [disabled]="!clienteEncontradoDesdeMain()"><app-by-historico></app-by-historico></mat-tab>
+
+</mat-tab-group>
+
+
+
+<router-outlet></router-outlet>
 

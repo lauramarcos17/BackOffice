@@ -9,5 +9,6 @@ export const routes: Routes = [
         loadChildren:()=>import('./main/main.routes'),
         canActivate: [AuthGuard]
     }
+
     //controlar 404
 ];

@@ -15,6 +15,9 @@ export class MiSignalService {
   clienteElegido =  signal(false);
   copiaSeguridad = signal<CopiaSeguridadJson|null>(null);
 
+  clienteEncontradoDeMain = signal<boolean>(false);
+  tipoError = signal<string>("");
+
 
 
   setMensaje(nuevo: string ) {
@@ -38,6 +41,14 @@ export class MiSignalService {
   }
   setClienteElegido(nuevo: boolean){
     this.clienteElegido.set(nuevo);
+  }
+
+  setClienteEncontradoDeMain(nuevo: boolean){
+    this.clienteEncontradoDeMain.set(nuevo);
+  }
+
+  setTipoError(nuevo: string ) {
+    this.tipoError.set(nuevo);
   }
 
 

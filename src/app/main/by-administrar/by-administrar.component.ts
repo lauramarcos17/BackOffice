@@ -38,14 +38,15 @@ import { Observable } from 'rxjs';
 })
 export class ByAdministrarComponent {
   misignalService=inject(MiSignalService);
-  private _snackBar = inject(MatSnackBar);
+
 
   jsonDatoService = inject(JsonDatoService);
 
-  usuarioEncontrado = signal<boolean>(false);
-  primeraBusqueda = computed(() =>this.misignalService.primeraBusqueda());
-  tipoError = signal<string>("");
 
+
+
+  clienteEncontradoDeMain = computed(()=>this.misignalService.clienteEncontradoDeMain());
+  tipoError = computed(()=> this.misignalService.tipoError());
 
 
 
@@ -57,48 +58,9 @@ export class ByAdministrarComponent {
 
 
 
-  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
-  openSnackBar() {
-    this._snackBar.open(this.textosGuiaFacil.get("guia")!, 'X', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration:5000,
-      panelClass: ['snackbar-pre']
-    });
-  }
 
 
 
-  busqueda(usuario:string){ //Controlar que no sea un number.
-    this.misignalService.setPrimeraBusqueda(true);
-    if(usuario=='0'||usuario=='1'){
-      this.usuarioEncontrado.set(true);
-      this.misignalService.setClienteElegido(true);
-      this.jsonDatoService.buscarPorCliente(usuario).subscribe((resp:ClienteJsonInterface)=>
-        {console.log(resp),
 
-
-          this.misignalService.objetoCliente.set(resp);//enviamos el objeto obtenido del json a la señal 
-        });
-    }else{
-      this.usuarioEncontrado.set(false);
-      this.misignalService.setClienteElegido(false);
-      if(usuario=='2'){
-        this.tipoError.set("404 Not Found: Usuario no encontrado.");
-      }else{
-        if(isNaN(Number(usuario))){ //comprueba que no es numerico
-          this.tipoError.set("500 Internal Server Error: ID no numérica.");
-        }else{
-          this.tipoError.set("400 Bad Request: El usuario no existe.");
-        }
-
-      }
-
-
-    }
-
-  }
 
 }

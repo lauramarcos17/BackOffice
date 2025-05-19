@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule, MatTooltip } from '@angular/material/tooltip';
@@ -45,6 +45,8 @@ export class CuadernosAdministrarComponent {
 
   misignalService=inject(MiSignalService);
   jsonDatoService = inject(JsonDatoService);
+  private _snackBar = inject(MatSnackBar);
+
   tipoCuadernoSignal=signal('');
   nombreCliente = computed(() => this.misignalService.objetoCliente()?.nombre || '');
   nifCliente = computed(() => this.misignalService.objetoCliente()?.nif || '');
@@ -103,11 +105,11 @@ export class CuadernosAdministrarComponent {
         cuenta: o.cuenta,
         nif:`${o.nif} ${o.sufijo? o.sufijo:''}`,
         estado: 'Inactivo' //lo dejamos como inactivo por defecto
-        
+
 
       }));
 
-      //Vinculamos con html 
+      //Vinculamos con html
       this.dataSource.data = data;
 
       }
@@ -126,6 +128,21 @@ export class CuadernosAdministrarComponent {
             return false;
         }
       }
+
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'end';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  openSnackBar() {
+    this._snackBar.open(this.textosGuiaFacil.get("guia")!, 'X', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration:5000,
+      panelClass: ['snackbar-pre']
+    });
+  }
+
+
     }
 
 
