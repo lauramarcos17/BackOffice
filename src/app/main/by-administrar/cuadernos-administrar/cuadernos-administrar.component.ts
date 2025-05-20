@@ -1,4 +1,4 @@
-import { ClienteJsonInterface, SctOrdenante, ChkOrdenante, Acreedores } from './../../../shared/interfaces/ClienteJson.interface';
+import { ClienteJsonInterface, SctOrdenante, ChkOrdenante, Acreedores, Libradore, Beneficiario, Deudore } from './../../../shared/interfaces/ClienteJson.interface';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -58,6 +58,7 @@ export class CuadernosAdministrarComponent {
   dirCliente6 = computed(() => this.misignalService.objetoCliente()?.dirProvincia || '');
   dirCliente7 = computed(() => this.misignalService.objetoCliente()?.dirIsoPais || '');
   sufijoCliente = computed(() => this.misignalService.objetoCliente()?.sufijo || '');
+  
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
 
@@ -86,27 +87,35 @@ export class CuadernosAdministrarComponent {
 
       //si lo dejo solo con ordenantes=[] error
       let ordenantes : (SctOrdenante | Acreedores | ChkOrdenante)[] = [];
+      let deudores: (Beneficiario|Deudore | Libradore)[] |undefined = [];
       switch(tipoCuaderno){
         case 'sct':
           ordenantes=cliente?.sct.ordenantes ?? [];
+           deudores = cliente?.sct.ordenantes.flatMap(ord => ord.beneficiarios ?? []);
           break;
 
           case 'sdd':
           ordenantes = cliente?.sdd?.acreedores ?? [];
+           deudores = cliente?.sdd.acreedores.flatMap(ord => ord.deudores ?? []);
+        
             break;
 
           case 'chk':
           ordenantes = cliente?.chk?.ordenantes ?? [];
+          deudores = cliente?.chk.ordenantes.flatMap(ord => ord.libradores ?? []);
           break;
       }
 
+      //envio los datos del objeto cliente a la señal para recuperarlo en posteriores pestañas
+     
+       this.misignalService.ordenanteSignal.set(ordenantes);
+        //this.misignalService.deudoresSignal.set(deudores ?? []);
       //mapeo los datos y convierto en formato
       const data: infoCuaderno[] = ordenantes.map((o: any) => ({
         ordenantes: o.nombre,
         cuenta: o.cuenta,
         nif:`${o.nif} ${o.sufijo? o.sufijo:''}`,
         estado: 'Inactivo' //lo dejamos como inactivo por defecto
-
 
       }));
 

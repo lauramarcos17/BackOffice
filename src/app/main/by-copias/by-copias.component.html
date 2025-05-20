@@ -1,106 +1,32 @@
 <div class="container">
-<div class="encabezado">
 
-  <h5 class="title" >Listado de copias de seguridad
-      <span >
-
-        <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
-          <mat-icon>help</mat-icon>
-        </button>
-
-
-
-      </span>
-  </h5>
-</div>
-  <mat-divider class ="title"></mat-divider>
+  
   <span #copiasTooltip="matTooltip" [matTooltip]="textosGuiaFacil.get('guia_copias')"></span>
-  <form class="formUsuario">
-  <div class="buscador">
+ 
+ 
+ 
+  @if(!mostrarTablaTotales()){
+      <div class="encabezado">
+
+        <h5 class="title" >Listado de copias de seguridad
+        <span >
+
+            <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+              <mat-icon>help</mat-icon>
+            </button>
+
+        </span>
+        </h5>
+        <mat-divider class ="title"></mat-divider>
+    </div>
+
+    <app-tabla-copia></app-tabla-copia>
+    }
+
+  @else {
+
+    <app-tabla-totales></app-tabla-totales>
+  }
 
 
-    <!-- <mat-form-field class="example-full-width">  EL USUARIO LLEGA DIRECTAMENTE DE LA PESTAÑA DE INICIO
-      <mat-label>Usuario</mat-label>
-      <input matInput>
-    </mat-form-field> -->
-
-    <mat-form-field>
-      <mat-label>Fecha desde</mat-label>
-      <input matInput [matDatepicker]="picker" [value]="fechaDesde()" (dateChange)="fechaDesde.set($event.value)">
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Fecha hasta</mat-label>
-    <input matInput [matDatepicker]="picker2" [value]="fechaHasta()" (dateChange)="fechaHasta.set($event.value)">
-    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-    <mat-datepicker #picker2></mat-datepicker>
-</mat-form-field>
-
-
-  <button class="mat-flat-button-form" mat-flat-button (click)="aplicarFiltroFechas()" [matTooltip]="textosGuiaFacil.get('buscar_copias')">Buscar</button>
-
-  <button class="mat-flat-button-form" mat-flat-button (click)="verTodasFechas()" [matTooltip]="textosGuiaFacil.get('vertodas_copias')">Ver todas</button>
-
-
-
-
-
-</div>
-</form>
-
-
-
-<div class="tablaCopias">
-  
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-       class="mat-elevation-z8">
-  <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
-       class="mat-elevation-z8"> -->
-
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="cliente">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-     ID Cliente
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="fechaHora">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-      Fecha
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.fechaHora}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="descripcion">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-      Descripción
-    </th>
-    <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-
-</table>
-<mat-paginator
-              [pageSize]="5"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page">
-</mat-paginator>
-
-</div>
-
-
-<div class="btnCopias">
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('restaurar_copias')">Restaurar copias</button>
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="textosGuiaFacil.get('eliminar_copias')">Eliminar copias</button>
-  <button class="mat-flat-button" (click)="abrirDialogo()" mat-flat-button [matTooltip]="textosGuiaFacil.get('crear_copias')">Crear copias</button>
-</div>
 </div>

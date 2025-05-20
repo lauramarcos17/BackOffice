@@ -1,0 +1,73 @@
+ <app-cuadernos-administrar></app-cuadernos-administrar>
+
+
+ <div class="botonesInferiorModal">
+  <button class="mat-flat-button" (click)=" volverSinCopia()" mat-flat-button mat-dialog-close [matTooltip]="textosGuiaFacil.get('volver')">Volver</button>
+  <button class="mat-flat-button" (click)="crearCopiaSeguridad()"mat-flat-button [matTooltip]="textosGuiaFacil.get('crearcopia')">Crear copia</button>
+</div>
+
+
+   <div class="tablaCopias">
+   
+        <table mat-table [dataSource]="dataSource" matSort
+             class="mat-elevation-z8">
+           
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="acreedores">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+            Ordenantes
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.acreedores}}</td>
+        </ng-container>
+   
+      
+
+          <ng-container matColumnDef="deudores">
+
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+             Deudores
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.deudores}}  </td>
+
+          </ng-container>
+
+          
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="remesas">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+            Remesas
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.remesas}}   </td>
+        </ng-container>
+
+        <ng-container matColumnDef="recibos">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+              Estado
+            </th>
+            <td mat-cell *matCellDef="let element"> </td>
+          </ng-container>
+             <ng-container matColumnDef="remesasemitidas">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+            Nif-sufijo
+          </th>
+          <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+           <ng-container matColumnDef="recibosemitidos">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+            Nif-sufijo
+          </th>
+          <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>  
+
+     
+   
+    </div>
+  
+

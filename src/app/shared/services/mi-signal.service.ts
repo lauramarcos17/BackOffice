@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import { ClienteJsonInterface } from '../interfaces/ClienteJson.interface';
+import { Beneficiario, ClienteJsonInterface, Deudore, Libradore } from '../interfaces/ClienteJson.interface';
 import { CopiaSeguridadJson } from '../interfaces/CopiaSeguridadJson.interface';
-
+import { SctOrdenante, ChkOrdenante, Acreedores } from '../interfaces/ClienteJson.interface';
 
 @Injectable({ providedIn: 'root' })
 
@@ -14,9 +14,14 @@ export class MiSignalService {
   objetoCliente = signal<ClienteJsonInterface|null>(null);
   clienteElegido =  signal(false);
   copiaSeguridad = signal<CopiaSeguridadJson|null>(null);
+  mostrarTablaTotales=signal<boolean>(false);
+  tituloTabla=signal<string>('');
 
   clienteEncontradoDeMain = signal<boolean>(false);
   tipoError = signal<string>("");
+
+  ordenanteSignal=signal<(SctOrdenante | Acreedores | ChkOrdenante)[]> ([]) ;
+  deudoresSignal=signal<(Beneficiario|Deudore | Libradore)[]> ([]) ;
 
 
 

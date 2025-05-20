@@ -1,4 +1,4 @@
-import { ResumenClienteDialogComponent } from './Resumen-Cliente-Dialog/Resumen-Cliente-Dialog.component';
+import { TablaCopiaComponent } from './tabla-copia/tabla-copia.component';
 import { AfterViewInit, Component, inject, ViewChild, computed, effect, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +22,7 @@ import {
 import { MiSignalService } from '../../shared/services/mi-signal.service';
 import { Backup } from 'app/shared/interfaces/Backup.interface';
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
+import { TablaTotalesComponent } from './tabla-totales/tabla-totales.component';
 
 
 
@@ -33,11 +34,13 @@ const ELEMENT_DATA: Backup[] = [
 @Component({
 
   selector: 'app-by-copias',
-  imports: [ResumenClienteDialogComponent,FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [TablaCopiaComponent,TablaTotalesComponent,FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './by-copias.component.html',
   styleUrl: 'by-copias.component.css',
   providers: [provideNativeDateAdapter()]
 })
+
+
 export class ByCopiasComponent implements AfterViewInit {
 
   private _liveAnnouncer = inject(LiveAnnouncer);
@@ -48,6 +51,9 @@ export class ByCopiasComponent implements AfterViewInit {
   cliente= this.misignalService.objetoCliente(); //json completo del cliente
   clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? ''); //id numerico del cliente en String
   clienteElegido = computed (()=> this.misignalService.clienteElegido()); //booleano que muestra si se ha elegido cliente. No usado en este componente?
+  mostrarTablaTotales = computed (()=> this.misignalService.mostrarTablaTotales());
+
+
 
   fechaDesde = signal<Date | null>(null);
   fechaHasta = signal<Date | null>(null);
@@ -131,24 +137,10 @@ export class ByCopiasComponent implements AfterViewInit {
       }
     });
   }
-
-  abrirDialogo() {
-
-
-
-
-   const dialogRef= this.dialog.open(ResumenClienteDialogComponent, {
-      //aqui pasarle el objeto cliente
-      width: '80%',
-      height: '80%',
-  });
-
-   dialogRef.afterClosed().subscribe(result => {
-    // Cuando se cierra el diálogo, actualiza la tabla backups
-    this.cargarBackups();
-  });
-
+  cambiarLaura(){
+    this.misignalService.mostrarTablaTotales.set(!this.mostrarTablaTotales());
   }
+  
 //para obtener datos de Backup
     ngOnInit() {
      const id = this.clienteId().toString;

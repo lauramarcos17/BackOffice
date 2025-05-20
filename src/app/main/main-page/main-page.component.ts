@@ -33,9 +33,13 @@ export class MainPageComponent {
   // rol=this.misignalService.rol;
 
   clienteEncontradoDesdeMain = computed(()=> this.misignalService.clienteEncontradoDeMain());
-  selectedTab = signal(0);
+  
+  selectedTab = signal(0);//declaro señal para que me mande a la pestaña de inicio si cambio el cliente 
 
-
+  controlPestana(event: number) {
+    this.selectedTab.set(event); //redirige a la primera pestaña
+    this.misignalService.mostrarTablaTotales.set(false); 
+  }
 
 
 
