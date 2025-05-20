@@ -57,6 +57,7 @@ export class CuadernosAdministrarComponent {
   dirCliente5 = computed(() => this.misignalService.objetoCliente()?.dirLocalidad || '');
   dirCliente6 = computed(() => this.misignalService.objetoCliente()?.dirProvincia || '');
   dirCliente7 = computed(() => this.misignalService.objetoCliente()?.dirIsoPais || '');
+  sufijoCliente = computed(() => this.misignalService.objetoCliente()?.sufijo || '');
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
 

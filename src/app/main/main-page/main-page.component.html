@@ -1,23 +1,23 @@
 <div class="cabecera">
-  <div class="cargarCliente">
-  <mat-form-field>
-    <mat-label>ID Cliente</mat-label>
-    <input matInput #idClienteMain >
-  </mat-form-field>
+    <div class="cargarCliente">
+    <mat-form-field>
+      <mat-label>ID Cliente</mat-label>
+      <input matInput #idClienteMain >
+    </mat-form-field>
 
-  <button class="btnCargaCliente" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
+    <button class="btnCargaCliente" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
+  </div>
+  <div class="cierresesion">
+    <p>Usuario: {{mensaje()}}  ({{rolNombre()}}) </p>
+
+    <button class="btnSalir" [routerLink]="['/']" (click)="resetPantalla()" mat-mini-fab aria-label="Example icon button with a menu icon">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+
+  </div>
+
 </div>
-<div class="cierresesion">
-  <p>Usuario: {{mensaje()}}  ({{rolNombre()}}) </p>
-
-  <button class="btnSalir" [routerLink]="['/']" (click)="resetPantalla()" mat-mini-fab aria-label="Example icon button with a menu icon">
-    <mat-icon>exit_to_app</mat-icon>
-  </button>
-
-</div>
-
-</div>
-<mat-tab-group class="texto-azul" animationDuration="0ms" [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
+<mat-tab-group  animationDuration="0ms" [selectedIndex]="selectedTab()" (selectedIndexChange)="selectedTab.set($event)">
   <!-- <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPantalla()" > -->
 
 
@@ -32,7 +32,7 @@
     @if(rol()==1){
       <mat-tab [disabled]="!clienteElegido()" label="Histórico migraciones"><app-by-historico></app-by-historico></mat-tab>
     } -->
-<mat-tab label="Pantalla de inicio"><app-by-administrar></app-by-administrar></mat-tab>
+<mat-tab label="Resumen del cliente"><app-by-administrar></app-by-administrar></mat-tab>
 
 <mat-tab label="Copias de seguridad" [disabled]="!clienteEncontradoDesdeMain()"><app-by-copias></app-by-copias></mat-tab>
 

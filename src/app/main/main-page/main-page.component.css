@@ -6,16 +6,17 @@
     align-items: center;
     margin-right: 8px;
     width: fit-content;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+    
   
 
   }
   .cabecera{
     display: flex;
-  justify-content: space-between; /* o space-around / flex-start según lo que prefieras */
+  justify-content: space-between; 
   align-items: center;
   width: 100%;
-    gap: 40px;               /* espacio entre los dos bloques */
+    gap: 40px;               
   padding: 10px;
   
   }
@@ -30,21 +31,14 @@
 .btnCargaCliente{
   margin-bottom: 16px;
  
-  
-  
+
 }
-
-
-
-
-
-
 
     .btnSalir{
     margin-left:16px;
   }
 
-  #errorbusqueda{
+  .errorbusqueda{
   color: red ;
 
 }
