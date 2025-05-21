@@ -1,3 +1,28 @@
+.encabezado{
+  display:flex;
+  align-items: center;
+  height:32px;
+}
+.container{
+  height:auto;
+  overflow: hidden;
+}
+.tituloTxt{
+  margin-bottom: 26px;
+}
+.botonAyuda{
+  margin-bottom:0px;
+  padding:0px important!;
+  height: fit-content;
+
+}
+.iconoAyuda{
+  margin:0px;
+}
+.separacion{
+  margin-right:16px;
+}
+
 .info-btn{
     margin-right:0px;
     width: auto;
@@ -6,10 +31,6 @@
 
   }
 
-  .container{
-    height:auto;
-    overflow: hidden;
-  }
 .cabecera-logs
 {
   display:flex;

@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 export interface infoTotal {
@@ -25,8 +26,9 @@ const ELEMENT_DATA: infoTotal[] = [
 
 @Component({
   selector: 'app-tabla-totales',
-  imports: [CuadernosAdministrarComponent,MatDialogModule, MatTabsModule, MatTableModule, MatTooltipModule, MatButtonModule],
+  imports: [MatDividerModule, CuadernosAdministrarComponent,MatDialogModule, MatTabsModule, MatTableModule, MatTooltipModule, MatButtonModule],
   templateUrl: './tabla-totales.component.html',
+  styleUrl: '../by-copias.component.css'
 })
 export class TablaTotalesComponent {
   misignalService=inject(MiSignalService);

@@ -1,27 +1,25 @@
 <div class="container">
 <div class="encabezado">
+  <div class="tituloTxt">
+  <h5 class="title" >Migración de usuarios
 
-    <h5 class="title" >Migracion de usuarios
-        <span >
-          <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
-            <mat-icon>help</mat-icon>
-          </button>
-
-
-
-        </span>
-    </h5>
+  </h5>
   </div>
-
-  <mat-divider></mat-divider>
-
-
+  <span class="separacion"></span>
+  <span class="botonAyuda">
+      <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+        <mat-icon class ="iconoAyuda">help</mat-icon>
+      </button>
+    </span>
+</div>
+    <mat-divider></mat-divider>
+</div>
   <form class="formRegistros">
 
 
     <div class="cabecera-logs">
 
-      
+
 
         <mat-form-field  class="example-full-width">
           <mat-label>Buscar</mat-label>
@@ -88,7 +86,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator 
+  <mat-paginator
                 [pageSize]="5"
                 [pageSizeOptions]="[5, 10, 25, 100]"
                 aria-label="Select page">

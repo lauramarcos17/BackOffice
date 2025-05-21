@@ -7,9 +7,29 @@
   margin-left:16px;
 }
 
+.encabezado{
+  display:flex;
+  align-items: center;
+  height:32px;
+}
 .container{
   height:auto;
   overflow: hidden;
+}
+.tituloTxt{
+  margin-bottom: 26px;
+}
+.botonAyuda{
+  margin-bottom:0px;
+  padding:0px important!;
+  height: fit-content;
+
+}
+.iconoAyuda{
+  margin:0px;
+}
+.separacion{
+  margin-right:16px;
 }
 
 .info-btn{
@@ -27,12 +47,13 @@ mat-form-field {
 .mat-flat-button-form, .mat-flat-button{
   margin-right: 16px;
   width: 196px;
+  margin-bottom: 16px;
 }
 
 .buscador{
   display:flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width:100%;
 
 }

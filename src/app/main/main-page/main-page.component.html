@@ -5,7 +5,7 @@
       <input matInput #idClienteMain >
     </mat-form-field>
 
-    <button class="btnCargaCliente" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
+    <button class="btnCargaCliente" [matTooltip]="textosGuiaFacil.get('Buscar')" mat-flat-button (click)="cargarClienteDesdeMain(idClienteMain.value)" >Buscar</button>
   </div>
   <div class="cierresesion">
     <p>Usuario: {{mensaje()}}  ({{rolNombre()}}) </p>
@@ -17,7 +17,8 @@
   </div>
 
 </div>
-<mat-tab-group  animationDuration="0ms" [selectedIndex]="selectedTab()" (selectedIndexChange)="controlPestana($event)">
+
+<mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTab()" (selectedIndexChange)="controlPestana($event)">
   <!-- <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPantalla()" > -->
 
 
@@ -43,6 +44,7 @@
 <mat-tab label="Histórico migraciones" [disabled]="!clienteEncontradoDesdeMain()"><app-by-historico></app-by-historico></mat-tab>
 
 </mat-tab-group>
+
 
 
 

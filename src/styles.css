@@ -14,7 +14,26 @@
   margin-bottom:0px;
 
 }
+.separacionVertical {
+    margin-bottom: 50px !important;
+  }
 
+*{
+  font-size:14px;
+  color: rgb(90,133,215);
+}
+
+h3{
+  font-size:large !important;
+}
+
+.mdc-tab__text-label{
+  color: rgb(90,133,215) !important;
+}
+
+.mdc-button__label{
+  color: white !important;
+}
 .texto-azul{
   color: rgb(90,133,215);
 }

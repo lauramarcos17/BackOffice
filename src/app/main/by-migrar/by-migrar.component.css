@@ -1,7 +1,27 @@
 
+.encabezado{
+  display:flex;
+  align-items: center;
+  height:32px;
+}
 .container{
   height:auto;
-  overflow: hidden; 
+  overflow: hidden;
+}
+.tituloTxt{
+  margin-bottom: 26px;
+}
+.botonAyuda{
+  margin-bottom:0px;
+  padding:0px important!;
+  height: fit-content;
+
+}
+.iconoAyuda{
+  margin:0px;
+}
+.separacion{
+  margin-right:16px;
 }
 .example-section {
     display: flex;

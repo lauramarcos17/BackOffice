@@ -6,6 +6,33 @@
   margin-top: 24px;
 
 }
+
+.encabezado{
+  display:flex;
+  align-items: center;
+  height:32px;
+}
+/* p, h5, mat-label, mat-mdc-select-min-line{
+  font-size: 14px !important;
+} */
+
+
+.tituloTxt{
+  margin-bottom: 26px;
+}
+.botonAyuda{
+  margin-bottom:0px;
+  padding:0px important!;
+  height: fit-content;
+
+}
+.iconoAyuda{
+  margin:0px;
+}
+.separacion{
+  margin-right:16px;
+}
+
 .container{
   height:auto;
   overflow: hidden;
@@ -43,6 +70,10 @@ mat-form-field {
   width:100%;
 
 
+}
+
+.separacion{
+  margin-right:16px;
 }
 
 
