@@ -27,7 +27,7 @@ const ELEMENT_DATA: Backup[] = [
 })
 
 
-export class TablaCopiaComponent { 
+export class TablaCopiaComponent {
 
  misignalService = inject(MiSignalService)
   jsonDatoService = inject(JsonDatoService);
@@ -44,6 +44,11 @@ export class TablaCopiaComponent {
 
   backups = signal<Backup[]>([]);
 
+  clickedRows = new Set<Backup>();
+
+
+
+  filaSeleccionada = signal<boolean>(false);
 
 
  constructor() {
@@ -112,7 +117,7 @@ export class TablaCopiaComponent {
     }
 
 
-    cambiarLaura(){
+    crearCopia(){
     this.misignalService.mostrarTablaTotales.set(!this.mostrarTablaTotales());
   }
 
@@ -181,7 +186,23 @@ export class TablaCopiaComponent {
       const [dia, mes, anio] = fecha.split('/').map(Number);
       const [h, m, s] = hora.split(':').map(Number);
       return new Date(anio, mes - 1, dia, h, m, s);
-}
+    }
+
+      seleccionarCopia(row: any){
+        if(!this.clickedRows.has(row)){ //cambio de selección
+          this.clickedRows.clear();
+          this.clickedRows.add(row)
+          this.filaSeleccionada.set(true);
+        }else{ //Dejamos de seleccionar
+          this.clickedRows.clear();
+          this.filaSeleccionada.set(false);
+        }
+        // alert(row.fechaHora);
+      }
+
+      eliminarCopia(){
+        
+      }
 
 
 }
