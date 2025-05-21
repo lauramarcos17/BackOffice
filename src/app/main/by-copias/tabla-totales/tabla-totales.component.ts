@@ -32,7 +32,7 @@ export class TablaTotalesComponent {
   misignalService=inject(MiSignalService);
 
   jsonDatoService = inject(JsonDatoService);
-  
+
  mostrarTablaTotales = computed (()=> this.misignalService.mostrarTablaTotales());
   idCliente=computed(()=>this.misignalService.objetoCliente()!.id.toString());
   ordenanteSignal=computed(()=>this.misignalService.ordenanteSignal());
@@ -42,7 +42,7 @@ export class TablaTotalesComponent {
   displayedColumns: string[] = ['acreedores', 'deudores', 'remesas', 'recibos','remesasemitidas','recibosemitidos'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  
+
 
 constructor() {
   effect(() => {
@@ -54,29 +54,65 @@ constructor() {
       let acreedores = 0;
       let deudores = 0;
       let totalRemesas = 0;
+      let totalRecibos = 0;
+      let historicoRemesas =0;
+      let historicoRecibos=0;
       let prueba="";
 
       if (tipoCuaderno === 'sct') {
         acreedores = ordenantes.length;
         deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.beneficiarios?.length ?? 0), 0);
         totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSct?.length ?? 0), 0);
-        prueba='sc'
+        totalRecibos = ordenantes.reduce((acc, ord: any) => {
+          const remesas = ord.remesasSct ?? [];
+          // Suma la cantidad de transf en cada remesa
+          return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.transferenciasSct?.length ?? 0), 0);
+        }, 0);
+        historicoRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.historicosRemesasSct?.length ?? 0), 0);
+        historicoRecibos = ordenantes.reduce((acc, ord: any) => {
+          const remesas = ord.historicosRemesasSct ?? [];
+          // Suma la cantidad de transf en cada remesa
+          return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.historicosTransferenciaSct?.length ?? 0), 0);
+        }, 0);
+
       } else if (tipoCuaderno === 'sdd') {
         acreedores = ordenantes.length;
         deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.deudores?.length ?? 0), 0);
         totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSdd?.length ?? 0), 0);
-        prueba='sd'
+        totalRecibos = ordenantes.reduce((acc, ord: any) => {
+          const remesas = ord.remesasSdd ?? [];
+          // Suma la cantidad de recibos en cada remesa
+          return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.recibos?.length ?? 0), 0);
+        }, 0);
+        historicoRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.historicoRemesas?.length ?? 0), 0);
+        historicoRecibos = ordenantes.reduce((acc, ord: any) => {
+          const remesas = ord.historicoRemesas ?? [];
+          // Suma la cantidad de transf en cada remesa
+          return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.historicosRecibo?.length ?? 0), 0);
+        }, 0);
+
       } else if (tipoCuaderno === 'chk') {
         acreedores = ordenantes.length;
         deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.libradores?.length ?? 0), 0);
         totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasChk?.length ?? 0), 0);
+        totalRecibos = ordenantes.reduce((acc, ord: any) => {
+          const remesas = ord.remesasChk ?? [];
+          // Suma la cantidad de cheques en cada remesa
+          return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.cheques?.length ?? 0), 0);
+        }, 0);
+        historicoRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.historicoRemesasChk?.length ?? 0), 0);
+        historicoRecibos = ordenantes.reduce((acc, ord: any) => {
+          const remesas = ord.historicoRemesasChk ?? [];
+          // Suma la cantidad de transf en cada remesa
+          return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.historicosCheque?.length ?? 0), 0);
+        }, 0);
       }
 
 
 
 
    /*
-    //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente 
+    //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente
      let total = 0;
   if (ordenantes.length && 'beneficiarios' in ordenantes[0]) {
     total = ordenantes.reduce((acc, ord: any) => acc + (ord.beneficiarios?.length ?? 0), 0);
@@ -86,8 +122,8 @@ constructor() {
     total = ordenantes.reduce((acc, ord: any) => acc + (ord.libradores?.length ?? 0), 0);
   }
 
-  
-    //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente 
+
+    //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente
      let totalRemesas = 0;
   if (ordenantes.length && 'remesasSct' in ordenantes[0]) {
     totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSct?.length ?? 0), 0);
@@ -101,9 +137,9 @@ constructor() {
       acreedores: acreedores.toString(),
       deudores: deudores.toString(),
       remesas: totalRemesas.toString(),
-      recibos: prueba,
-      remesasemitidas: '0',
-      recibosemitidos: '0'
+      recibos: totalRecibos.toString(),
+      remesasemitidas: historicoRemesas.toString(),
+      recibosemitidos: historicoRecibos.toString(),
     }];
     this.dataSource.data = data;
   });
@@ -125,7 +161,7 @@ constructor() {
         this.misignalService.copiaSeguridad.set(resp);
 
         alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
-      
+
     });
       this.misignalService.mostrarTablaTotales.set(false);
       console.log(this.misignalService.mostrarTablaTotales());
@@ -134,6 +170,6 @@ constructor() {
    }
 
 
-   
+
 
  }
