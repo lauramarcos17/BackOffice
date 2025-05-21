@@ -45,19 +45,19 @@
 
         <ng-container matColumnDef="recibos">
             <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-              Estado
+              Recibos
             </th>
-            <td mat-cell *matCellDef="let element"> </td>
+            <td mat-cell *matCellDef="let element">{{element.recibos}} </td>
           </ng-container>
              <ng-container matColumnDef="remesasemitidas">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-            Nif-sufijo
+            Remesas Emitidas
           </th>
           <td mat-cell *matCellDef="let element"> </td>
         </ng-container>
            <ng-container matColumnDef="recibosemitidos">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-            Nif-sufijo
+           Recibos emitidos 
           </th>
           <td mat-cell *matCellDef="let element"> </td>
         </ng-container>

@@ -42,9 +42,6 @@ export class ByAdministrarComponent {
 
   jsonDatoService = inject(JsonDatoService);
 
-
-
-
   clienteEncontradoDeMain = computed(()=>this.misignalService.clienteEncontradoDeMain());
   tipoError = computed(()=> this.misignalService.tipoError());
 

@@ -84,6 +84,7 @@ export class CuadernosAdministrarComponent {
       console.log('hola'+cliente?.nombre);
 
       this.tipoCuadernoSignal.set(tipoCuaderno);
+      this.misignalService.tipoCuadernoSignal.set(tipoCuaderno);
 
       //si lo dejo solo con ordenantes=[] error
       let ordenantes : (SctOrdenante | Acreedores | ChkOrdenante)[] = [];

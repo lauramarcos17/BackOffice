@@ -48,6 +48,34 @@ constructor() {
   effect(() => {
 
    const ordenantes = this.ordenanteSignal();
+
+
+      const tipoCuaderno = this.misignalService.tipoCuadernoSignal(); // asegúrate de tener esta señal en tu servicio
+      let acreedores = 0;
+      let deudores = 0;
+      let totalRemesas = 0;
+      let prueba="";
+
+      if (tipoCuaderno === 'sct') {
+        acreedores = ordenantes.length;
+        deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.beneficiarios?.length ?? 0), 0);
+        totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSct?.length ?? 0), 0);
+        prueba='sc'
+      } else if (tipoCuaderno === 'sdd') {
+        acreedores = ordenantes.length;
+        deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.deudores?.length ?? 0), 0);
+        totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSdd?.length ?? 0), 0);
+        prueba='sd'
+      } else if (tipoCuaderno === 'chk') {
+        acreedores = ordenantes.length;
+        deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.libradores?.length ?? 0), 0);
+        totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasChk?.length ?? 0), 0);
+      }
+
+
+
+
+   /*
     //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente 
      let total = 0;
   if (ordenantes.length && 'beneficiarios' in ordenantes[0]) {
@@ -68,12 +96,12 @@ constructor() {
   } else if (ordenantes.length && 'remesasChk' in ordenantes[0]) {
     totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasChk?.length ?? 0), 0);
   }
-
-    const data: infoTotal[] = [{
-      acreedores: this.ordenanteSignal().length.toString(),
-      deudores: total.toString(),
+*/
+      const data: infoTotal[] = [{
+      acreedores: acreedores.toString(),
+      deudores: deudores.toString(),
       remesas: totalRemesas.toString(),
-      recibos: '0',
+      recibos: prueba,
       remesasemitidas: '0',
       recibosemitidos: '0'
     }];

@@ -22,7 +22,7 @@ export class MiSignalService {
 
   ordenanteSignal=signal<(SctOrdenante | Acreedores | ChkOrdenante)[]> ([]) ;
   deudoresSignal=signal<(Beneficiario|Deudore | Libradore)[]> ([]) ;
-
+  tipoCuadernoSignal=signal("");
 
 
   setMensaje(nuevo: string ) {
