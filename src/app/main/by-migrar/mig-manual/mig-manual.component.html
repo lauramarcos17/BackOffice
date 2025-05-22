@@ -3,17 +3,17 @@
 <div class="buscador">
 <mat-form-field class="migraformmanual">
     <mat-label >Usuario origen</mat-label>
-    <input matInput>
+    <input matInput #idClienteOrigen>
 </mat-form-field>
 
 <mat-form-field class="migraformmanual">
     <mat-label>Usuario destino</mat-label>
-    <input matInput>
+    <input matInput #idClienteDestino>
 </mat-form-field>
 
 
 
-<button class="mat-flat-button-form" mat-flat-button [matTooltip]="mapa.get('migrar')">Migrar usuario</button>
+<button class="mat-flat-button-form" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
 </div>
 
 <!-- FALTA LA TABLA -->

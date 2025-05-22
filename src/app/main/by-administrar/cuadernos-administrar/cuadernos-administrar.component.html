@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="encabezado">
+  <div class="encabezadoAyuda">
     <div class="tituloTxt">
-      <h5 class="title">Resumen del cliente de AEBWeb</h5>
+      <!-- <h5 class="title"></h5> -->
     </div>
     <span class="separacion"></span>
     <span class="botonAyuda">
@@ -10,11 +10,20 @@
       </button>
     </span>
   </div>
-  <mat-divider></mat-divider>
+ 
 </div>
 
 <!-- Tabla resumen de cliente (sustituye los <p>) -->
+  <div class="encabezado">
+    <div class="tituloTxt">
+      <h5 class="title">Datos del cliente</h5>
+    </div>
+    <span class="separacion"></span>
+  </div>
+<mat-divider></mat-divider>
 <div class="tablaCopias">
+  
+ 
   <table mat-table [dataSource]="[{
       nombre: nombreCliente(),
       nif: nifCliente(),
@@ -75,7 +84,7 @@
       <!-- ...resto de la tabla de ordenantes... -->
       <ng-container matColumnDef="ordenantes">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-          Ordenantes
+          Ordenante
         </th>
         <td mat-cell *matCellDef="let element"> {{element.ordenantes}} </td>
       </ng-container>

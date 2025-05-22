@@ -6,11 +6,19 @@
   margin-top: 24px;
 
 }
+.encabezadoAyuda{
+  display:flex;
+  align-items: center;
+  height:50px;
+  justify-content: right;
+}
 
 .encabezado{
   display:flex;
   align-items: center;
-  height:32px;
+  height:50px;
+  
+
 }
 /* p, h5, mat-label, mat-mdc-select-min-line{
   font-size: 14px !important;
@@ -28,6 +36,7 @@
 }
 .iconoAyuda{
   margin:0px;
+  
 }
 .separacion{
   margin-right:16px;
@@ -44,9 +53,10 @@
 }
 .info-btn{
   margin-right:0px;
-  width: auto;
-  height: auto;
+  width: 40px;
+  height: 40px;
   min-width: 0;
+ 
 
 }
 .errorBusqueda{

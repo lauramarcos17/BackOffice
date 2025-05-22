@@ -12,6 +12,7 @@ import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Backup } from 'app/shared/interfaces/Backup.interface';
+import { CopiaSeguridadJson } from 'app/shared/interfaces/CopiaSeguridadJson.interface';
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
 
@@ -230,6 +231,22 @@ export class TablaCopiaComponent {
       restaurarCopia(){
         const row = Array.from(this.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
         alert("Copia de seguridad restaurada a fecha de: "+row.fechaHora.trim());
+        this.jsonDatoService.restaurarCopiaSeguridad(this.clienteId()).subscribe((resp: CopiaSeguridadJson) => {
+                console.log(resp),
+                this.misignalService.copiaSeguridad.set(resp);
+        
+                alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
+        
+                //Al crear una copia cambio la señal para que se ejecute el efecto 
+                this.misignalService.actualizarBackup.set(true);
+               
+               
+            });
+              //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
+               setTimeout(() => {
+               this.cargarBackups()
+            }, 400);
+              console.log(this.misignalService.mostrarTablaTotales());
       }
 
 

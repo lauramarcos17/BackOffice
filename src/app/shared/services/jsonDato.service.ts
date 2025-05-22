@@ -4,6 +4,7 @@ import { ClienteJsonInterface } from '../interfaces/ClienteJson.interface';
 import { catchError, map, Observable, throwError, timeout } from 'rxjs';
 import { CopiaSeguridadJson } from '../interfaces/CopiaSeguridadJson.interface';
 import { Backup } from '../interfaces/Backup.interface';
+import { Migracion } from '../interfaces/Migracion.interface';
 
 
 
@@ -72,5 +73,39 @@ export class JsonDatoService {
     });
   }
 
+   restaurarCopiaSeguridad(idCliente: String):Observable<CopiaSeguridadJson>{
+     return this.http.get<CopiaSeguridadJson>(`${this.apiUrl}/restaurarCopia`, {
+      params: { id: idCliente.toString() }, // Pasa el parámetro id como query param
+      withCredentials: true,
+
+       // Incluye cookies o credenciales si es necesario
+    }).pipe(
+
+      timeout(3000),//tiempo para que saque el alert si hay error de conexión
+      //map(res => JSON.parse(res) as ClienteJsonInterface), // Parseamos manualmente
+      catchError(error => {console.error("error de conexion al servidor ", error);
+        //alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        return throwError(()=>new Error ("No se pudo conectar al serv"))})
+
+    );
+  }
+
+   crearMigracion(clienteOrigen: String, clienteDestino:String):Observable<Migracion>{
+     return this.http.get<Migracion>(`${this.apiUrl}/generarMigracion`, {
+      params: { clienteOrigen: clienteOrigen.toString() ,clienteDestino: clienteDestino.toString()},
+      // Pasa el parámetro id como query param
+      withCredentials: true,
+
+       // Incluye cookies o credenciales si es necesario
+    }).pipe(
+
+      timeout(3000),//tiempo para que saque el alert si hay error de conexión
+      //map(res => JSON.parse(res) as ClienteJsonInterface), // Parseamos manualmente
+      catchError(error => {console.error("error de conexion al servidor ", error);
+        //alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        return throwError(()=>new Error ("No se pudo conectar al serv"))})
+
+    );
+  }
 
 }

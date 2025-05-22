@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { JsonDatoService } from 'app/shared/services/jsonDato.service';
+import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Migracion } from 'app/shared/interfaces/Migracion.interface';
 
 
 export interface Manual{
@@ -30,5 +32,14 @@ export class MigManualComponent {
   @Input() mapa!: Map<string, string>;
   displayedColumns: string[] = ['Idoperacion', 'fechaOperacion','UsuariOrigen', 'UsuarioDestino','resultado','descripcion'];
   dataSource = ELEMENT_DATA;
+  jsonDatoService=inject(JsonDatoService)
 
+  crearMigracion(clienteOrigen:string,clienteDestino:string){
+    this.jsonDatoService.crearMigracion(clienteOrigen,clienteDestino).subscribe((resp: Migracion) => {
+            console.log(resp);
+
+    });
+    
+    
+  }
  }
