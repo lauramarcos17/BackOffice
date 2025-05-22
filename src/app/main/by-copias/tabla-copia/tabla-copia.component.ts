@@ -201,7 +201,22 @@ export class TablaCopiaComponent {
       }
 
       eliminarCopia(){
-        
+        const row = Array.from(this.clickedRows)[0];
+        if (!row) return;
+        //añado el .trim() para quitar los espacios al final
+        this.jsonDatoService.eliminarCopia(row.cliente.trim(), row.fechaHora.trim()).subscribe({
+          next: () => {
+            // Elimina la fila del array local y refresca la tabla
+            this.backups.set(this.backups().filter(b => !(b.cliente === row.cliente && b.fechaHora === row.fechaHora)));
+            this.dataSource.data = this.backupsFiltrados();
+            this.clickedRows.clear();
+            this.filaSeleccionada.set(false);
+          },
+          error: err => {
+            alert('Error al eliminar la copia');
+            console.error(err);
+          }
+        });
       }
 
 
