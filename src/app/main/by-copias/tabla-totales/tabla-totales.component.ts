@@ -113,28 +113,6 @@ constructor() {
 
 
 
-   /*
-    //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente
-     let total = 0;
-  if (ordenantes.length && 'beneficiarios' in ordenantes[0]) {
-    total = ordenantes.reduce((acc, ord: any) => acc + (ord.beneficiarios?.length ?? 0), 0);
-  } else if (ordenantes.length && 'deudores' in ordenantes[0]) {
-    total = ordenantes.reduce((acc, ord: any) => acc + (ord.deudores?.length ?? 0), 0);
-  } else if (ordenantes.length && 'libradores' in ordenantes[0]) {
-    total = ordenantes.reduce((acc, ord: any) => acc + (ord.libradores?.length ?? 0), 0);
-  }
-
-
-    //cuento total de beneficiarios/libradores/deudores un cuaderno elegido de un cliente
-     let totalRemesas = 0;
-  if (ordenantes.length && 'remesasSct' in ordenantes[0]) {
-    totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSct?.length ?? 0), 0);
-  } else if (ordenantes.length && 'remesasSdd' in ordenantes[0]) {
-    totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSdd?.length ?? 0), 0);
-  } else if (ordenantes.length && 'remesasChk' in ordenantes[0]) {
-    totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasChk?.length ?? 0), 0);
-  }
-*/
       const data: infoTotal[] = [{
       acreedores: acreedores.toString(),
       deudores: deudores.toString(),
@@ -164,10 +142,16 @@ constructor() {
 
         alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
 
+        //Al crear una copia cambio la señal para que se ejecute el efecto 
+        this.misignalService.actualizarBackup.set(true);
+       
+       
     });
-      this.misignalService.mostrarTablaTotales.set(false);
+      //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
+       setTimeout(() => {
+       this.misignalService.mostrarTablaTotales.set(false);
+    }, 400);
       console.log(this.misignalService.mostrarTablaTotales());
-
 
    }
 

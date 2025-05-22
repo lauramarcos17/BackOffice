@@ -53,10 +53,18 @@ export class TablaCopiaComponent {
 
  constructor() {
     effect(() => {
+      const actualizar = this.misignalService.actualizarBackup();
       const cliente = this.misignalService.objetoCliente();
+      
       if (cliente && cliente.id !== undefined && cliente.id !== null) {
         this.cargarBackups();
+         this.misignalService.actualizarBackup.set(false);
+       
       }
+
+      //para detectar cada vez que creo una copia 
+      
+      
     });
   }
 
@@ -217,6 +225,11 @@ export class TablaCopiaComponent {
             console.error(err);
           }
         });
+      }
+      
+      restaurarCopia(){
+        const row = Array.from(this.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
+        alert("Copia de seguridad restaurada a fecha de: "+row.fechaHora.trim());
       }
 
 

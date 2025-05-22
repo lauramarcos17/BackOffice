@@ -23,7 +23,7 @@ export class MiSignalService {
   ordenanteSignal=signal<(SctOrdenante | Acreedores | ChkOrdenante)[]> ([]) ;
   deudoresSignal=signal<(Beneficiario|Deudore | Libradore)[]> ([]) ;
   tipoCuadernoSignal=signal("");
-
+  actualizarBackup=signal<boolean>(false);
 
   setMensaje(nuevo: string ) {
     this.mensaje.set(nuevo);

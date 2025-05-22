@@ -131,9 +131,11 @@ export class ByCopiasComponent implements AfterViewInit {
 
   constructor(private dialog: MatDialog) {
     effect(() => {
+      //const actualizar=this.misignalService.actualizarBackup();
       const cliente = this.misignalService.objetoCliente();
       if (cliente && cliente.id !== undefined && cliente.id !== null) {
         this.cargarBackups();
+        
       }
     });
   }

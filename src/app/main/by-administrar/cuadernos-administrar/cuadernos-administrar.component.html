@@ -1,30 +1,58 @@
 <div class="container">
-<div class="encabezado">
-  <div class="tituloTxt">
-  <h5 class="title" >Resumen del cliente de AEBWeb
-
-  </h5>
-  </div>
-  <span class="separacion"></span>
-  <span class="botonAyuda">
-      <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
-        <mat-icon class ="iconoAyuda">help</mat-icon>
+  <div class="encabezado">
+    <div class="tituloTxt">
+      <h5 class="title">Resumen del cliente de AEBWeb</h5>
+    </div>
+    <span class="separacion"></span>
+    <span class="botonAyuda">
+      <button class="info-btn" mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+        <mat-icon class="iconoAyuda">help</mat-icon>
       </button>
     </span>
-</div>
-    <mat-divider></mat-divider>
+  </div>
+  <mat-divider></mat-divider>
 </div>
 
-<p class="title">Nombre: {{nombreCliente()}} </p><p class="title"> NIF: {{nifCliente()}} [Sufijo: {{sufijoCliente()}}]</p><p class="title">Dirección: {{dirCliente1()}} {{dirCliente2()}} {{dirCliente3()}} {{dirCliente4()}} {{dirCliente5()}} {{dirCliente6()}} {{dirCliente7()}}</p>
-<!-- <p class="title">{{dirCliente()}}</p> -->
+<!-- Tabla resumen de cliente (sustituye los <p>) -->
+<div class="tablaCopias">
+  <table mat-table [dataSource]="[{
+      nombre: nombreCliente(),
+      nif: nifCliente(),
+      sufijo: sufijoCliente(),
+      direccion: dirCliente1() + ' ' + dirCliente2() + ' ' + dirCliente3() + ' ' + dirCliente4() + ' ' + dirCliente5() + ' ' + dirCliente6() + ' ' + dirCliente7()
+    }]" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nif">
+      <th mat-header-cell *matHeaderCellDef>NIF</th>
+      <td mat-cell *matCellDef="let element">{{element.nif}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sufijo">
+      <th mat-header-cell *matHeaderCellDef>Sufijo</th>
+      <td mat-cell *matCellDef="let element">{{element.sufijo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef>Dirección</th>
+      <td mat-cell *matCellDef="let element">{{element.direccion}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['nombre', 'nif', 'sufijo', 'direccion']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['nombre', 'nif', 'sufijo', 'direccion'];"></tr>
+  </table>
+</div>
 <br>
 <div class="buscador">
 
-
     <mat-form-field>
         <mat-label>Cuaderno</mat-label>
-          <!--AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
-         <mat-select #cuadernoSelect (selectionChange)="cargarTablaInicio($event.value)">
+        <!--AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
+        <mat-select #cuadernoSelect (selectionChange)="cargarTablaInicio($event.value)">
         @for (cuaderno of cuadernos; track cuaderno) {
             <mat-option [value]="cuaderno.value"
             [disabled]="!isCuadernoAvailable(cuaderno.value)">{{cuaderno.viewValue}}</mat-option>
@@ -32,65 +60,46 @@
         </mat-select>
     </mat-form-field>
 
-    </div>
-
-    @if(tipoCuadernoSignal()!=''){
-    <div class="encabezado">
-  <div class="tituloTxt">
-  <h5 class="title" >Ordenantes
-
-  </h5>
-  </div>
-  <span class="separacion"></span>
-
 </div>
-<mat-divider></mat-divider>
-    <div class="tablaCopias">
-        <table mat-table [dataSource]="dataSource" matSort
-             class="mat-elevation-z8">
-        <!-- <table mat-table  (matSortChange)="announceSortChange($event)"
-             class="mat-elevation-z8"> -->
 
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="ordenantes">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            Ordenantes
-          </th>
-          <td mat-cell *matCellDef="let element"> {{element.ordenantes}} </td>
-        </ng-container>
-
-        <!-- Weight Column -->
-
-          <ng-container matColumnDef="cuenta">
-
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-             Cuenta
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
-
-          </ng-container>
-
-
-
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="nif">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-            Nif-sufijo
-          </th>
-          <td mat-cell *matCellDef="let element"> {{element.nif}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="estado">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-              Estado
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
-          </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+@if(tipoCuadernoSignal()!=''){
+  <div class="encabezado">
+    <div class="tituloTxt">
+      <h5 class="title">Ordenantes</h5>
     </div>
-  }
+    <span class="separacion"></span>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="tablaCopias">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- ...resto de la tabla de ordenantes... -->
+      <ng-container matColumnDef="ordenantes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+          Ordenantes
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.ordenantes}} </td>
+      </ng-container>
+      <ng-container matColumnDef="cuenta">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+          Cuenta
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.cuenta}} </td>
+      </ng-container>
+      <ng-container matColumnDef="nif">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+          Nif-sufijo
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.nif}} </td>
+      </ng-container>
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+          Estado
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+}
 
