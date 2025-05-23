@@ -32,7 +32,7 @@ export class TablaCopiaComponent {
 
  misignalService = inject(MiSignalService)
   jsonDatoService = inject(JsonDatoService);
-  private _liveAnnouncer = inject(LiveAnnouncer);
+  private _liveAnnouncer = inject(LiveAnnouncer); //para ordenar tabla
 
 
   cliente= this.misignalService.objetoCliente(); //json completo del cliente

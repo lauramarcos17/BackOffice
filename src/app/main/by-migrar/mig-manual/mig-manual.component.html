@@ -18,7 +18,7 @@
 
 <!-- FALTA LA TABLA -->
 <div class="tablaCopias">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
 
     <!--asocio en matcolumnDef el campo de displayedColumns-->
 
@@ -75,13 +75,21 @@
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarCopia(row)"
+    [class.demo-row-is-clicked]="clickedRows.has(row)"></tr>
+
+    
 </table>
+<mat-paginator
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
 
 <div class="btnCopias">
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('limpiar')">Restaurar copias</button>
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('restaurar')">Eliminar copias</button>
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('exportar')">Crear copias</button>
+  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('limpiar')">Restaurar migración</button>
+  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('restaurar')">Eliminar migración</button>
+  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('exportar')">Crear migración</button>
 </div>
 
 </div>
