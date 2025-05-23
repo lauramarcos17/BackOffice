@@ -40,25 +40,36 @@ export class MigManualComponent {
   }
 
   cargarMigraciones() {
+    setTimeout(() => {
     this.jsonDatoService.getMigraciones().subscribe({
       next: (migraciones) => {
-        this.dataSource.data = migraciones;
+
+          this.dataSource.data = migraciones;
+
+
       },
       error: (err) => {
         console.error('Error cargando migraciones', err);
       }
     });
+    }, 300);
   }
 
   crearMigracion(clienteOrigen: string, clienteDestino: string) {
     this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
       next: (nuevaMigracion) => {
         // Recarga la tabla tras crear
-        this.cargarMigraciones();
+
+        setTimeout(() => {
+          this.cargarMigraciones();
+        }, 300);
       },
       error: (err) => {
         console.error('Error creando migración', err);
       }
     });
+    setTimeout(() => {
+      this.cargarMigraciones();
+    },300);
   }
  }
