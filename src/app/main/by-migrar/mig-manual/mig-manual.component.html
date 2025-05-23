@@ -21,33 +21,41 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!--asocio en matcolumnDef el campo de displayedColumns-->
-  <ng-container matColumnDef="Idoperacion">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-      Id operacion
-    </th>
-    <td mat-cell *matCellDef="let elemento"> {{elemento.Idoperacion}} </td>
-  </ng-container>
 
-
-  <ng-container matColumnDef="fechaOperacion">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-      Fecha de Operacion
-    </th>
-    <td mat-cell *matCellDef="let elemento"> {{elemento.fechaOperacion}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="UsuariOrigen">
+  <ng-container matColumnDef="clienteOrigen">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
       Usuario Origen
     </th>
-    <td mat-cell *matCellDef="let elemento"> {{elemento.UsuariOrigen}} </td>
+    <td mat-cell *matCellDef="let elemento"> {{elemento.clienteOrigen}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="UsuarioDestino">
+  <ng-container matColumnDef="clienteDestino">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
       Usuario Destino
     </th>
-    <td mat-cell *matCellDef="let elemento"> {{elemento.UsuarioDestino}} </td>
+    <td mat-cell *matCellDef="let elemento"> {{elemento.clienteDestino}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="fechaHoraInicioOperacion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+      Fecha de Inicio Operacion
+    </th>
+    <td mat-cell *matCellDef="let elemento"> {{elemento.fechaHoraInicioOperacion}} </td>
+  </ng-container>
+
+    <ng-container matColumnDef="fechaHoraFinOperacion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+      Fecha de Fin de Operacion
+    </th>
+    <td mat-cell *matCellDef="let elemento"> {{elemento.fechaHoraFinOperacion}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="operacion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+      Operación
+    </th>
+    <td mat-cell *matCellDef="let elemento"> {{elemento.operacion}} </td>
   </ng-container>
 
   <ng-container matColumnDef="resultado">

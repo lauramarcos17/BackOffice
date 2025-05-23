@@ -34,7 +34,7 @@ const ELEMENT_DATA: Backup[] = [
 @Component({
 
   selector: 'app-by-copias',
-  imports: [TablaCopiaComponent,TablaTotalesComponent,FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButton, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule],
+  imports: [TablaCopiaComponent,TablaTotalesComponent,FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatDatepickerModule, MatButtonModule, MatPaginatorModule, MatTableModule, MatSortModule, MatButtonModule, MatIconModule, MatTooltipModule],
   templateUrl: './by-copias.component.html',
   styleUrl: 'by-copias.component.css',
   providers: [provideNativeDateAdapter()]
@@ -135,14 +135,14 @@ export class ByCopiasComponent implements AfterViewInit {
       const cliente = this.misignalService.objetoCliente();
       if (cliente && cliente.id !== undefined && cliente.id !== null) {
         this.cargarBackups();
-        
+
       }
     });
   }
   cambiarLaura(){
     this.misignalService.mostrarTablaTotales.set(!this.mostrarTablaTotales());
   }
-  
+
 //para obtener datos de Backup
     ngOnInit() {
      const id = this.clienteId().toString;

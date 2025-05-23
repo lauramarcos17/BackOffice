@@ -107,5 +107,8 @@ export class JsonDatoService {
 
     );
   }
+  getMigraciones(): Observable<Migracion[]> {
+    return this.http.get<Migracion[]>(`${this.apiUrl}/migraciones`);
+  }
 
 }
