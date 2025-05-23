@@ -9,6 +9,7 @@ import { Migracion } from 'app/shared/interfaces/Migracion.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MiSignalService } from 'app/shared/services/mi-signal.service';
 
 
 // export interface Manual{
@@ -37,11 +38,14 @@ export class MigManualComponent {
   dataSource = new MatTableDataSource<Migracion>(ELEMENT_DATA);
   private _liveAnnouncer = inject(LiveAnnouncer); //para ordenar tabla con Matsort
 
+  misignalService = inject(MiSignalService);
   jsonDatoService=inject(JsonDatoService);
+
    clickedRows = new Set<Migracion>(); //guarda los clicks
+   migraciones = signal<Migracion[]>([]);
    filaSeleccionada = signal<boolean>(false);
 
-   
+
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -67,7 +71,7 @@ export class MigManualComponent {
     setTimeout(() => {
     this.jsonDatoService.getMigraciones().subscribe({
       next: (migraciones) => {
-
+          this.migraciones.set(migraciones);
           this.dataSource.data = migraciones;
 
 
@@ -79,8 +83,15 @@ export class MigManualComponent {
     }, 300);
   }
 
+  /*
+     this.jsonDatoService.getBackups(cliente).subscribe({
+        next: (backups) => {
+          this.backups.set(backups);
+
+  */
+
   crearMigracion(clienteOrigen: string, clienteDestino: string) {
-    this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
+    this.jsonDatoService.crearMigracion(clienteOrigen.trim(), clienteDestino.trim()).subscribe({
       next: (nuevaMigracion) => {
         // Recarga la tabla tras crear
 
@@ -98,11 +109,11 @@ export class MigManualComponent {
   }
 
 
-   seleccionarCopia(row: any){
+   seleccionarMigracion(row: any){
         if(!this.clickedRows.has(row)){ //cambio de selección
           this.clickedRows.clear();
           this.clickedRows.add(row)
-          this.filaSeleccionada.set(true); 
+          this.filaSeleccionada.set(true);
         }else{ //Dejamos de seleccionar
           this.clickedRows.clear();
           this.filaSeleccionada.set(false);
@@ -110,4 +121,45 @@ export class MigManualComponent {
         // alert(row.fechaHora);
       }
 
+       eliminarMigracion(){
+              const row = Array.from(this.clickedRows)[0];
+              if (!row) return;
+              //añado el .trim() para quitar los espacios al final
+              this.jsonDatoService.eliminarMigracion(row.clienteOrigen.trim(), row.fechaHoraInicioOperacion.trim()).subscribe({
+                next: () => {
+                  // Elimina la fila del array local y refresca la tabla
+                  this.migraciones.set(this.migraciones().filter(b => !(b.clienteOrigen === row.clienteOrigen && b.fechaHoraInicioOperacion === row.fechaHoraInicioOperacion)));
+                  this.dataSource.data = this.migraciones();
+                  this.clickedRows.clear();
+                  this.filaSeleccionada.set(false);
+                },
+                error: err => {
+                  alert('Error al eliminar la copia');
+                  console.error(err);
+                }
+              });
+            }
+
+    restaurarMigracion(){
+      const row = Array.from(this.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
+      if (!row) return;
+      alert("Migracion restaurada a fecha de: " + row.fechaHoraInicioOperacion.trim());
+      this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim()).subscribe((resp: Migracion) => {
+              console.log(resp);
+              // Actualiza la lista de migraciones agregando la respuesta
+              this.migraciones.update((prev) => [...prev, resp]);
+              alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
+              // Al crear una copia cambio la señal para que se ejecute el efecto
+
+        });
+      // Si necesitas recargar migraciones después de restaurar, llama a cargarMigraciones
+      setTimeout(() => {
+        this.cargarMigraciones();
+      }, 400);
+
+    }
+
+
  }
+
+

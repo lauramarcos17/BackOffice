@@ -75,10 +75,10 @@
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarCopia(row)"
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarMigracion(row)"
     [class.demo-row-is-clicked]="clickedRows.has(row)"></tr>
 
-    
+
 </table>
 <mat-paginator
               [pageSize]="5"
@@ -87,8 +87,8 @@
 </mat-paginator>
 
 <div class="btnCopias">
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('limpiar')">Restaurar migración</button>
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('restaurar')">Eliminar migración</button>
+  <button class="mat-flat-button" mat-flat-button (click)="restaurarMigracion()"[matTooltip]="mapa.get('limpiar')">Restaurar migración</button>
+  <button class="mat-flat-button" mat-flat-button (click)="eliminarMigracion()" [matTooltip]="mapa.get('restaurar')">Eliminar migración</button>
   <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('exportar')">Crear migración</button>
 </div>
 
