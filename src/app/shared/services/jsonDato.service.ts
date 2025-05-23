@@ -5,6 +5,7 @@ import { catchError, map, Observable, throwError, timeout } from 'rxjs';
 import { CopiaSeguridadJson } from '../interfaces/CopiaSeguridadJson.interface';
 import { Backup } from '../interfaces/Backup.interface';
 import { Migracion } from '../interfaces/Migracion.interface';
+import { Log } from '../interfaces/Log.interface';
 
 
 
@@ -135,4 +136,17 @@ export class JsonDatoService {
     );
   }
 
+  crearLog(log: Log): Observable<Log> {
+    return this.http.post<Log>(`${this.apiUrl}/generarLog`, log, {
+      withCredentials: true,
+      // Incluye cookies o credenciales si es necesario
+    }).pipe(
+      timeout(3000), // tiempo para que saque el alert si hay error de conexión
+      catchError(error => {
+        console.error("error de conexion al servidor ", error);
+        //alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        return throwError(() => new Error("No se pudo conectar al serv"));
+      })
+    );
+  }
 }

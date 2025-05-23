@@ -89,7 +89,7 @@
 <div class="btnCopias">
   <button class="mat-flat-button" mat-flat-button (click)="restaurarMigracion()"[matTooltip]="mapa.get('limpiar')">Restaurar migración</button>
   <button class="mat-flat-button" mat-flat-button (click)="eliminarMigracion()" [matTooltip]="mapa.get('restaurar')">Eliminar migración</button>
-  <button class="mat-flat-button" mat-flat-button [matTooltip]="mapa.get('exportar')">Crear migración</button>
+  <button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="mapa.get('exportar')">Crear migración</button>
 </div>
 
 </div>

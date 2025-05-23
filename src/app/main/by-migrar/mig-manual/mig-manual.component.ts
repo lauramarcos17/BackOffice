@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
+import { Log } from 'app/shared/interfaces/Log.interface';
 
 
 // export interface Manual{
@@ -119,6 +120,7 @@ export class MigManualComponent {
           this.filaSeleccionada.set(false);
         }
         // alert(row.fechaHora);
+
       }
 
        eliminarMigracion(){
@@ -138,6 +140,7 @@ export class MigManualComponent {
                   console.error(err);
                 }
               });
+
             }
 
     restaurarMigracion(){
@@ -160,6 +163,20 @@ export class MigManualComponent {
     }
 
 
- }
+    mandaLogBruto(){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+      alert("mandando log");
+      const logBruto= {
+        fechaInicio: '2024-06-10T12:00:00Z',
+        fechaFin: '2024-06-10T13:00:00Z',
+        usuario: 'usuarioPrueba',
+        cuaderno: 'cuadernoPrueba',
+        operacion: 'operacionPrueba',
+        descripcion: 'asas',
+        cliente: '1'
+      };
+       this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
+              console.log(resp);
+    },
+ )}
 
-
+}

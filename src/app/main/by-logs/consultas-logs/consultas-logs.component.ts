@@ -23,10 +23,7 @@ export interface Log{
   query: string;
 }
 const ELEMENT_DATA: Log[] = [
-  {error: 1, fecha: new Date(1991, 10, 30), rol:3,cuaderno :'34SEPA',accion:'Listar ordenantes', query: 'update 34293'},
-  {error: 2, fecha: new Date(1991, 10, 30), rol:2,cuaderno :'34SEPA',accion:'Listar ordenantes', query: 'update 976693'},
-  {error: 3, fecha: new Date(1998, 10, 30), rol:1,cuaderno :'34SEPA',accion:'Listar ordenantes', query: 'update 98293'},
-
+  
 ];
 
 
@@ -40,7 +37,7 @@ const ELEMENT_DATA: Log[] = [
 export class ConsultasLogsComponent {
   misignalService = inject(MiSignalService);
   rol=this.misignalService.rol;
-  displayedColumns: string[] = ['error', 'fecha', 'rol','cuaderno','accion','query'];
+  displayedColumns: string[] = ['fechaInicio','fechaFin','usuario','operacion','cuaderno','cliente'];
   dataSource = new MatTableDataSource<Log>(ELEMENT_DATA);
   private _liveAnnouncer = inject(LiveAnnouncer);
 
@@ -51,7 +48,7 @@ export class ConsultasLogsComponent {
     this.dataSource.sort = this.sort;
   }
    announceSortChange(sortState: Sort) {
-   //para ordenar columnas de la tabla 
+   //para ordenar columnas de la tabla
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
