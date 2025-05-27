@@ -1,6 +1,6 @@
 export interface CopiaSeguridadJson{
-    cliente:        String;
-    fechaHora:            String;
+    cliente:        string;
+    fechaHora:            string;
     descripcion:      string;
 
 }

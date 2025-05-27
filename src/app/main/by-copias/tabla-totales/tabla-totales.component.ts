@@ -10,6 +10,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
+import { Backup } from 'app/shared/interfaces/Backup.interface';
+import { Log } from 'app/shared/interfaces/Log.interface';
 
 
 export interface infoTotal {
@@ -39,6 +41,8 @@ export class TablaTotalesComponent {
   idCliente=computed(()=>this.misignalService.objetoCliente()!.id.toString());
   ordenanteSignal=computed(()=>this.misignalService.ordenanteSignal());
   deudoresSignal=computed(()=>this.misignalService.deudoresSignal());
+  nombrerol=this.misignalService.nombrerol();
+  
 
 
   displayedColumns: string[] = ['acreedores', 'deudores', 'remesas', 'recibos','remesasemitidas','recibosemitidos'];
@@ -144,6 +148,8 @@ constructor() {
 
         //Al crear una copia cambio la señal para que se ejecute el efecto 
         this.misignalService.actualizarBackup.set(true);
+         this.mandaLogBruto(resp);
+        
        
     });
       //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
@@ -151,8 +157,36 @@ constructor() {
        this.misignalService.mostrarTablaTotales.set(false);
     }, 400);
       console.log(this.misignalService.mostrarTablaTotales());
+   
 
    }
+    mandaLogBruto(row : CopiaSeguridadJson){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+          alert("mandando log");
+            const logBruto= {
+                    fechaInicio: row.fechaHora,
+                    fechaFin: this.addHoursToISOString(row.fechaHora),
+                    usuario: this.nombrerol,
+                    cuaderno: this.misignalService.tipoCuadernoSignal(),
+                    operacion: 'Copia de seguridad creada',
+                    descripcion: row.descripcion,
+                    cliente: this.misignalService.objetoCliente()!.id.toString()
+                  };
+         console.log(logBruto);
+           this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
+                  console.log(resp);
+        },
+     )}
+
+     addHoursToISOString(dateStr: string): string {
+        const [datePart, timePart] = dateStr.split(" - ");
+        const [day, month, year] = datePart.split("/").map(Number);
+        const [hours, minutes, seconds] = timePart.split(":").map(Number);
+
+        // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
+        const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+        date.setUTCHours(date.getUTCHours() + 1);
+        return date.toISOString().split('.')[0] + 'Z';
+    }
 
 
 

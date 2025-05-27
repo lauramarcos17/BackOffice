@@ -107,8 +107,12 @@ export class MigManualComponent {
   crearMigracion(clienteOrigen: string, clienteDestino: string) {
     this.jsonDatoService.crearMigracion(clienteOrigen.trim(), clienteDestino.trim()).subscribe({
       next: (nuevaMigracion) => {
+        
+        
+        console.log(nuevaMigracion); //objeto que recibimos al crear una migración desde spring
+        this.mandaLogBruto(nuevaMigracion, "Migración creada"); 
+
         // Recarga la tabla tras crear
-        console.log(nuevaMigracion);
         setTimeout(() => {
           this.cargarMigraciones();
           
@@ -163,7 +167,7 @@ export class MigManualComponent {
 
               //recojo datos de columna que hago click para guardar en la base de datos de logs y luego pintar info
               
-              this.mandaLogBruto(row)
+              this.mandaLogBruto(row,"Migración eliminada");
 
 
             }
@@ -186,19 +190,19 @@ export class MigManualComponent {
       setTimeout(() => {
         this.cargarMigraciones();
       }, 400);
-       this.mandaLogBruto(row);
+       this.mandaLogBruto(row,"Migración restaurada");
 
     }
 
 
-    mandaLogBruto(row : Migracion){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+    mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
       alert("mandando log");
         const logBruto= {
                 fechaInicio: row.fechaHoraInicioOperacion,
                 fechaFin: row.fechaHoraFinOperacion,
                 usuario: this.nombrerol,
                 cuaderno: 'Todos',
-                operacion: row.operacion,
+                operacion: operacion,
                 descripcion: row.descripcion,
                 cliente: this.misignalService.objetoCliente()!.id.toString()
               };

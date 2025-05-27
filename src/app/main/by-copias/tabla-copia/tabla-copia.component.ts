@@ -13,6 +13,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Backup } from 'app/shared/interfaces/Backup.interface';
 import { CopiaSeguridadJson } from 'app/shared/interfaces/CopiaSeguridadJson.interface';
+import { Log } from 'app/shared/interfaces/Log.interface';
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
 
@@ -39,6 +40,7 @@ export class TablaCopiaComponent {
   clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? ''); //id numerico del cliente en String
   clienteElegido = computed (()=> this.misignalService.clienteElegido()); //booleano que muestra si se ha elegido cliente. No usado en este componente?
   mostrarTablaTotales = computed (()=> this.misignalService.mostrarTablaTotales());
+  nombrerol=this.misignalService.nombrerol();
 
   fechaDesde = signal<Date | null>(null);
   fechaHasta = signal<Date | null>(null);
@@ -220,6 +222,7 @@ export class TablaCopiaComponent {
             this.dataSource.data = this.backupsFiltrados();
             this.clickedRows.clear();
             this.filaSeleccionada.set(false);
+            this.mandaLogBruto(row,"Copia de seguridad eliminada");
           },
           error: err => {
             alert('Error al eliminar la copia');
@@ -239,6 +242,8 @@ export class TablaCopiaComponent {
         
                 //Al crear una copia cambio la señal para que se ejecute el efecto 
                 this.misignalService.actualizarBackup.set(true);
+
+                  this.mandaLogBruto(row,"Copia de seguridad restaurada");
                
             });
               //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
@@ -248,5 +253,32 @@ export class TablaCopiaComponent {
               console.log(this.misignalService.mostrarTablaTotales());
       }
 
+       mandaLogBruto(row : CopiaSeguridadJson,operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+                alert("mandando log");
+                  const logBruto= {
+                          fechaInicio: row.fechaHora,
+                          fechaFin: this.addHoursToISOString(row.fechaHora),
+                          usuario: this.nombrerol,
+                          cuaderno: this.misignalService.tipoCuadernoSignal(),
+                          operacion: operacion,
+                          descripcion: row.descripcion,
+                          cliente: this.misignalService.objetoCliente()!.id.toString()
+                        };
+               console.log(logBruto);
+                 this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
+                        console.log(resp);
+              },
+           )}
+      
+           addHoursToISOString(dateStr: string): string {
+              const [datePart, timePart] = dateStr.split(" - ");
+              const [day, month, year] = datePart.split("/").map(Number);
+              const [hours, minutes, seconds] = timePart.split(":").map(Number);
+      
+              // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
+              const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+              date.setUTCHours(date.getUTCHours() + 1);
+              return date.toISOString().split('.')[0] + 'Z';
+          }
 
 }

@@ -23,6 +23,7 @@ import { MiSignalService } from '../../shared/services/mi-signal.service';
 import { Backup } from 'app/shared/interfaces/Backup.interface';
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 import { TablaTotalesComponent } from './tabla-totales/tabla-totales.component';
+import { Log } from 'app/shared/interfaces/Log.interface';
 
 
 
@@ -52,7 +53,7 @@ export class ByCopiasComponent implements AfterViewInit {
   clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? ''); //id numerico del cliente en String
   clienteElegido = computed (()=> this.misignalService.clienteElegido()); //booleano que muestra si se ha elegido cliente. No usado en este componente?
   mostrarTablaTotales = computed (()=> this.misignalService.mostrarTablaTotales());
-
+  
 
 
   fechaDesde = signal<Date | null>(null);
@@ -209,7 +210,11 @@ export class ByCopiasComponent implements AfterViewInit {
       const [dia, mes, anio] = fecha.split('/').map(Number);
       const [h, m, s] = hora.split(':').map(Number);
       return new Date(anio, mes - 1, dia, h, m, s);
+    }
+
+   
 }
-}
+    
+
 
 
