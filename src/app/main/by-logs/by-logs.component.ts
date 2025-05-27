@@ -34,12 +34,6 @@ export class ByLogsComponent {
   private _snackBar = inject(MatSnackBar);
   misignalService=inject(MiSignalService);
 
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-
 
   textosGuiaFacil = new Map<string, string>([
     ['guia',' Este menú permite ver las operaciones de base de datos realizadas sobre los datos de un cliente en los cuadernos SEPA de AEBWeb. El periodo para el que se mantiene este log de acciones está fijado en la configuración de la aplicación.'],

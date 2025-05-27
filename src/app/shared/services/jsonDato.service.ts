@@ -149,4 +149,14 @@ export class JsonDatoService {
       })
     );
   }
+
+   getLogs(cliente:string): Observable<Log[]> {
+    return this.http.get<Log[]>('http://localhost:8080/api/logs', {
+       // Pasa el parámetro id como query param
+         params: { cliente },
+      withCredentials: true,
+
+       // Incluye cookies o credenciales si es necesario
+    });
+  }
 }
