@@ -19,7 +19,7 @@ import { Log } from 'app/shared/interfaces/Log.interface';
 
 
 const ELEMENT_DATA: Log[] = [
-  
+
 ];
 
 
@@ -40,7 +40,7 @@ export class ConsultasLogsComponent {
 
   private _liveAnnouncer = inject(LiveAnnouncer);
   logs = signal<Log[]>([]);
-   
+
 
 
 
@@ -65,19 +65,20 @@ export class ConsultasLogsComponent {
     effect(() => {
       const actualizar = this.misignalService.actualizarBackup();
       const cliente = this.misignalService.objetoCliente();
-      
+      const onTabChange = this.misignalService.selectedTab(); //Esta señal se actualiza con cada cambio de pestaña
+
       if (cliente && cliente.id !== undefined && cliente.id !== null) {
          this.cargarLogs();
          this.misignalService.actualizarBackup.set(false);
-       
+
       }
-     
-      //para detectar cada vez que creo una copia 
-      
-      
+
+      //para detectar cada vez que creo una copia
+
+
     });
 
-  
+
   }
   cargarLogs() {
 

@@ -17,6 +17,8 @@ export class MiSignalService {
   mostrarTablaTotales=signal<boolean>(false);
   tituloTabla=signal<string>('');
 
+  selectedTab = signal(0);
+
   clienteEncontradoDeMain = signal<boolean>(false);
   tipoError = signal<string>("");
 
