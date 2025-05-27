@@ -240,7 +240,6 @@ export class TablaCopiaComponent {
                 //Al crear una copia cambio la señal para que se ejecute el efecto 
                 this.misignalService.actualizarBackup.set(true);
                
-               
             });
               //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
                setTimeout(() => {

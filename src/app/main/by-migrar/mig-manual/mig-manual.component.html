@@ -87,9 +87,9 @@
 </mat-paginator>
 
 <div class="btnCopias">
-  <button class="mat-flat-button" mat-flat-button (click)="restaurarMigracion()"[matTooltip]="mapa.get('limpiar')">Restaurar migración</button>
-  <button class="mat-flat-button" mat-flat-button (click)="eliminarMigracion()" [matTooltip]="mapa.get('restaurar')">Eliminar migración</button>
-  <button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="mapa.get('exportar')">Crear migración</button>
+  <button class="mat-flat-button" mat-flat-button [disabled]="!filaSeleccionada()" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migración</button>
+  <button class="mat-flat-button" mat-flat-button [disabled]="!filaSeleccionada()" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
+ <!--<button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>--> 
 </div>
 
 </div>

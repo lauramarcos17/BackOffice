@@ -1,5 +1,5 @@
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
-import { Component, inject, Input, signal, ViewChild } from '@angular/core';
+import { Component, inject, Input, signal, ViewChild, computed } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,7 @@ import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
 import { Log } from 'app/shared/interfaces/Log.interface';
+import { Observable } from 'rxjs';
 
 
 // export interface Manual{
@@ -28,7 +29,7 @@ const ELEMENT_DATA: Migracion[] = [
 
 @Component({
   selector: 'app-mig-manual',
-  imports: [MatLabel,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator],
+  imports: [MatLabel,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator],
   templateUrl: './mig-manual.component.html',
   styleUrl: 'mig-manual.component.css',
 })
@@ -45,6 +46,18 @@ export class MigManualComponent {
    clickedRows = new Set<Migracion>(); //guarda los clicks
    migraciones = signal<Migracion[]>([]);
    filaSeleccionada = signal<boolean>(false);
+   nombrerol=this.misignalService.nombrerol();
+
+
+   
+  textosGuiaFacil = new Map<string, string>([
+    ['seleccionar', 'Permite seleccionar todas las migraciones del listado'],   
+    ['restaurar','Pemite restaurar una o varias migraciones. Si no hay ninguna migracción seleccionada aparecerá desactivado'] ,
+     ['limpiar','Permite limpiar una o varias migraciones.Si no hay ninguna migración seleccionada aparecerá desactivado']
+ 
+
+  ]);
+
 
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -95,18 +108,24 @@ export class MigManualComponent {
     this.jsonDatoService.crearMigracion(clienteOrigen.trim(), clienteDestino.trim()).subscribe({
       next: (nuevaMigracion) => {
         // Recarga la tabla tras crear
-
+        console.log(nuevaMigracion);
         setTimeout(() => {
           this.cargarMigraciones();
+          
         }, 300);
+
+        
       },
       error: (err) => {
         console.error('Error creando migración', err);
+          
       }
     });
     setTimeout(() => {
       this.cargarMigraciones();
     },300);
+ 
+    
   }
 
 
@@ -124,6 +143,7 @@ export class MigManualComponent {
       }
 
        eliminarMigracion(){
+
               const row = Array.from(this.clickedRows)[0];
               if (!row) return;
               //añado el .trim() para quitar los espacios al final
@@ -141,6 +161,11 @@ export class MigManualComponent {
                 }
               });
 
+              //recojo datos de columna que hago click para guardar en la base de datos de logs y luego pintar info
+              
+              this.mandaLogBruto(row)
+
+
             }
 
     restaurarMigracion(){
@@ -155,25 +180,29 @@ export class MigManualComponent {
               // Al crear una copia cambio la señal para que se ejecute el efecto
 
         });
+
+         
       // Si necesitas recargar migraciones después de restaurar, llama a cargarMigraciones
       setTimeout(() => {
         this.cargarMigraciones();
       }, 400);
+       this.mandaLogBruto(row);
 
     }
 
 
-    mandaLogBruto(){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+    mandaLogBruto(row : Migracion){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
       alert("mandando log");
-      const logBruto= {
-        fechaInicio: '2024-06-10T12:00:00Z',
-        fechaFin: '2024-06-10T13:00:00Z',
-        usuario: 'usuarioPrueba',
-        cuaderno: 'cuadernoPrueba',
-        operacion: 'operacionPrueba',
-        descripcion: 'asas',
-        cliente: '1'
-      };
+        const logBruto= {
+                fechaInicio: row.fechaHoraInicioOperacion,
+                fechaFin: row.fechaHoraFinOperacion,
+                usuario: this.nombrerol,
+                cuaderno: 'Todos',
+                operacion: row.operacion,
+                descripcion: row.descripcion,
+                cliente: this.misignalService.objetoCliente()!.id.toString()
+              };
+     
        this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
               console.log(resp);
     },

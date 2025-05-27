@@ -23,12 +23,13 @@
 <mat-divider></mat-divider>
 <div class="tablaCopias">
   
- 
   <table mat-table [dataSource]="[{
       nombre: nombreCliente(),
       nif: nifCliente(),
       sufijo: sufijoCliente(),
-      direccion: dirCliente1() + ' ' + dirCliente2() + ' ' + dirCliente3() + ' ' + dirCliente4() + ' ' + dirCliente5() + ' ' + dirCliente6() + ' ' + dirCliente7()
+      direccion: dirCliente1() + ' ' + dirCliente2() + ' '
+       + dirCliente3() + ' ' + dirCliente4() + ' ' + dirCliente5() + ' ' 
+       + dirCliente6() + ' ' + dirCliente7()
     }]" class="mat-elevation-z8">
 
     <ng-container matColumnDef="nombre">
