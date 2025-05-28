@@ -1,7 +1,7 @@
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 
 import { Component, effect, inject, Input, signal, ViewChild } from '@angular/core';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MiSignalService } from '../../../shared/services/mi-signal.service';
 import { MatFormField, MatFormFieldControl, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -44,12 +44,13 @@ export class ConsultasLogsComponent {
 
 
 
-
   @Input() mapa!: Map<string, string>;
 
-   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
    announceSortChange(sortState: Sort) {
    //para ordenar columnas de la tabla

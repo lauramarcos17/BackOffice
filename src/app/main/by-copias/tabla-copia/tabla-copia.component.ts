@@ -58,16 +58,16 @@ export class TablaCopiaComponent {
     effect(() => {
       const actualizar = this.misignalService.actualizarBackup();
       const cliente = this.misignalService.objetoCliente();
-      
+
       if (cliente && cliente.id !== undefined && cliente.id !== null) {
         this.cargarBackups();
          this.misignalService.actualizarBackup.set(false);
-       
+
       }
 
-      //para detectar cada vez que creo una copia 
-      
-      
+      //para detectar cada vez que creo una copia
+
+
     });
   }
 
@@ -117,6 +117,7 @@ export class TablaCopiaComponent {
        this.cargarBackups();
 
 
+
     }
 
     ngOnChanges() {
@@ -129,7 +130,10 @@ export class TablaCopiaComponent {
 
 
     crearCopia(){
-    this.misignalService.mostrarTablaTotales.set(!this.mostrarTablaTotales());
+      this.misignalService.clienteEncontradoDeMain.set(false);
+      this.misignalService.clienteEncontradoDeMain.set(true);
+      this.misignalService.mostrarTablaTotales.set(!this.mostrarTablaTotales());
+      this.misignalService.cuadernoSeleccionado.set(false);
   }
 
     cargarBackups() {
@@ -230,23 +234,23 @@ export class TablaCopiaComponent {
           }
         });
       }
-      
+
       restaurarCopia(){
         const row = Array.from(this.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
         alert("Copia de seguridad restaurada a fecha de: "+row.fechaHora.trim());
         this.jsonDatoService.restaurarCopiaSeguridad(this.clienteId()).subscribe((resp: CopiaSeguridadJson) => {
                 console.log(resp),
                 this.misignalService.copiaSeguridad.set(resp);
-        
+
                 alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
-        
-                //Al crear una copia cambio la señal para que se ejecute el efecto 
+
+                //Al crear una copia cambio la señal para que se ejecute el efecto
                 this.misignalService.actualizarBackup.set(true);
 
                   this.mandaLogBruto(row,"Copia de seguridad restaurada");
-               
+
             });
-              //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
+              //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias
                setTimeout(() => {
                this.cargarBackups()
             }, 400);
@@ -269,12 +273,12 @@ export class TablaCopiaComponent {
                         console.log(resp);
               },
            )}
-      
+
            addHoursToISOString(dateStr: string): string {
               const [datePart, timePart] = dateStr.split(" - ");
               const [day, month, year] = datePart.split("/").map(Number);
               const [hours, minutes, seconds] = timePart.split(":").map(Number);
-      
+
               // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
               const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
               date.setUTCHours(date.getUTCHours() + 1);

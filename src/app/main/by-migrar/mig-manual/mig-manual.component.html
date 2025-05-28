@@ -16,7 +16,9 @@
 <button class="mat-flat-button-form" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
 </div>
 
-<!-- FALTA LA TABLA -->
+<!-- TABLA HISTORICO MIGRACIONES (Solo para Admin) -->
+@if(rol()==1){
+<!-- falta titulo h5 para tabla migraciones-->
 <div class="tablaCopias">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
 
@@ -89,7 +91,8 @@
 <div class="btnCopias">
   <button class="mat-flat-button" mat-flat-button [disabled]="!filaSeleccionada()" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migración</button>
   <button class="mat-flat-button" mat-flat-button [disabled]="!filaSeleccionada()" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
- <!--<button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>--> 
+ <!--<button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>-->
 </div>
 
 </div>
+}

@@ -31,7 +31,7 @@ export class MainPageComponent {
   jsonDatoService=inject(JsonDatoService);
   mensaje= this.misignalService.mensaje;
   rolNombre=this.misignalService.nombrerol;
-  // rol=this.misignalService.rol;
+  rol=this.misignalService.rol;
 
   clienteEncontradoDesdeMain = computed(()=> this.misignalService.clienteEncontradoDeMain());
 
@@ -46,6 +46,10 @@ export class MainPageComponent {
   controlPestana(event: number) {
     this.selectedTab.set(event); //redirige a la primera pestaña
     this.misignalService.mostrarTablaTotales.set(false);
+    this.misignalService.cuadernoSeleccionado.set(false);
+    this.misignalService.tipoCuadernoSignal.set('');
+
+
   }
 
 
@@ -57,9 +61,16 @@ export class MainPageComponent {
   resetPantalla() {
     this.misignalService.setPrimeraBusqueda(false); // Resetea la señal al cambiar de pestaña
     this.misignalService.setClienteEncontradoDeMain(false);
+    this.misignalService.cuadernoSeleccionado.set(false);
+    this.misignalService.tipoCuadernoSignal.set('');
+    this.selectedTab.set(0);
   }
 
   cargarClienteDesdeMain(idClienteMain:string){
+    this.misignalService.cuadernoSeleccionado.set(false);
+    this.misignalService.setClienteEncontradoDeMain(false);
+    this.misignalService.tipoCuadernoSignal.set('');
+
     if (Number(idClienteMain)==1||Number(idClienteMain)==0){ //debería cambiar a un array que controle los usuarios que sí existen
       this.jsonDatoService.buscarPorCliente(idClienteMain).subscribe((resp:ClienteJsonInterface)=>
               {console.log(resp),

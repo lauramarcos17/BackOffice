@@ -34,14 +34,14 @@
       <mat-tab [disabled]="!clienteElegido()" label="Histórico migraciones"><app-by-historico></app-by-historico></mat-tab>
     } -->
 <mat-tab label="Resumen del cliente"><app-by-administrar></app-by-administrar></mat-tab>
-
+@if(rol()!=3){
 <mat-tab label="Copias de seguridad" [disabled]="!clienteEncontradoDesdeMain()"><app-by-copias></app-by-copias></mat-tab>
-
+}
 <mat-tab label="Visor de logs" [disabled]="!clienteEncontradoDesdeMain()"><app-by-logs></app-by-logs></mat-tab>
-
+@if(rol()!=3){ <!-- Pestaña MIGRACIONES no disponible para rol Supervisor-->
 <mat-tab label="Migrar usuario" [disabled]="!clienteEncontradoDesdeMain()"><app-by-migrar></app-by-migrar></mat-tab>
-
-<mat-tab label="Histórico migraciones" [disabled]="!clienteEncontradoDesdeMain()"><app-by-historico></app-by-historico></mat-tab>
+}
+<!-- <mat-tab label="Histórico migraciones" [disabled]="!clienteEncontradoDesdeMain()"><app-by-historico></app-by-historico></mat-tab> -->
 
 </mat-tab-group>
 

@@ -1,6 +1,6 @@
 import { Sdd, RemesasSct, RemesasSdd, RemesasChk } from './../../../shared/interfaces/ClienteJson.interface';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
-import { Component, computed, effect, inject, Inject } from '@angular/core';
+import { Component, computed, effect, inject, Inject, signal } from '@angular/core';
 import { CuadernosAdministrarComponent } from 'app/main/by-administrar/cuadernos-administrar/cuadernos-administrar.component';
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 import { CopiaSeguridadJson } from 'app/shared/interfaces/CopiaSeguridadJson.interface';
@@ -42,11 +42,16 @@ export class TablaTotalesComponent {
   ordenanteSignal=computed(()=>this.misignalService.ordenanteSignal());
   deudoresSignal=computed(()=>this.misignalService.deudoresSignal());
   nombrerol=this.misignalService.nombrerol();
-  
+  clienteEncontradoDeMain=computed(()=>this.misignalService.clienteEncontradoDeMain());
+
 
 
   displayedColumns: string[] = ['acreedores', 'deudores', 'remesas', 'recibos','remesasemitidas','recibosemitidos'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  terminosTablas:string[]=['','','',]
+
+
 
 
 
@@ -54,6 +59,7 @@ constructor() {
   effect(() => {
 
    const ordenantes = this.ordenanteSignal();
+   this.clienteEncontradoDeMain();
 
 
       const tipoCuaderno = this.misignalService.tipoCuadernoSignal(); // asegúrate de tener esta señal en tu servicio
@@ -66,6 +72,8 @@ constructor() {
       let prueba="";
 
       if (tipoCuaderno === 'sct') {
+        this.terminosTablas=['Ordenantes','Beneficiarios','Transferencias', 'Transferencias emitidas'];
+        this.misignalService.cuadernoSeleccionado.set(true);
         acreedores = ordenantes.length;
         deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.beneficiarios?.length ?? 0), 0);
         totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSct?.length ?? 0), 0);
@@ -82,6 +90,8 @@ constructor() {
         }, 0);
 
       } else if (tipoCuaderno === 'sdd') {
+        this.terminosTablas=['Acreedores','Deudores','Recibos', 'Recibos emitidos'];
+        this.misignalService.cuadernoSeleccionado.set(true);
         acreedores = ordenantes.length;
         deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.deudores?.length ?? 0), 0);
         totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasSdd?.length ?? 0), 0);
@@ -98,6 +108,8 @@ constructor() {
         }, 0);
 
       } else if (tipoCuaderno === 'chk') {
+      this.misignalService.cuadernoSeleccionado.set(true);
+      this.terminosTablas=['Ordenantes','Libradores','Cheques', 'Cheques emitidos'];
         acreedores = ordenantes.length;
         deudores = ordenantes.reduce((acc, ord: any) => acc + (ord.libradores?.length ?? 0), 0);
         totalRemesas = ordenantes.reduce((acc, ord: any) => acc + (ord.remesasChk?.length ?? 0), 0);
@@ -112,6 +124,8 @@ constructor() {
           // Suma la cantidad de transf en cada remesa
           return acc + remesas.reduce((accRem: number, rem: any) => accRem + (rem.historicosCheque?.length ?? 0), 0);
         }, 0);
+      }else {
+        this.misignalService.cuadernoSeleccionado.set(false);
       }
 
 
@@ -146,18 +160,18 @@ constructor() {
 
         alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
 
-        //Al crear una copia cambio la señal para que se ejecute el efecto 
+        //Al crear una copia cambio la señal para que se ejecute el efecto
         this.misignalService.actualizarBackup.set(true);
          this.mandaLogBruto(resp);
-        
-       
+
+
     });
-      //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias 
+      //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias
        setTimeout(() => {
        this.misignalService.mostrarTablaTotales.set(false);
     }, 400);
       console.log(this.misignalService.mostrarTablaTotales());
-   
+
 
    }
     mandaLogBruto(row : CopiaSeguridadJson){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN

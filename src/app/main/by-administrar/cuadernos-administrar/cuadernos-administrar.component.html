@@ -10,7 +10,7 @@
       </button>
     </span>
   </div>
- 
+
 </div>
 
 <!-- Tabla resumen de cliente (sustituye los <p>) -->
@@ -22,13 +22,13 @@
   </div>
 <mat-divider></mat-divider>
 <div class="tablaCopias">
-  
+
   <table mat-table [dataSource]="[{
       nombre: nombreCliente(),
       nif: nifCliente(),
       sufijo: sufijoCliente(),
       direccion: dirCliente1() + ' ' + dirCliente2() + ' '
-       + dirCliente3() + ' ' + dirCliente4() + ' ' + dirCliente5() + ' ' 
+       + dirCliente3() + ' ' + dirCliente4() + ' ' + dirCliente5() + ' '
        + dirCliente6() + ' ' + dirCliente7()
     }]" class="mat-elevation-z8">
 
@@ -75,7 +75,7 @@
 @if(tipoCuadernoSignal()!=''){
   <div class="encabezado">
     <div class="tituloTxt">
-      <h5 class="title">Ordenantes</h5>
+      <h5 class="title">{{terminos}}</h5>
     </div>
     <span class="separacion"></span>
   </div>
@@ -85,7 +85,7 @@
       <!-- ...resto de la tabla de ordenantes... -->
       <ng-container matColumnDef="ordenantes">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-          Ordenante
+          {{termino}}
         </th>
         <td mat-cell *matCellDef="let element"> {{element.ordenantes}} </td>
       </ng-container>

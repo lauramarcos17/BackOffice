@@ -60,12 +60,13 @@ export class CuadernosAdministrarComponent {
   dirCliente6 = computed(() => this.misignalService.objetoCliente()?.dirProvincia || '');
   dirCliente7 = computed(() => this.misignalService.objetoCliente()?.dirIsoPais || '');
   sufijoCliente = computed(() => this.misignalService.objetoCliente()?.sufijo || '');
-
+  terminos: string='';
+  termino: string='';
 
   displayedColumns: string[] = ['ordenantes', 'cuenta', 'nif', 'estado'];
-  
+
     dataSource = new MatTableDataSource(ELEMENT_DATA);
-  
+
 
     textosGuiaFacil = new Map<string, string>([
     ['guia', 'Este menú permite administrar los datos de un cliente en AEBWeb, accediendo a todas las funciones disponibles en el front-end. Debe usarse con precaución ya que permite modificar y eliminar los datos introducidos por el cliente.\n Para acceder a AEBWeb con la cuenta de un cliente, introduzca un identificador de usuario y pulse el botón, posteriormente elija un cuaderno.\n No se permite el acceso simultáneo del cliente cuando se está administrando su cuenta desde back-office.\n Si el cliente está conectado a AEBWeb, se interrumpirá su sesión. Si el cliente intenta acceder mientras se le está administrando se le redirigirá a una pantalla explicativa. No olvide salir de forma controlada de la sesión de administración. Para ello debe usar el botón "Salir" que verá en la parte superior de la pantalla. En otro caso el usuario no podrá acceder hasta que la sesión de administración caduque.\n Cada vez que acceda a administrar un usuario se le ofrecerá la posibilidad de crear una copia de seguridad completa de los datos del usuario. Esta copia le permitirá restaurar, en caso necesario, los datos originales del cliente tras la sesión de administración. Recuerde que sólo se mantiene una copia de seguridad por cliente. Si crea una nueva copia se machacará la existente.'],
@@ -78,6 +79,10 @@ export class CuadernosAdministrarComponent {
     {value: 'sdd', viewValue: 'Adeudos'},
     {value: 'chk', viewValue: 'Cheques'},
   ];
+
+
+
+
 
 
 
@@ -94,17 +99,23 @@ export class CuadernosAdministrarComponent {
       let deudores: (Beneficiario|Deudore | Libradore)[] |undefined = [];
       switch(tipoCuaderno){
         case 'sct':
+          this.termino='Ordenante';
+          this.terminos='Ordenantes';
           ordenantes=cliente?.sct.ordenantes ?? [];
            deudores = cliente?.sct.ordenantes.flatMap(ord => ord.beneficiarios ?? []);
           break;
 
-          case 'sdd':
+        case 'sdd':
+          this.termino='Acreedor';
+          this.terminos='Acreedores';
           ordenantes = cliente?.sdd?.acreedores ?? [];
-           deudores = cliente?.sdd.acreedores.flatMap(ord => ord.deudores ?? []);
+          deudores = cliente?.sdd.acreedores.flatMap(ord => ord.deudores ?? []);
 
             break;
 
           case 'chk':
+          this.termino='Ordenante';
+          this.terminos='Ordenantes';
           ordenantes = cliente?.chk?.ordenantes ?? [];
           deudores = cliente?.chk.ordenantes.flatMap(ord => ord.libradores ?? []);
           break;
@@ -125,7 +136,7 @@ export class CuadernosAdministrarComponent {
 
       //Vinculamos con html
       this.dataSource.data = data;
-      
+
 
       }
 

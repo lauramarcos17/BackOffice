@@ -47,14 +47,15 @@ export class MigManualComponent {
    migraciones = signal<Migracion[]>([]);
    filaSeleccionada = signal<boolean>(false);
    nombrerol=this.misignalService.nombrerol();
+   rol = this.misignalService.rol;
 
 
-   
+
   textosGuiaFacil = new Map<string, string>([
-    ['seleccionar', 'Permite seleccionar todas las migraciones del listado'],   
+    ['seleccionar', 'Permite seleccionar todas las migraciones del listado'],
     ['restaurar','Pemite restaurar una o varias migraciones. Si no hay ninguna migracción seleccionada aparecerá desactivado'] ,
      ['limpiar','Permite limpiar una o varias migraciones.Si no hay ninguna migración seleccionada aparecerá desactivado']
- 
+
 
   ]);
 
@@ -107,29 +108,29 @@ export class MigManualComponent {
   crearMigracion(clienteOrigen: string, clienteDestino: string) {
     this.jsonDatoService.crearMigracion(clienteOrigen.trim(), clienteDestino.trim()).subscribe({
       next: (nuevaMigracion) => {
-        
-        
+
+
         console.log(nuevaMigracion); //objeto que recibimos al crear una migración desde spring
-        this.mandaLogBruto(nuevaMigracion, "Migración creada"); 
+        this.mandaLogBruto(nuevaMigracion, "Migración creada");
 
         // Recarga la tabla tras crear
         setTimeout(() => {
           this.cargarMigraciones();
-          
+
         }, 300);
 
-        
+
       },
       error: (err) => {
         console.error('Error creando migración', err);
-          
+        alert("Error al crear la migración: "+err);
       }
     });
     setTimeout(() => {
       this.cargarMigraciones();
     },300);
- 
-    
+
+
   }
 
 
@@ -166,7 +167,7 @@ export class MigManualComponent {
               });
 
               //recojo datos de columna que hago click para guardar en la base de datos de logs y luego pintar info
-              
+
               this.mandaLogBruto(row,"Migración eliminada");
 
 
@@ -185,7 +186,7 @@ export class MigManualComponent {
 
         });
 
-         
+
       // Si necesitas recargar migraciones después de restaurar, llama a cargarMigraciones
       setTimeout(() => {
         this.cargarMigraciones();
@@ -206,7 +207,7 @@ export class MigManualComponent {
                 descripcion: row.descripcion,
                 cliente: this.misignalService.objetoCliente()!.id.toString()
               };
-     
+
        this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
               console.log(resp);
     },

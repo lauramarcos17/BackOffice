@@ -18,6 +18,8 @@ export class MiSignalService {
   tituloTabla=signal<string>('');
 
   selectedTab = signal(0);
+  cuadernoSeleccionado=signal(false);
+
 
   clienteEncontradoDeMain = signal<boolean>(false);
   tipoError = signal<string>("");
