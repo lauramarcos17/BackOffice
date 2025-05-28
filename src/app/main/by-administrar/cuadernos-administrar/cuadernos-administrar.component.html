@@ -64,9 +64,10 @@
         <!--AQUI HAY QUE MANDAR POR SELECTION CHANGE EL TIPO DE CUADERNO-->
         <mat-select #cuadernoSelect (selectionChange)="cargarTablaInicio($event.value)">
         @for (cuaderno of cuadernos; track cuaderno) {
-            <mat-option [value]="cuaderno.value"
-            [disabled]="!isCuadernoAvailable(cuaderno.value)">{{cuaderno.viewValue}}</mat-option>
+            <mat-option [value]="cuaderno.value">{{cuaderno.viewValue}}</mat-option>
         }
+
+
         </mat-select>
     </mat-form-field>
 

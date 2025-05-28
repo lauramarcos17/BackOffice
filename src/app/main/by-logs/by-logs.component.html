@@ -17,54 +17,6 @@
     <mat-divider></mat-divider>
 </div>
 
-<!--
-<span #logsTooltip="matTooltip" [matTooltip]="textosGuiaFacil.get('guia')"></span>
-<form class="formUsuario">
-
-    <div class="buscador">
-
-            <mat-form-field>
-                <mat-label>Cuaderno</mat-label>
-                <mat-select>
-                @for (food of foods; track food) {
-                    <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-                }
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="example-full-width">
-                <mat-label>Usuario</mat-label>
-                <input matInput>
-            </mat-form-field>
-
-
-
-
-        <button class="mat-flat-button-form" mat-flat-button [matTooltip]="textosGuiaFacil.get('verdias')">Ver días con actividad</button>
-
-    </div>
-
-
-
-</form>
-
-    <div>
-        <mat-form-field class="fechalog">
-            <mat-label>Fecha con actividad registrada:</mat-label>
-            <mat-select>
-            @for (food of foods; track food) {
-                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-            }
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-
-    <div  class="pep">
-        <mat-checkbox [matTooltip]="textosGuiaFacil.get('query')"> Mostrar sólo querys que alteren base de datos</mat-checkbox>
-        <button class="botoncargar" mat-flat-button [matTooltip]="textosGuiaFacil.get('cargar')">Cargar log</button>
-    </div>
--->
     @if(true){
         <app-consultas-logs [mapa]=textosGuiaFacil></app-consultas-logs>
     }

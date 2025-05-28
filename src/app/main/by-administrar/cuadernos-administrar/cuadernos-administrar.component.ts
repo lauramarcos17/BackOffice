@@ -1,4 +1,4 @@
-import { ClienteJsonInterface, SctOrdenante, ChkOrdenante, Acreedores, Libradore, Beneficiario, Deudore } from './../../../shared/interfaces/ClienteJson.interface';
+import { SctOrdenante, ChkOrdenante, Acreedores } from './../../../shared/interfaces/ClienteJson.interface';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -96,35 +96,31 @@ export class CuadernosAdministrarComponent {
 
       //si lo dejo solo con ordenantes=[] error
       let ordenantes : (SctOrdenante | Acreedores | ChkOrdenante)[] = [];
-      let deudores: (Beneficiario|Deudore | Libradore)[] |undefined = [];
+
       switch(tipoCuaderno){
         case 'sct':
           this.termino='Ordenante';
           this.terminos='Ordenantes';
           ordenantes=cliente?.sct.ordenantes ?? [];
-           deudores = cliente?.sct.ordenantes.flatMap(ord => ord.beneficiarios ?? []);
           break;
 
         case 'sdd':
           this.termino='Acreedor';
           this.terminos='Acreedores';
           ordenantes = cliente?.sdd?.acreedores ?? [];
-          deudores = cliente?.sdd.acreedores.flatMap(ord => ord.deudores ?? []);
+          break;
 
-            break;
-
-          case 'chk':
+        case 'chk':
           this.termino='Ordenante';
           this.terminos='Ordenantes';
           ordenantes = cliente?.chk?.ordenantes ?? [];
-          deudores = cliente?.chk.ordenantes.flatMap(ord => ord.libradores ?? []);
           break;
       }
 
       //envio los datos del objeto cliente a la señal para recuperarlo en posteriores pestañas
 
        this.misignalService.ordenanteSignal.set(ordenantes);
-        //this.misignalService.deudoresSignal.set(deudores ?? []);
+
       //mapeo los datos y convierto en formato
       const data: infoCuaderno[] = ordenantes.map((o: any) => ({
         ordenantes: o.nombre,
@@ -138,21 +134,6 @@ export class CuadernosAdministrarComponent {
       this.dataSource.data = data;
 
 
-      }
-
-      //Intento de mostrar en el input solo los cuadernos existentes
-      isCuadernoAvailable(tipoCuaderno: string): boolean {
-        const cliente = this.misignalService.objetoCliente();
-        switch (tipoCuaderno) {
-          case 'sct':
-            return !!cliente?.sct?.ordenantes?.length;
-          case 'sdd':
-            return !!cliente?.sdd?.acreedores?.length;
-          case 'chk':
-            return !!cliente?.chk?.ordenantes?.length;
-          default:
-            return false;
-        }
       }
 
 

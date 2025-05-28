@@ -10,7 +10,7 @@
 .encabezado{
   display:flex;
   align-items: center;
-  height:32px;
+  height:50px;
 }
 .container{
   height:auto;
@@ -58,7 +58,8 @@ mat-form-field {
 
 }
 
-.btnCopias{
+
+.btnCopias, .botonesInferiorModal{
   display:flex;
   justify-content: flex-end;
   width: 99%;
