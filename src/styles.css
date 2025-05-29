@@ -20,10 +20,16 @@
 
 *{
   font-size:14px;
-  color: rgb(90,133,215);
+  
+}
+td {
+  background-color:rgba(90,133,215,0.15) !important;
+}
+th{
+   background-color:rgba(90,133,215,0.3) !important;
 }
 
-h3{
+h1{
   font-size:large !important;
 }
 
@@ -33,6 +39,10 @@ h3{
 
 .mdc-button__label{
   color: white !important;
+}
+.info-btn ,.btnSalir{ /*quita fondo a los botones de salir y ayuda*/
+  background-color:white !important;
+  box-shadow: none !important;
 }
 .texto-azul{
   color: rgb(90,133,215);
@@ -78,4 +88,7 @@ body {
 .mat-mdc-tab-indicator {
   background-color: rgb(90,133,215) !important;
    color: red;
+}
+.boton-azul:not(:disabled){ /*Para que el important no se aplique si esta desactivado el boon */
+  background-color:  rgb(90,133,215)!important;
 }

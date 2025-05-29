@@ -12,7 +12,9 @@
   height:50px;
   justify-content: right;
 }
-
+.contenedor-sin-scroll{
+  overflow: hidden;
+}
 .encabezado{
   display:flex;
   align-items: center;

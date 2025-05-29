@@ -16,6 +16,7 @@
  }
  .container{
   height:auto;
+   overflow: hidden; /*para quitar scroll*/
  }
 
  .mat-flat-button-form, .mat-flat-button{

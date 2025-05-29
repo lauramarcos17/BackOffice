@@ -14,7 +14,7 @@
 
 
 
-<button class="mat-flat-button-form" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
+<button class="mat-flat-button-form boton-azul" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
 </div>
 
 <div class="encabezado">
@@ -98,8 +98,8 @@
 </mat-paginator>
 
 <div class="btnCopias">
-  <button class="mat-flat-button" mat-flat-button [disabled]="!filaSeleccionada()" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migración</button>
-  <button class="mat-flat-button" mat-flat-button [disabled]="!filaSeleccionada()" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
+  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="!filaSeleccionada()" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migración</button>
+  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="!filaSeleccionada()" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
  <!--<button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>-->
 </div>
 
