@@ -4,8 +4,9 @@
     color: rgb(90,133,215);
     display: flex;
     justify-content: center;
-    margin-top: 48px;
-    margin-bottom: 48px;
+    margin-top: 0px;
+   
+  
 }
 
 .title{
@@ -31,6 +32,7 @@ th{
 
 h1{
   font-size:large !important;
+  height: fit-content;
 }
 
 .mdc-tab__text-label{
@@ -91,4 +93,16 @@ body {
 }
 .boton-azul:not(:disabled){ /*Para que el important no se aplique si esta desactivado el boon */
   background-color:  rgb(90,133,215)!important;
+}
+.barra-superior{
+  height:10vh ;
+  background: linear-gradient(to right,white ,rgba(90,133,215,0.30));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.logo{
+ width: 200px;
+  margin-left: 16px;
 }
