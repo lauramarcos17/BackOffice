@@ -1,3 +1,4 @@
+
 <div class="container">
 
 <div class="buscador">
@@ -15,6 +16,14 @@
 
 <button class="mat-flat-button-form" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
 </div>
+
+<div class="encabezado">
+    <div class="tituloTxt">
+      <h5 class="title">Listado de migraciones</h5>
+    </div>
+    <span class="separacion"></span>
+  </div>
+<mat-divider></mat-divider>
 
 <!-- TABLA HISTORICO MIGRACIONES (Solo para Admin) -->
 @if(rol()==1){

@@ -1,8 +1,9 @@
 
+
 .encabezado{
   display:flex;
   align-items: center;
-  height:32px;
+  height:50px;
 }
 .container{
   height:auto;
@@ -30,11 +31,23 @@
     height: 60px;
     margin-left:16px
   }
+  
   .info-btn{
-    margin-right:0px;
-    width: auto;
-    height: auto;
-    min-width: 0;
+  margin-right:0px;
+  width: 40px;
+  height: 40px;
+  min-width: 0;
 
-  }
+}
+  .encabezadoAyuda{
+  display:flex;
+  align-items: center;
+  height:50px;
+  justify-content: right;
+}
+.container{
+  height:auto;
+  overflow: hidden;
+}
+
 

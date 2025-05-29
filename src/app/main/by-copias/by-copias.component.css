@@ -28,14 +28,15 @@
 .iconoAyuda{
   margin:0px;
 }
+
 .separacion{
   margin-right:16px;
 }
 
 .info-btn{
   margin-right:0px;
-  width: auto;
-  height: auto;
+  width: 40px;
+  height: 40px;
   min-width: 0;
 
 }
@@ -80,4 +81,14 @@ mat-form-field {
 
 .demo-row-is-clicked {
   font-weight: bold;
+}
+.encabezadoAyuda{
+  display:flex;
+  align-items: center;
+  height:50px;
+  justify-content: right;
+}
+.container{
+  height:auto;
+  overflow: hidden;
 }

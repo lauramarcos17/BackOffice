@@ -30,3 +30,14 @@
     margin-right:16px;
 
   }
+  .encabezado{
+  display:flex;
+  align-items: center;
+  height:50px;
+}
+.tituloTxt{
+  margin-bottom: 26px;
+}
+.separacion{
+  margin-right:16px;
+}

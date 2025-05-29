@@ -12,6 +12,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
 import { Log } from 'app/shared/interfaces/Log.interface';
 import { Observable } from 'rxjs';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 // export interface Manual{
@@ -29,7 +30,7 @@ const ELEMENT_DATA: Migracion[] = [
 
 @Component({
   selector: 'app-mig-manual',
-  imports: [MatLabel,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator],
+  imports: [MatLabel,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator,MatDividerModule],
   templateUrl: './mig-manual.component.html',
   styleUrl: 'mig-manual.component.css',
 })

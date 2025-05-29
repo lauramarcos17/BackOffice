@@ -1,19 +1,23 @@
 <div class="container">
-<div class="encabezado">
-  <div class="tituloTxt">
-  <h5 class="title" >Histórico de migraciones
-
-  </h5>
-  </div>
-  <span class="separacion"></span>
-  <span class="botonAyuda">
-      <button class="info-btn"   mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
-        <mat-icon class ="iconoAyuda">help</mat-icon>
+  <div class="encabezadoAyuda">
+    <div class="tituloTxt">
+      <!-- <h5 class="title"></h5> -->
+    </div>
+    <span class="separacion"></span>
+    <span class="botonAyuda">
+      <button class="info-btn" mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+        <mat-icon class="iconoAyuda">help</mat-icon>
       </button>
     </span>
+  </div>
+
 </div>
-    <mat-divider></mat-divider>
-</div>
+
+<!-- Tabla resumen de cliente (sustituye los <p>) -->
+ 
+
+
+
 <span #migrarTooltip="matTooltip" [matTooltip]="textosGuiaFacil.get('guia')"></span>
 
 
@@ -35,7 +39,9 @@
 
 @if(tipoMigracion()==1)
 {
+ 
     <app-mig-manual [mapa]=textosGuiaFacil></app-mig-manual>
+     
 }
 @if(tipoMigracion()==2)
 {
