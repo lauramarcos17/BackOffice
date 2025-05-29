@@ -39,9 +39,8 @@ h1{
   color: rgb(90,133,215) !important;
 }
 
-.mdc-button__label{
-  color: rgb(90,133,215)!important;
-}
+
+
 .info-btn ,.btnSalir{ /*quita fondo a los botones de salir y ayuda*/
   background-color:white !important;
   box-shadow: none !important;
