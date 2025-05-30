@@ -17,10 +17,10 @@ import { MatSnackBar, MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition,
 })
 export class ByMigrarComponent {
 
-  tipoMigracion=signal<number>(0);
+
   misignalService=inject(MiSignalService);
   private _snackBar = inject(MatSnackBar);
-
+  tipoMigracion=this.misignalService.tipoMigracion;
 
   rolEsAdmin = computed(() => this.misignalService.rol() == 1);
 
