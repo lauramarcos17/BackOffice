@@ -14,7 +14,7 @@
 
 
 
-<button class="mat-flat-button-form boton-azul" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
+<button class="mat-flat-button-form boton-azul btn-mig" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
 </div>
 
 <div class="encabezado">
@@ -23,7 +23,7 @@
     </div>
     <span class="separacion"></span>
   </div>
-<mat-divider></mat-divider>
+<!-- <mat-divider></mat-divider> -->
 
 <!-- TABLA HISTORICO MIGRACIONES (Solo para Admin) -->
 @if(rol()==1){
