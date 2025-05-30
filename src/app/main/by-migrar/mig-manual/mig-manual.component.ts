@@ -156,7 +156,8 @@ export class MigManualComponent {
               this.jsonDatoService.eliminarMigracion(row.clienteOrigen.trim(), row.fechaHoraInicioOperacion.trim()).subscribe({
                 next: () => {
                   // Elimina la fila del array local y refresca la tabla
-                  this.migraciones.set(this.migraciones().filter(b => !(b.clienteOrigen === row.clienteOrigen && b.fechaHoraInicioOperacion === row.fechaHoraInicioOperacion)));
+                  this.migraciones.set(this.migraciones().filter(b => 
+                    !(b.clienteOrigen === row.clienteOrigen && b.fechaHoraInicioOperacion === row.fechaHoraInicioOperacion)));
                   this.dataSource.data = this.migraciones();
                   this.clickedRows.clear();
                   this.filaSeleccionada.set(false);
@@ -186,8 +187,6 @@ export class MigManualComponent {
               // Al crear una copia cambio la señal para que se ejecute el efecto
 
         });
-
-
       // Si necesitas recargar migraciones después de restaurar, llama a cargarMigraciones
       setTimeout(() => {
         this.cargarMigraciones();
