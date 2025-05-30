@@ -29,6 +29,8 @@ export class MiSignalService {
   tipoCuadernoSignal=signal("");
   actualizarBackup=signal<boolean>(false);
 
+  tipoMigracion=signal<number>(0);
+
   setMensaje(nuevo: string ) {
     this.mensaje.set(nuevo);
   }

@@ -183,7 +183,7 @@ export class MigManualComponent {
               console.log(resp);
               // Actualiza la lista de migraciones agregando la respuesta
               this.migraciones.update((prev) => [...prev, resp]);
-              alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
+             // alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
               // Al crear una copia cambio la señal para que se ejecute el efecto
 
         });
@@ -197,7 +197,7 @@ export class MigManualComponent {
 
 
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
-      alert("mandando log");
+      // alert("mandando log");
         const logBruto= {
                 fechaInicio: row.fechaHoraInicioOperacion,
                 fechaFin: row.fechaHoraFinOperacion,

@@ -38,7 +38,7 @@ export class LoginPageComponent {
   nombreusuario = signal<string >('');
   nombreRol=signal<string >('');
 
-  
+
 
   constructor() {
     merge(this.nombre.statusChanges, this.nombre.valueChanges)
@@ -76,29 +76,29 @@ export class LoginPageComponent {
     this.nombre.markAsTouched();
     this.contrasena.markAsTouched();
     this.updateErrorMessage();
-   
+
 
         this.http.post('http://localhost:8080/api/login', {
 
           nombre: this.nombre.value,
-         
-          contrasena: this.contrasena.value 
+
+          contrasena: this.contrasena.value
         }).subscribe((response: any) => {
 
           this.errorMessageFinal.set(response.errorMsg);
-          //obtiene la info de spring de la base de datos y la guarda en las señales 
+          //obtiene la info de spring de la base de datos y la guarda en las señales
           if (response.success) {
             this.rol.set(response.rol);
             this.nombreRol.set(response.rolnombre);
-          
+
             if(this.nombreusuario !==null)
             {
               this.nombreusuario.set(this.nombre.value ?? '' );
             }
             console.log(this.nombreusuario());
 
-            alert('Login correcto');
-           
+            // alert('Login correcto');
+
             //PASAR A SIGUIENTE PANTALLA (llevar el rol (this.rol()) que ha recogido y lo envia al servicio para utilizarlo en la siguientes pantalla)
             this.misignalService.setMensaje(this.nombreusuario());
             this.misignalService.setNumRol(Number(this.rol()));
