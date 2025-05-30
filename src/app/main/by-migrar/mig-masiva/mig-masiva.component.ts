@@ -3,6 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { Log } from 'app/shared/interfaces/Log.interface';
+import { Migracion } from 'app/shared/interfaces/Migracion.interface';
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
 import * as XLSX from 'xlsx';
@@ -17,6 +19,8 @@ export class MigMasivaComponent {
 
   jsonDatoService = inject(JsonDatoService);
   misignalService = inject(MiSignalService);
+
+  nombrerol = this.misignalService.nombrerol();
 
   @Input() mapa!: Map<string, string>;
 
@@ -53,6 +57,9 @@ export class MigMasivaComponent {
         try {
           // Procesa las migraciones de forma secuencial para evitar bucles o sobrecarga en el backend (evita el bucle de error en servidor)
           this.procesarMigracionesSecuencialmente(this.data).then(() => {
+
+
+
             alert('Migración masiva creada con éxito');
             this.misignalService.tipoMigracion.set(1);
           }
@@ -76,31 +83,21 @@ export class MigMasivaComponent {
       }
     }
 
-    crearMigracion(clienteOrigen: string, clienteDestino: string) {
-      this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
-        next: (nuevaMigracion) => {
-          console.log(nuevaMigracion); //objeto que recibimos al crear una migración desde spring
-          //this.mandaLogBruto(nuevaMigracion, "Migración creada"); PTE: AÑADIR LOG
-          setTimeout(() => {
-            //this.cargarMigraciones(); NECESARIO PARA ACTUALIZAR LA TABLA ??
-          }, 300);
-        },
-        error: (err) => {
-          console.error('Error creando migración', err);
-          //alert("Error al crear la migración: " + err);
-        }
-      });
-      setTimeout(() => {
-        // this.cargarMigraciones(); NECESARIO PARA ACTUALIZAR LA TABLA ??
-      }, 300);
-    }
+
 
     crearMigracionAsync(clienteOrigen: string, clienteDestino: string): Promise<any> {
       return new Promise((resolve, reject) => {
         this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
           next: (nuevaMigracion) => {
             console.log(nuevaMigracion);
+              this.mandaLogBruto(nuevaMigracion, "Migración creada desde fichero").then(() => {
             resolve(nuevaMigracion);
+            }).catch((err: any) => {
+          console.error('Error creando log', err);
+          // Decide si quieres rechazar la promesa o resolverla igual
+          resolve(nuevaMigracion); // O reject(err);
+        });
+
           },
           error: (err) => {
             console.error('Error creando migración', err);
@@ -111,5 +108,30 @@ export class MigMasivaComponent {
       });
     }
 
+    mandaLogBruto(row: Migracion, operacion: string): Promise<void> {
+  const logBruto = {
+    fechaInicio: row.fechaHoraInicioOperacion,
+    fechaFin: row.fechaHoraFinOperacion,
+    usuario: this.nombrerol,
+    cuaderno: 'Todos',
+    operacion: operacion,
+    descripcion: row.descripcion,
+    cliente: this.misignalService.objetoCliente()!.id.toString()
+  };
+
+  return new Promise((resolve, reject) => {
+    this.jsonDatoService.crearLog(logBruto).subscribe({
+      next: (resp: Log) => {
+        console.log(resp);
+        resolve();
+      },
+      error: (err) => {
+        console.error('Error creando log', err);
+        reject(err);
+      }
+    });
+  });
+
  }
+}
 
