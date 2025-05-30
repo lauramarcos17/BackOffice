@@ -90,13 +90,8 @@ export class MigMasivaComponent {
         this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
           next: (nuevaMigracion) => {
             console.log(nuevaMigracion);
-              this.mandaLogBruto(nuevaMigracion, "Migración creada desde fichero").then(() => {
+            this.mandaLogBruto(nuevaMigracion, "Migración masiva realizada desde fichero");
             resolve(nuevaMigracion);
-            }).catch((err: any) => {
-          console.error('Error creando log', err);
-          // Decide si quieres rechazar la promesa o resolverla igual
-          resolve(nuevaMigracion); // O reject(err);
-        });
 
           },
           error: (err) => {
@@ -108,30 +103,22 @@ export class MigMasivaComponent {
       });
     }
 
-    mandaLogBruto(row: Migracion, operacion: string): Promise<void> {
-  const logBruto = {
-    fechaInicio: row.fechaHoraInicioOperacion,
-    fechaFin: row.fechaHoraFinOperacion,
-    usuario: this.nombrerol,
-    cuaderno: 'Todos',
-    operacion: operacion,
-    descripcion: row.descripcion,
-    cliente: this.misignalService.objetoCliente()!.id.toString()
-  };
+    mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+          //  alert("mandando log desde masivo");
+            const logBruto= {
+                    fechaInicio: row.fechaHoraInicioOperacion,
+                    fechaFin: row.fechaHoraFinOperacion,
+                    usuario: this.nombrerol,
+                    cuaderno: 'Todos',
+                    operacion: operacion,
+                    descripcion: row.descripcion,
+                    cliente: this.misignalService.objetoCliente()!.id.toString()
+                  };
 
-  return new Promise((resolve, reject) => {
-    this.jsonDatoService.crearLog(logBruto).subscribe({
-      next: (resp: Log) => {
-        console.log(resp);
-        resolve();
-      },
-      error: (err) => {
-        console.error('Error creando log', err);
-        reject(err);
-      }
-    });
-  });
+           this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
+            console.log(resp);
+        },
+     )}
 
  }
-}
 
