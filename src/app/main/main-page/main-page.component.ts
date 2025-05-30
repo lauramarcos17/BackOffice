@@ -5,7 +5,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ByAdministrarComponent } from '../by-administrar/by-administrar.component';
 import { ByCopiasComponent } from "../by-copias/by-copias.component";
-import { ByHistoricoComponent } from '../by-historico/by-historico.component';
 import { ByMigrarComponent } from '../by-migrar/by-migrar.component';
 import { ByLogsComponent } from '../by-logs/by-logs.component';
 import {MatCardModule} from '@angular/material/card';
@@ -19,7 +18,7 @@ import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-main-page',
-  imports: [MatTooltip,MatTooltipModule, MatInputModule, MatFormFieldModule, MatTabsModule,MatCardModule,MatIconModule, MatButtonModule,RouterOutlet, RouterLink, ByAdministrarComponent, ByCopiasComponent,ByHistoricoComponent,ByMigrarComponent,ByLogsComponent],
+  imports: [MatTooltip,MatTooltipModule, MatInputModule, MatFormFieldModule, MatTabsModule,MatCardModule,MatIconModule, MatButtonModule,RouterOutlet, RouterLink, ByAdministrarComponent, ByCopiasComponent,ByMigrarComponent,ByLogsComponent],
   templateUrl: './main-page.component.html',
   styleUrl:'main-page.component.css',
 
