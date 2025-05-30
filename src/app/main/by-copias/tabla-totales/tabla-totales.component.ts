@@ -158,7 +158,7 @@ constructor() {
         console.log(resp),
         this.misignalService.copiaSeguridad.set(resp);
 
-        alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
+        // alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
 
         //Al crear una copia cambio la señal para que se ejecute el efecto
         this.misignalService.actualizarBackup.set(true);
@@ -175,7 +175,7 @@ constructor() {
 
    }
     mandaLogBruto(row : CopiaSeguridadJson){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
-          alert("mandando log");
+          // alert("mandando log");
             const logBruto= {
                     fechaInicio: row.fechaHora,
                     fechaFin: this.addHoursToISOString(row.fechaHora),
