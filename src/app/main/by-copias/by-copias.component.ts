@@ -53,7 +53,7 @@ export class ByCopiasComponent implements AfterViewInit {
   clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? ''); //id numerico del cliente en String
   clienteElegido = computed (()=> this.misignalService.clienteElegido()); //booleano que muestra si se ha elegido cliente. No usado en este componente?
   mostrarTablaTotales = computed (()=> this.misignalService.mostrarTablaTotales());
-  
+
 
 
   fechaDesde = signal<Date | null>(null);
@@ -125,7 +125,7 @@ export class ByCopiasComponent implements AfterViewInit {
     this._snackBar.open(this.textosGuiaFacil.get("guia_copias")!, 'X', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration:5000,
+      duration:50000,
       panelClass: ['snackbar-pre']
     });
   }
@@ -212,9 +212,9 @@ export class ByCopiasComponent implements AfterViewInit {
       return new Date(anio, mes - 1, dia, h, m, s);
     }
 
-   
+
 }
-    
+
 
 
 

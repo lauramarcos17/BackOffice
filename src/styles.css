@@ -5,8 +5,8 @@
     display: flex;
     justify-content: center;
     margin-top: 0px;
-   
-  
+
+
 }
 
 .title{
@@ -21,7 +21,8 @@
 
 *{
   font-size:14px;
-  
+  font-family: "Nunito", sans-serif;
+
 }
 td {
   background-color:rgba(90,133,215,0.15) !important;
@@ -52,7 +53,7 @@ h1{
 .snackbar-pre{
   white-space: pre-line;
   width: 640px;
- 
+
   --mat-sys-inverse-on-surface: rgb(90,133,215);
   --mat-sys-inverse-surface:white;
 
