@@ -25,7 +25,7 @@ const ELEMENT_DATA: Log[] = [
 
 @Component({
   selector: 'app-consultas-logs',
-  imports: [MatPaginatorModule,MatTableModule, MatFormField,MatSortModule , MatFormFieldModule, MatLabel, MatInputModule, MatIconModule, MatTooltip, MatTooltipModule, MatCardModule],
+  imports: [MatPaginatorModule,MatTableModule, MatSortModule , MatFormFieldModule, MatInputModule, MatIconModule, MatTooltip, MatTooltipModule, MatCardModule],
   templateUrl: './consultas-logs.component.html',
   styleUrl: 'consultas-logs.component.css',
   providers: [provideNativeDateAdapter()]

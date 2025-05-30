@@ -28,10 +28,11 @@
     display: flex;
     align-content: center;
     align-items: center;
-    height: 60px;
-    margin-left:16px
+    /* height: 60px; */
+    margin-left:16px;
+    margin-bottom:16px;
   }
-  
+
   .info-btn{
   margin-right:0px;
   width: 40px;

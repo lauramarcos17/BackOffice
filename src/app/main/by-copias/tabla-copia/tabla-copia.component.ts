@@ -226,6 +226,7 @@ export class TablaCopiaComponent {
             this.dataSource.data = this.backupsFiltrados();
             this.clickedRows.clear();
             this.filaSeleccionada.set(false);
+            alert ("manda log de eliminar");
             this.mandaLogBruto(row,"Copia de seguridad eliminada");
           },
           error: err => {
@@ -246,8 +247,8 @@ export class TablaCopiaComponent {
 
                 //Al crear una copia cambio la señal para que se ejecute el efecto
                 this.misignalService.actualizarBackup.set(true);
-
-                  this.mandaLogBruto(row,"Copia de seguridad restaurada");
+                alert ("manda log de restaurar");
+                this.mandaLogBruto(row,"Copia de seguridad restaurada");
 
             });
               //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias
@@ -284,5 +285,7 @@ export class TablaCopiaComponent {
               date.setUTCHours(date.getUTCHours() + 1);
               return date.toISOString().split('.')[0] + 'Z';
           }
+
+          
 
 }

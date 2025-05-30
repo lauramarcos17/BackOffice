@@ -9,10 +9,14 @@
 
 }
 
+.tablaCopias{
+  margin-bottom:16px;
+}
+
 .title{
   color: rgb(90,133,215);
   margin-left: 16px;
-  margin-bottom:0px;
+  margin-bottom:16px;
 
 }
 .separacionVertical {
@@ -106,4 +110,15 @@ body {
 }
 .class-login{
   margin-top: 48px;
+}
+
+table {
+  margin-left:16px;
+}
+
+
+
+mat-paginator{
+  margin-left:16px;
+  background-color:white !important;
 }

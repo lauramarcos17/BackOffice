@@ -19,7 +19,7 @@
   display:flex;
   align-items: center;
   height:50px;
-  
+
 
 }
 /* p, h5, mat-label, mat-mdc-select-min-line{
@@ -38,7 +38,7 @@
 }
 .iconoAyuda{
   margin:0px;
-  
+
 }
 .separacion{
   margin-right:16px;
@@ -58,7 +58,7 @@
   width: 40px;
   height: 40px;
   min-width: 0;
- 
+
 
 }
 .errorBusqueda{
@@ -80,6 +80,7 @@ mat-form-field {
   align-items: center;
   margin-left: 16px;
   width:100%;
+  margin-top:16px;
 
 
 }
