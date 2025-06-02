@@ -125,7 +125,7 @@ export class ByCopiasComponent implements AfterViewInit {
     this._snackBar.open(this.textosGuiaFacil.get("guia_copias")!, 'X', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration:50000,
+      duration:5000,
       panelClass: ['snackbar-pre']
     });
   }
