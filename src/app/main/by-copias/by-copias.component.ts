@@ -84,8 +84,8 @@ export class ByCopiasComponent implements AfterViewInit {
 
   textosGuiaFacil = new Map<string, string>([
     ['guia_copias', 'Desde este menú podrá gestionar las copias de seguridad de AEBWeb. Una copia de seguridad almacena todos los datos que tiene un cliente en los cuadernos SEPA. \n Solamente se permite una copia de seguridad por cliente. Si se hace una segunda copia se machaca la anterior.'],
-    ['buscar_copias', 'Para encontrar una determinada copia de seguridad puede usar los campos de búsqueda por usuario o fecha y pulsar [Buscar].'],
-    ['vertodas_copias', 'Para listar todas las copias almacenadas, pulse [Ver Todas]'],
+    ['buscar_copias', 'Para encontrar una determinada copia de seguridad puede usar los campos de búsqueda por usuario o fecha y pulsar.'],
+    ['vertodas_copias', 'Para listar todas las copias almacenadas.'],
     ['restaurar_copias', 'Permite restaurar la información de un usuario de AEBWeb utilizando su copia de seguridad. Antes de restaurar la información se le mostrará, a modo de confirmación, un resumen de los datos almacenados en la copia. (Importante: Toda la información del usuario de AEBWeb, en los cuadernos SEPA, se eliminará antes de cargarle los datos de la copia de seguridad).'],
     ['eliminar_copias', 'Borrará toda la información de la copia de seguridad seleccionada.'],
     ['crear_copias', 'Conducirá a una pantalla donde podrá seleccionar el usuario para el que desea crear una copia de seguridad. En dicha pantalla se mostrará , a modo de confirmación, un resumen de los datos del usuario.'],

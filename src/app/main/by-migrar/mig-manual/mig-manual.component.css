@@ -6,7 +6,13 @@
 
   width:98%;
 }
-
+.buscador-migracion{
+  display: flex;
+  
+}
+.contenedor-sin-scroll{
+  overflow: hidden;
+}
 .btn-mig{
   margin-bottom: 16px;
 }
@@ -15,6 +21,9 @@
   font-weight: bold;
 }
 
+#buscador-migraciones{
+  margin-right: 0px !important;
+}
  .migraformmanual{
 
     margin-right: 16px;
@@ -22,6 +31,7 @@
  .container{
   height:auto;
    overflow: hidden; /*para quitar scroll*/
+   display: flex;
  }
 
  .mat-flat-button-form, .mat-flat-button{

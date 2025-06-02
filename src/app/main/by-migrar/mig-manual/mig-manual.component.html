@@ -1,21 +1,34 @@
-
+<div class="contenedor-sin-scroll">
 <div class="container">
 
 <div class="buscador">
-<mat-form-field class="migraformmanual">
+<mat-form-field  class="migraformmanual">
     <mat-label >Usuario origen</mat-label>
     <input matInput #idClienteOrigen>
 </mat-form-field>
 
-<mat-form-field class="migraformmanual">
+<mat-form-field  class="migraformmanual">
     <mat-label>Usuario destino</mat-label>
     <input matInput #idClienteDestino>
 </mat-form-field>
 
 
 
-<button class="mat-flat-button-form boton-azul btn-mig" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
+<button class="mat-flat-button-form boton-azul btn-mig" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button> 
 </div>
+<div class="buscador-migracion">
+  <mat-form-field   id="buscador-migraciones">
+      <mat-label>Buscar migración</mat-label>
+       <mat-icon matSuffix>search</mat-icon>
+      <input matInput (keyup)="aplicarFiltro($event)" placeholder="Filtrar por cualquier campo...">
+      <button mat-icon-button matSuffix *ngIf="dataSource.filter" (click)="limpiarFiltro()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</div>
+
+
 
 <div class="encabezado">
     <div class="tituloTxt">
@@ -27,8 +40,11 @@
 
 <!-- TABLA HISTORICO MIGRACIONES (Solo para Admin) -->
 @if(rol()==1){
-<!-- falta titulo h5 para tabla migraciones-->
 <div class="tablaCopias">
+
+  <!-- Input de búsqueda -->
+ 
+
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
 
     <!--asocio en matcolumnDef el campo de displayedColumns-->
@@ -87,7 +103,7 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarMigracion(row)"
-    [class.demo-row-is-clicked]="clickedRows.has(row)"></tr>
+    [class.demo-row-is-clicked]="misignalService.clickedRows.has(row)"></tr>
 
 
 </table>
@@ -98,11 +114,12 @@
 </mat-paginator>
 
 <div class="btnCopias">
-  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="filaSeleccionada()<=0" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migraciones</button>
-  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="filaSeleccionada()!=1" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
+  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="misignalService.filaSeleccionada()<=0" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migraciones</button>
+  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="misignalService.filaSeleccionada()!=1" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
   <button class="mat-flat-button boton-azul" mat-flat-button (click)="seleccionarTodos()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>
-   <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="filaSeleccionada()<=0" (click)="exportarSeleccionadas()" [matTooltip]="textosGuiaFacil.get('exportar')">Exportar</button>
+   <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="misignalService.filaSeleccionada()<=0" (click)="exportarSeleccionadas()" [matTooltip]="textosGuiaFacil.get('exportar')">Exportar</button>
 </div>
 
 </div>
 }
+</div>

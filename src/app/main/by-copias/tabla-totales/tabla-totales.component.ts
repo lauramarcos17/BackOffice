@@ -200,15 +200,19 @@ constructor() {
         },
      )}
 
-     addHoursToISOString(dateStr: string): string {
-        const [datePart, timePart] = dateStr.split(" - ");
-        const [day, month, year] = datePart.split("/").map(Number);
-        const [hours, minutes, seconds] = timePart.split(":").map(Number);
+    addHoursToISOString(dateStr: string): string {
+      const [datePart, timePart] = dateStr.split(" - ");
+      const [day, month, year] = datePart.split("/").map(Number);
+      const [hours, minutes, seconds] = timePart.split(":").map(Number);
 
-        // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
-        const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
-        date.setUTCHours(date.getUTCHours() + 1);
-        return date.toISOString().split('.')[0] + 'Z';
+      // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
+      const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+      date.setUTCHours(date.getUTCHours() + 1);
+
+      // Formatear a dd/MM/yyyy - HH:mm:ss
+      const pad = (n: number) => n.toString().padStart(2, '0');
+      const formattedDate = `${pad(date.getUTCDate())}/${pad(date.getUTCMonth() + 1)}/${date.getUTCFullYear()} - ${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
+      return formattedDate;
     }
 
 

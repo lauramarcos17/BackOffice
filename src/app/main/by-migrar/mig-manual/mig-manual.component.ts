@@ -13,6 +13,7 @@ import { MiSignalService } from 'app/shared/services/mi-signal.service';
 import { Log } from 'app/shared/interfaces/Log.interface';
 import { MatDividerModule } from '@angular/material/divider';
 import * as XLSX from 'xlsx';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 
 // export interface Manual{
@@ -30,7 +31,7 @@ const ELEMENT_DATA: Migracion[] = [
 
 @Component({
   selector: 'app-mig-manual',
-  imports: [MatLabel,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator,MatDividerModule],
+  imports: [MatLabel,MatIconModule,MatIcon,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator,MatDividerModule],
   templateUrl: './mig-manual.component.html',
   styleUrl: 'mig-manual.component.css',
 })
@@ -44,9 +45,9 @@ export class MigManualComponent {
   misignalService = inject(MiSignalService);
   jsonDatoService=inject(JsonDatoService);
 
-   clickedRows = new Set<Migracion>(); //guarda los clicks
+    //guarda los clicks
    migraciones = signal<Migracion[]>([]);
-   filaSeleccionada = signal<number>(0);
+  
    nombrerol=this.misignalService.nombrerol();
    rol = this.misignalService.rol;
 
@@ -137,21 +138,21 @@ export class MigManualComponent {
 
 
    seleccionarMigracion(row: any){
-        if(!this.clickedRows.has(row)){ //cambio de selección
+        if(!this.misignalService.clickedRows.has(row)){ //cambio de selección
           /*this.clickedRows.clear();*/
-          this.clickedRows.add(row)
-          this.filaSeleccionada.update(value=>value+1);
+          this.misignalService.clickedRows.add(row)
+          this.misignalService.filaSeleccionada.update(value=>value+1);
         }else{ //Dejamos de seleccionar
           /*this.clickedRows.clear();*/
-          this.clickedRows.delete(row);
-          this.filaSeleccionada.update(value=>value-1);
+          this.misignalService.clickedRows.delete(row);
+          this.misignalService.filaSeleccionada.update(value=>value-1);
         }
         // alert(row.fechaHora);
 
       }
 
   eliminarMigracion() {
-    const rowsToDelete = Array.from(this.clickedRows);
+    const rowsToDelete = Array.from(this.misignalService.clickedRows);
     if (rowsToDelete.length === 0) return;
 
     // Confirmación opcional
@@ -172,8 +173,8 @@ export class MigManualComponent {
           // Cuando termine la última, actualiza la tabla y limpia selección
           if (eliminadas === rowsToDelete.length) {
             this.dataSource.data = this.migraciones();
-            this.clickedRows.clear();
-            this.filaSeleccionada.set(0);
+            this.misignalService.clickedRows.clear();
+            this.misignalService.filaSeleccionada.set(0);
           }
         },
         error: err => {
@@ -188,7 +189,7 @@ export class MigManualComponent {
 }
 
     restaurarMigracion(){
-      const row = Array.from(this.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
+      const row = Array.from(this.misignalService.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
       if (!row) return;
       if(!row.operacion.includes("Restauración")) {
         if (!confirm(`¿Seguro que quieres restaurar la migración seleccionada?`)) return;
@@ -216,12 +217,12 @@ export class MigManualComponent {
 
     seleccionarTodos()
     {
-     this.dataSource.data.forEach(row => this.clickedRows.add(row));
-     this.filaSeleccionada.set(this.dataSource.data.length);
+     this.dataSource.data.forEach(row => this.misignalService.clickedRows.add(row));
+     this.misignalService.filaSeleccionada.set(this.dataSource.data.length);
     }
 
     exportarSeleccionadas(){
-      const rowsToExport = Array.from(this.clickedRows);
+      const rowsToExport = Array.from(this.misignalService.clickedRows);
       if (rowsToExport.length === 0) {
         alert('No hay migraciones seleccionadas para exportar.');
         return;
@@ -265,5 +266,14 @@ export class MigManualComponent {
               console.log(resp);
     },
  )}
+
+    aplicarFiltro(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    limpiarFiltro() {
+      this.dataSource.filter = '';
+    }
 
 }

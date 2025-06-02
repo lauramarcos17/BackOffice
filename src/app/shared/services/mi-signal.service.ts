@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { Beneficiario, ClienteJsonInterface, Deudore, Libradore } from '../interfaces/ClienteJson.interface';
 import { CopiaSeguridadJson } from '../interfaces/CopiaSeguridadJson.interface';
 import { SctOrdenante, ChkOrdenante, Acreedores } from '../interfaces/ClienteJson.interface';
+import { Migracion } from '../interfaces/Migracion.interface';
 
 @Injectable({ providedIn: 'root' })
 
@@ -16,6 +17,9 @@ export class MiSignalService {
   copiaSeguridad = signal<CopiaSeguridadJson|null>(null);
   mostrarTablaTotales=signal<boolean>(false);
   tituloTabla=signal<string>('');
+   
+  filaSeleccionada = signal<number>(0);
+   clickedRows = new Set<Migracion>();
 
   selectedTab = signal(0);
   cuadernoSeleccionado=signal(false);

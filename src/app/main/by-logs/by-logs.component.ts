@@ -24,7 +24,7 @@ interface Food {
 @Component({
 
   selector: 'app-by-logs',
-  imports: [ConsultasLogsComponent,FormsModule,MatSelectModule,MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDividerModule,  MatButton, MatButtonModule, MatTooltip, MatIconModule],
+  imports: [ConsultasLogsComponent,FormsModule,MatSelectModule,MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatButtonModule, MatTooltip, MatIconModule],
   templateUrl: './by-logs.component.html',
   styleUrl: 'by-logs.component.css',
   providers: [provideNativeDateAdapter()]

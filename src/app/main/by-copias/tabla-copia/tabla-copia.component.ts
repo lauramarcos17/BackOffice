@@ -156,8 +156,8 @@ export class TablaCopiaComponent {
 
       textosGuiaFacil = new Map<string, string>([
       ['guia_copias', 'Desde este menú podrá gestionar las copias de seguridad de AEBWeb. Una copia de seguridad almacena todos los datos que tiene un cliente en los cuadernos SEPA. \n Solamente se permite una copia de seguridad por cliente. Si se hace una segunda copia se machaca la anterior.'],
-      ['buscar_copias', 'Para encontrar una determinada copia de seguridad puede usar los campos de búsqueda por usuario o fecha y pulsar [Buscar].'],
-      ['vertodas_copias', 'Para listar todas las copias almacenadas, pulse [Ver Todas]'],
+      ['buscar_copias', 'Para encontrar una determinada copia de seguridad puede usar los campos de búsqueda por usuario o fecha y pulsar .'],
+      ['vertodas_copias', 'Para listar todas las copias almacenadas.'],
       ['restaurar_copias', 'Permite restaurar la información de un usuario de AEBWeb utilizando su copia de seguridad. Antes de restaurar la información se le mostrará, a modo de confirmación, un resumen de los datos almacenados en la copia. (Importante: Toda la información del usuario de AEBWeb, en los cuadernos SEPA, se eliminará antes de cargarle los datos de la copia de seguridad).'],
       ['eliminar_copias', 'Borrará toda la información de la copia de seguridad seleccionada.'],
       ['crear_copias', 'Conducirá a una pantalla donde podrá seleccionar el usuario para el que desea crear una copia de seguridad. En dicha pantalla se mostrará , a modo de confirmación, un resumen de los datos del usuario.']
@@ -276,15 +276,19 @@ export class TablaCopiaComponent {
               },
            )}
 
-           addHoursToISOString(dateStr: string): string {
-              const [datePart, timePart] = dateStr.split(" - ");
-              const [day, month, year] = datePart.split("/").map(Number);
-              const [hours, minutes, seconds] = timePart.split(":").map(Number);
+          addHoursToISOString(dateStr: string): string {
+            const [datePart, timePart] = dateStr.split(" - ");
+            const [day, month, year] = datePart.split("/").map(Number);
+            const [hours, minutes, seconds] = timePart.split(":").map(Number);
 
-              // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
-              const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
-              date.setUTCHours(date.getUTCHours() + 1);
-              return date.toISOString().split('.')[0] + 'Z';
+            // Crear la fecha en UTC (mes en JavaScript va de 0 a 11)
+            const date = new Date(Date.UTC(year, month - 1, day, hours, minutes, seconds));
+            date.setUTCHours(date.getUTCHours() + 1);
+
+            // Formatear como "dd/MM/yyyy - HH:mm:ss"
+            const pad = (n: number) => n.toString().padStart(2, '0');
+            const formatted = `${pad(date.getUTCDate())}/${pad(date.getUTCMonth() + 1)}/${date.getUTCFullYear()} - ${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`;
+            return formatted;
           }
 
           
