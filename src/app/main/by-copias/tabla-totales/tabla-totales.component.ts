@@ -153,25 +153,34 @@ constructor() {
   }
 
   crearCopiaSeguridad(){
+  
+    //controlamos lo que recogemos por teclado 
+    let descripcionCopia=prompt("Introduce una descripción para la copia de seguridad")
+      if (descripcionCopia === null) { //cuando el usuario pulsa cancelar
+      return;
 
-   this.jsonDatoService.crearCopiaSeguridad(this.idCliente()).subscribe((resp: CopiaSeguridadJson) => {
-        console.log(resp),
-        this.misignalService.copiaSeguridad.set(resp);
+    } else {
+      if (descripcionCopia.trim() === "") { //cuando el usuario no pone nada y da aceptar
+      descripcionCopia="Copia de seguridad generada correctamente.";
+       } 
+      this.jsonDatoService.crearCopiaSeguridad(this.idCliente(),descripcionCopia).subscribe((resp: CopiaSeguridadJson) => {
+          console.log(resp),
+          this.misignalService.copiaSeguridad.set(resp);
 
-        // alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
+          // alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
 
-        //Al crear una copia cambio la señal para que se ejecute el efecto
-        this.misignalService.actualizarBackup.set(true);
-         this.mandaLogBruto(resp);
+          //Al crear una copia cambio la señal para que se ejecute el efecto
+          this.misignalService.actualizarBackup.set(true);
+          this.mandaLogBruto(resp);
 
 
-    });
-      //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias
-       setTimeout(() => {
-       this.misignalService.mostrarTablaTotales.set(false);
-    }, 400);
-      console.log(this.misignalService.mostrarTablaTotales());
-
+      });
+        //ponemos tiempo para cambiar a la otra pestaña porque si no no actualiza al momento las copias
+        setTimeout(() => {
+        this.misignalService.mostrarTablaTotales.set(false);
+      }, 400);
+        console.log(this.misignalService.mostrarTablaTotales());
+    }
 
    }
     mandaLogBruto(row : CopiaSeguridadJson){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN

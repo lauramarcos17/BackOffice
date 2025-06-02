@@ -41,9 +41,9 @@ export class JsonDatoService {
     );
   }
 
-  crearCopiaSeguridad(idCliente: String):Observable<CopiaSeguridadJson>{
+  crearCopiaSeguridad(idCliente: String, descripcionCopia:String):Observable<CopiaSeguridadJson>{
      return this.http.get<CopiaSeguridadJson>(`${this.apiUrl}/generarCopiaSeguridad`, {
-      params: { id: idCliente.toString() }, // Pasa el parámetro id como query param
+      params: { id: idCliente.toString(),descripcionCopia:descripcionCopia.toString() }, // Pasa el parámetro id como query param
       withCredentials: true,
 
        // Incluye cookies o credenciales si es necesario
