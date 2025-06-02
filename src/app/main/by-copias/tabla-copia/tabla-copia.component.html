@@ -11,7 +11,7 @@
       <mat-label>Fecha desde</mat-label>
       <input matInput [matDatepicker]="picker" [value]="fechaDesde()" (dateChange)="fechaDesde.set($event.value)">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker class="calendario" #picker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field >

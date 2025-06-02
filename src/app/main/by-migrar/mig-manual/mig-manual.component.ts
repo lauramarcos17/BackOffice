@@ -69,6 +69,22 @@ export class MigManualComponent {
 
 
   ngAfterViewInit() {
+    // Personaliza el ordenamiento para las fechas
+    this.dataSource.sortingDataAccessor = (item:any, property:any) => {
+      if (property === 'fechaHoraInicioOperacion' || property === 'fechaHoraFinOperacion') {
+        // Espera formato "dd/MM/yyyy - HH:mm:ss"
+        const fechaStr = item[property];
+        if (!fechaStr) return 0;
+        const [fecha, hora] = fechaStr.split(' - ');
+        if (!fecha || !hora) return 0;
+        const [dia, mes, anio] = fecha.split('/').map(Number);
+        const [h, m, s] = hora.split(':').map(Number);
+        return new Date(anio, mes - 1, dia, h, m, s).getTime();
+      }
+      // Por defecto, devuelve el valor tal cual
+      return item[property];
+    };
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

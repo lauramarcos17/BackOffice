@@ -73,6 +73,9 @@ h1{
   max-width: none;
   box-sizing: border-box;
 }
+.mat-calendar-table{
+    margin-left: 0px !important;
+}
 
 body {
   height: auto;

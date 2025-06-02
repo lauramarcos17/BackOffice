@@ -98,11 +98,33 @@ export class TablaCopiaComponent {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngAfterViewInit() {
+   ngAfterViewInit() {
+    this.dataSource.sortingDataAccessor = (item: any, property: string) => {
+      if (property === 'fechaHora') {
+        const fechaStr: string = item[property];
+        if (!fechaStr) return 0;
+        const [fecha, hora] = fechaStr.split(' - ');
+        if (!fecha || !hora) return 0;
+        const [dia, mes, anio] = fecha.split('/').map(Number);
+        const [h, m, s] = hora.split(':').map(Number);
+        // Devuelve SIEMPRE un número
+        const time = new Date(anio, mes - 1, dia, h, m, s).getTime();
+        return isNaN(time) ? 0 : time;
+      }
+      // Por defecto, devuelve el valor tal cual
+      return item[property];
+    };
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.cargarBackups();
   }
+
+  /*ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.cargarBackups();
+  }*/
 
   announceSortChange(sortState: Sort) {
    //para ordenar columnas de la tabla
