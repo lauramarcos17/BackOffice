@@ -42,7 +42,8 @@ export class ByLogsComponent {
     ['query', 'Para facilitar la localización de las operaciones que modifican los datos en base de datos, puede marcar el check Mostrar sólo querys que alteren base de datos. Se mostrarán sólo las queries de inserción, actualización y borrado de datos.'],
     ['buscar', 'Puede hacer uso del campo de búsqueda de texto libre, sobre la tabla, para buscar en las columnas"Acción" y "Query"'],
     ['rol','El campo "Rol" permite distinguir si la acción la ha realizado el cliente ("Estandar") o se ha realizado desde Back-office como "Administrador" o "Supervisor".' ],
-    ['accion','El campo "Acción" indica la acción del usuario que desencadenó esa operación de base de datos. \n Seleccione la fila correspondiente a una acción para ver la consulta completa en el cuadro bajo la tabla.']
+    ['accion','El campo "Acción" indica la acción del usuario que desencadenó esa operación de base de datos. \n Seleccione la fila correspondiente a una acción para ver la consulta completa en el cuadro bajo la tabla.'],
+    ['ayuda','Ayuda']
   ]);
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';

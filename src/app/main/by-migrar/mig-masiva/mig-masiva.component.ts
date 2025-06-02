@@ -58,8 +58,6 @@ export class MigMasivaComponent {
           // Procesa las migraciones de forma secuencial para evitar bucles o sobrecarga en el backend (evita el bucle de error en servidor)
           this.procesarMigracionesSecuencialmente(this.data).then(() => {
 
-
-
             alert('Migración masiva creada con éxito');
             this.misignalService.tipoMigracion.set(1);
           }
@@ -69,8 +67,6 @@ export class MigMasivaComponent {
         } catch (err) {
           alert('Error en la migración (' + err + ')');
         }
-
-
         console.log(this.data);
       };
 
@@ -83,8 +79,7 @@ export class MigMasivaComponent {
       }
     }
 
-
-
+    
     crearMigracionAsync(clienteOrigen: string, clienteDestino: string): Promise<any> {
       return new Promise((resolve, reject) => {
         this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({

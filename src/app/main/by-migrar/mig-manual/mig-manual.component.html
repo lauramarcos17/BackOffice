@@ -98,9 +98,10 @@
 </mat-paginator>
 
 <div class="btnCopias">
-  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="!filaSeleccionada()" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migración</button>
-  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="!filaSeleccionada()" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
- <!--<button class="mat-flat-button" mat-flat-button (click)="mandaLogBruto()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>-->
+  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="filaSeleccionada()<=0" (click)="eliminarMigracion()"[matTooltip]="textosGuiaFacil.get('limpiar')">Limpiar migraciones</button>
+  <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="filaSeleccionada()!=1" (click)="restaurarMigracion()" [matTooltip]="textosGuiaFacil.get('restaurar')">Restaurar migración</button>
+  <button class="mat-flat-button boton-azul" mat-flat-button (click)="seleccionarTodos()" [matTooltip]="textosGuiaFacil.get('seleccionar')">Seleccionar todo</button>
+   <button class="mat-flat-button boton-azul" mat-flat-button [disabled]="filaSeleccionada()<=0" (click)="exportarSeleccionadas()" [matTooltip]="textosGuiaFacil.get('exportar')">Exportar</button>
 </div>
 
 </div>

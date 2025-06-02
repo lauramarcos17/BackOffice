@@ -5,7 +5,7 @@
     </div>
     <span class="separacion"></span>
     <span class="botonAyuda">
-      <button class="info-btn" mat-mini-fab (click)="openSnackBar()" aria-label="Show/Hide tooltip on the button at the end of this section">
+      <button class="info-btn" mat-mini-fab (click)="openSnackBar()"[matTooltip]="textosGuiaFacil.get('ayuda')" aria-label="Show/Hide tooltip on the button at the end of this section">
         <mat-icon class="iconoAyuda">help_outline</mat-icon>
       </button>
     </span>

@@ -32,7 +32,7 @@ export class ByMigrarComponent {
     ['limpiar','Esta acción no se puede deshacer. Se eliminan la copia de seguidad de los usuarios que se generaron en la migración y el registro de la operación en la tabla de migraciones.'],
     ['restaurar','Esta acción no se puede deshacer. Vuelve al estado previo a la migración, recuperando la información de las copias de seguridad. Si el usuario Origen o Destino hubiesen añadido información tras la migración, esta se perderá. La migración restaurada sigue disponible. Esto permite restaurarla de nuevo si fuera necesario.'],
     ['exportar','Genera un fichero excel con el resultado de la migración.'],
-
+    ['ayuda','Ayuda']
   ]);
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';

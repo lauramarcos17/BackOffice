@@ -10,7 +10,7 @@
   <div class="cierresesion">
     <p>Usuario: {{mensaje()}}  ({{rolNombre()}}) </p>
 
-    <button class="btnSalir" [routerLink]="['/']" (click)="resetPantalla()" mat-mini-fab aria-label="Example icon button with a menu icon">
+    <button class="btnSalir" [routerLink]="['/']" [matTooltip]="textosGuiaFacil.get('ayuda')"(click)="resetPantalla()" mat-mini-fab aria-label="Example icon button with a menu icon">
       <mat-icon>exit_to_app</mat-icon>
     </button>
 

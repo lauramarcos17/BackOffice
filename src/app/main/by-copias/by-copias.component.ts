@@ -88,8 +88,8 @@ export class ByCopiasComponent implements AfterViewInit {
     ['vertodas_copias', 'Para listar todas las copias almacenadas, pulse [Ver Todas]'],
     ['restaurar_copias', 'Permite restaurar la información de un usuario de AEBWeb utilizando su copia de seguridad. Antes de restaurar la información se le mostrará, a modo de confirmación, un resumen de los datos almacenados en la copia. (Importante: Toda la información del usuario de AEBWeb, en los cuadernos SEPA, se eliminará antes de cargarle los datos de la copia de seguridad).'],
     ['eliminar_copias', 'Borrará toda la información de la copia de seguridad seleccionada.'],
-    ['crear_copias', 'Conducirá a una pantalla donde podrá seleccionar el usuario para el que desea crear una copia de seguridad. En dicha pantalla se mostrará , a modo de confirmación, un resumen de los datos del usuario.']
-
+    ['crear_copias', 'Conducirá a una pantalla donde podrá seleccionar el usuario para el que desea crear una copia de seguridad. En dicha pantalla se mostrará , a modo de confirmación, un resumen de los datos del usuario.'],
+    ['ayuda','Ayuda']
 
   ]);
 

@@ -11,8 +11,8 @@ import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MiSignalService } from 'app/shared/services/mi-signal.service';
 import { Log } from 'app/shared/interfaces/Log.interface';
-import { Observable } from 'rxjs';
 import { MatDividerModule } from '@angular/material/divider';
+import * as XLSX from 'xlsx';
 
 
 // export interface Manual{
@@ -46,7 +46,7 @@ export class MigManualComponent {
 
    clickedRows = new Set<Migracion>(); //guarda los clicks
    migraciones = signal<Migracion[]>([]);
-   filaSeleccionada = signal<boolean>(false);
+   filaSeleccionada = signal<number>(0);
    nombrerol=this.misignalService.nombrerol();
    rol = this.misignalService.rol;
 
@@ -55,7 +55,8 @@ export class MigManualComponent {
   textosGuiaFacil = new Map<string, string>([
     ['seleccionar', 'Permite seleccionar todas las migraciones del listado'],
     ['restaurar','Pemite restaurar una o varias migraciones. Si no hay ninguna migracción seleccionada aparecerá desactivado'] ,
-     ['limpiar','Permite limpiar una o varias migraciones.Si no hay ninguna migración seleccionada aparecerá desactivado']
+    ['limpiar','Permite limpiar una o varias migraciones. Si no hay ninguna migración seleccionada aparecerá desactivado'],
+    ['exportar','Permite exportar una o varias migraciones en formato xls. Si no hay ninguna migración seleccionada aparecerá desactivado']
 
 
   ]);
@@ -137,64 +138,116 @@ export class MigManualComponent {
 
    seleccionarMigracion(row: any){
         if(!this.clickedRows.has(row)){ //cambio de selección
-          this.clickedRows.clear();
+          /*this.clickedRows.clear();*/
           this.clickedRows.add(row)
-          this.filaSeleccionada.set(true);
+          this.filaSeleccionada.update(value=>value+1);
         }else{ //Dejamos de seleccionar
-          this.clickedRows.clear();
-          this.filaSeleccionada.set(false);
+          /*this.clickedRows.clear();*/
+          this.clickedRows.delete(row);
+          this.filaSeleccionada.update(value=>value-1);
         }
         // alert(row.fechaHora);
 
       }
 
-       eliminarMigracion(){
+  eliminarMigracion() {
+    const rowsToDelete = Array.from(this.clickedRows);
+    if (rowsToDelete.length === 0) return;
 
-              const row = Array.from(this.clickedRows)[0];
-              if (!row) return;
-              //añado el .trim() para quitar los espacios al final
-              this.jsonDatoService.eliminarMigracion(row.clienteOrigen.trim(), row.fechaHoraInicioOperacion.trim()).subscribe({
-                next: () => {
-                  // Elimina la fila del array local y refresca la tabla
-                  this.migraciones.set(this.migraciones().filter(b => 
-                    !(b.clienteOrigen === row.clienteOrigen && b.fechaHoraInicioOperacion === row.fechaHoraInicioOperacion)));
-                  this.dataSource.data = this.migraciones();
-                  this.clickedRows.clear();
-                  this.filaSeleccionada.set(false);
-                },
-                error: err => {
-                  alert('Error al eliminar la copia');
-                  console.error(err);
-                }
-              });
+    // Confirmación opcional
+    if (!confirm(`¿Seguro que quieres eliminar ${rowsToDelete.length} migración(es) seleccionada(s)?`)) return;
 
-              //recojo datos de columna que hago click para guardar en la base de datos de logs y luego pintar info
+    let eliminadas = 0;
+    rowsToDelete.forEach(row => {
+      this.jsonDatoService.eliminarMigracion(row.clienteOrigen.trim(), row.fechaHoraInicioOperacion.trim()).subscribe({
+        next: () => {
+          // Elimina del array local
+          this.migraciones.set(
+            this.migraciones().filter(b =>
+              !(b.clienteOrigen === row.clienteOrigen && b.fechaHoraInicioOperacion === row.fechaHoraInicioOperacion)
+            )
+          );
+           this.mandaLogBruto(row, "Migración eliminada"); //para enviar a Logs
+          eliminadas++;
+          // Cuando termine la última, actualiza la tabla y limpia selección
+          if (eliminadas === rowsToDelete.length) {
+            this.dataSource.data = this.migraciones();
+            this.clickedRows.clear();
+            this.filaSeleccionada.set(0);
+          }
+        },
+        error: err => {
+          alert('Error al eliminar la migración');
+          console.error(err);
+        }
+      });
 
-              this.mandaLogBruto(row,"Migración eliminada");
-
-
-            }
+      // Log de eliminación (opcional)
+     
+  });
+}
 
     restaurarMigracion(){
       const row = Array.from(this.clickedRows)[0]; //obtenemos la fila de la copia seleccionada
       if (!row) return;
-      alert("Migracion restaurada a fecha de: " + row.fechaHoraInicioOperacion.trim());
-      this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim()).subscribe((resp: Migracion) => {
-              console.log(resp);
-              // Actualiza la lista de migraciones agregando la respuesta
-              this.migraciones.update((prev) => [...prev, resp]);
-             // alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
-              // Al crear una copia cambio la señal para que se ejecute el efecto
+      if(!row.operacion.includes("Restauración")) {
+        if (!confirm(`¿Seguro que quieres restaurar la migración seleccionada?`)) return;
+        alert("Migracion restaurada a fecha de: " + row.fechaHoraInicioOperacion.trim());
+        this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim()).subscribe((resp: Migracion) => {
+                console.log(resp);
+                // Actualiza la lista de migraciones agregando la respuesta
+                this.migraciones.update((prev) => [...prev, resp]);
+              // alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
+                // Al crear una copia cambio la señal para que se ejecute el efecto
 
-        });
-      // Si necesitas recargar migraciones después de restaurar, llama a cargarMigraciones
-      setTimeout(() => {
-        this.cargarMigraciones();
-      }, 400);
-       this.mandaLogBruto(row,"Migración restaurada");
+          });
+        // Si necesitas recargar migraciones después de restaurar, llama a cargarMigraciones
+        setTimeout(() => {
+          this.cargarMigraciones();
+        }, 400);
+        this.mandaLogBruto(row,"Migración restaurada");
 
     }
+    else {
+      alert("No se puede restaurar una migración restaurada.");
+    }
+  }
+  
 
+    seleccionarTodos()
+    {
+     this.dataSource.data.forEach(row => this.clickedRows.add(row));
+     this.filaSeleccionada.set(this.dataSource.data.length);
+    }
+
+    exportarSeleccionadas(){
+      const rowsToExport = Array.from(this.clickedRows);
+      if (rowsToExport.length === 0) {
+        alert('No hay migraciones seleccionadas para exportar.');
+        return;
+      }
+
+      const data = rowsToExport.map(row => ({
+        'Usuario Origen': row.clienteOrigen,
+        'Usuario Destino': row.clienteDestino,
+        'Fecha Inicio': row.fechaHoraInicioOperacion,
+        'Fecha Fin': row.fechaHoraFinOperacion,
+        'Operación': row.operacion,
+        'Resultado': row.resultado,
+        'Descripción': row.descripcion
+      }));
+
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+      const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Migraciones');
+
+      // Formatea la fecha actual como yyyyMMdd_HHmmss
+      const now = new Date();
+      const fechaStr = now.toISOString().slice(0,19).replace(/[-:T]/g, '').replace(/(\d{8})(\d{6})/, '$1_$2');
+      const filename = `Migraciones_${fechaStr}.xlsx`;
+
+      XLSX.writeFile(workbook, filename);
+    }
 
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
       // alert("mandando log");
