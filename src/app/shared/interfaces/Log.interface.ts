@@ -1,5 +1,5 @@
   export interface Log {
-    
+    id: number;
     usuario: string;
     fechaInicio: string;
     fechaFin: string;

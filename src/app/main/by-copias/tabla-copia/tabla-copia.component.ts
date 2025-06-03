@@ -284,6 +284,7 @@ export class TablaCopiaComponent {
        mandaLogBruto(row : CopiaSeguridadJson,operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
                 // alert("mandando log");
                   const logBruto= {
+                          id:0,
                           fechaInicio: row.fechaHora,
                           fechaFin: this.addHoursToISOString(row.fechaHora),
                           usuario: this.nombrerol,
@@ -313,6 +314,6 @@ export class TablaCopiaComponent {
             return formatted;
           }
 
-          
+
 
 }

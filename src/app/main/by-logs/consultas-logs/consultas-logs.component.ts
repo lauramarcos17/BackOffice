@@ -35,7 +35,7 @@ export class ConsultasLogsComponent {
   jsonDatoService=inject(JsonDatoService);
   rol=this.misignalService.rol;
 
-  displayedColumns: string[] = ['fechaInicio','fechaFin','usuario','operacion','cuaderno','cliente'];
+  displayedColumns: string[] = ['id','fechaInicio','fechaFin','usuario','operacion','cuaderno','cliente'];
   dataSource = new MatTableDataSource<Log>(ELEMENT_DATA);
 
   private _liveAnnouncer = inject(LiveAnnouncer);
@@ -70,7 +70,7 @@ export class ConsultasLogsComponent {
   }
 
 
- 
+
    announceSortChange(sortState: Sort) {
    //para ordenar columnas de la tabla
     if (sortState.direction) {
@@ -105,7 +105,7 @@ export class ConsultasLogsComponent {
     const clienteobjeto = this.misignalService.objetoCliente();
     const cliente = clienteobjeto?.id?.toString() ?? '';
 
-    console.log('Cliente ID usado para buscar backups:', cliente);
+    console.log('Cliente ID usado para buscar logs:', cliente);
     this.jsonDatoService.getLogs(cliente).subscribe({
       next: (resp) => {
        this.logs.set(resp);
@@ -116,7 +116,7 @@ export class ConsultasLogsComponent {
 
       },
       error: (err) => {
-       console.error('Error cargando backups', err);
+       console.error('Error cargando logs', err);
       }
     });
    }

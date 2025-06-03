@@ -153,8 +153,8 @@ constructor() {
   }
 
   crearCopiaSeguridad(){
-  
-    //controlamos lo que recogemos por teclado 
+
+    //controlamos lo que recogemos por teclado
     let descripcionCopia=prompt("Introduce una descripción para la copia de seguridad")
       if (descripcionCopia === null) { //cuando el usuario pulsa cancelar
       return;
@@ -162,7 +162,7 @@ constructor() {
     } else {
       if (descripcionCopia.trim() === "") { //cuando el usuario no pone nada y da aceptar
       descripcionCopia="Copia de seguridad generada correctamente.";
-       } 
+       }
       this.jsonDatoService.crearCopiaSeguridad(this.idCliente(),descripcionCopia).subscribe((resp: CopiaSeguridadJson) => {
           console.log(resp),
           this.misignalService.copiaSeguridad.set(resp);
@@ -186,6 +186,7 @@ constructor() {
     mandaLogBruto(row : CopiaSeguridadJson){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
           // alert("mandando log");
             const logBruto= {
+                    id:0,
                     fechaInicio: row.fechaHora,
                     fechaFin: this.addHoursToISOString(row.fechaHora),
                     usuario: this.nombrerol,

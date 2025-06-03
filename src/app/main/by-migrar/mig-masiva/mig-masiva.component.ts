@@ -79,7 +79,7 @@ export class MigMasivaComponent {
       }
     }
 
-    
+
     crearMigracionAsync(clienteOrigen: string, clienteDestino: string): Promise<any> {
       return new Promise((resolve, reject) => {
         this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
@@ -101,6 +101,7 @@ export class MigMasivaComponent {
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
           //  alert("mandando log desde masivo");
             const logBruto= {
+                    id:0,
                     fechaInicio: row.fechaHoraInicioOperacion,
                     fechaFin: row.fechaHoraFinOperacion,
                     usuario: this.nombrerol,

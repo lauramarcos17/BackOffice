@@ -262,7 +262,7 @@ export class MigManualComponent {
         setTimeout(() => {
           this.cargarMigraciones();
         }, 400);
-       // this.mandaLogBruto(row,"Migración restaurada");    <-----
+        this.mandaLogBruto(row,"Migración restaurada");
 
     }
     else {
@@ -312,7 +312,7 @@ export class MigManualComponent {
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
       // alert("mandando log");
         const logBruto= {
-
+                id:0,
                 fechaInicio: row.fechaHoraInicioOperacion,
                 fechaFin: row.fechaHoraFinOperacion,
                 usuario: this.nombrerol,
