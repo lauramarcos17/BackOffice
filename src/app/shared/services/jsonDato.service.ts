@@ -108,33 +108,39 @@ export class JsonDatoService {
 
     );
   }
-  getMigraciones(): Observable<Migracion[]> {
-    return this.http.get<Migracion[]>(`${this.apiUrl}/migraciones`);
+  getMigraciones(idCliente: string): Observable<Migracion[]> {
+    return this.http.get<Migracion[]>(`${this.apiUrl}/migraciones`,{
+      params: { idCliente },
+      withCredentials: true,
+    });
   }
 
-  eliminarMigracion(clienteOrigen: string, fechaHoraInicioOperacion: string) {
+  eliminarMigracion(id: number) {
     return this.http.delete(`${this.apiUrl}/eliminarMigracion`, {
-      params: { clienteOrigen, fechaHoraInicioOperacion },
+      params: { id },
       responseType: 'text'
     });
   }
 
-  restaurarMigracion(clienteOrigen: String, clienteDestino:String):Observable<Migracion>{
-     return this.http.get<Migracion>(`${this.apiUrl}/restaurarMigracion`, {
-      params: { clienteOrigen: clienteOrigen.toString(), clienteDestino: clienteDestino.toString()}, // Pasa el parámetro id como query param
-      withCredentials: true,
 
-       // Incluye cookies o credenciales si es necesario
-    }).pipe(
 
-      timeout(3000),//tiempo para que saque el alert si hay error de conexión
-      //map(res => JSON.parse(res) as ClienteJsonInterface), // Parseamos manualmente
-      catchError(error => {console.error("error de conexion al servidor ", error);
-        //alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
-        return throwError(()=>new Error ("No se pudo conectar al serv"))})
-
+  restaurarMigracion(clienteOrigen: string, clienteDestino: string, id: string): Observable<Migracion> {
+    return this.http.post<Migracion>(
+      `${this.apiUrl}/restaurarMigracion`,
+      { id }, // Request body
+      {
+        params: { clienteOrigen: clienteOrigen.toString(), clienteDestino: clienteDestino.toString() },
+        withCredentials: true,
+      }
+    ).pipe(
+      timeout(3000),
+      catchError(error => {
+        console.error("error de conexion al servidor ", error);
+        return throwError(() => new Error("No se pudo conectar al serv"));
+      })
     );
   }
+
 
   crearLog(log: Log): Observable<Log> {
     return this.http.post<Log>(`${this.apiUrl}/generarLog`, log, {

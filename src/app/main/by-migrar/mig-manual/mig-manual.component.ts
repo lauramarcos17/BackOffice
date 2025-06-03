@@ -1,5 +1,5 @@
 import { JsonDatoService } from 'app/shared/services/jsonDato.service';
-import { Component, inject, Input, signal, ViewChild, computed } from '@angular/core';
+import { Component, inject, Input, signal, ViewChild, computed, effect } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +14,8 @@ import { Log } from 'app/shared/interfaces/Log.interface';
 import { MatDividerModule } from '@angular/material/divider';
 import * as XLSX from 'xlsx';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 
 // export interface Manual{
@@ -31,14 +33,14 @@ const ELEMENT_DATA: Migracion[] = [
 
 @Component({
   selector: 'app-mig-manual',
-  imports: [MatLabel,MatIconModule,MatIcon,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator,MatDividerModule],
+  imports: [CommonModule, MatLabel,MatIconModule,MatIcon,MatTooltipModule,MatFormField,MatSortModule,MatInputModule,MatFormFieldModule,MatButtonModule, MatTooltipModule,MatTableModule,MatPaginator,MatDividerModule],
   templateUrl: './mig-manual.component.html',
   styleUrl: 'mig-manual.component.css',
 })
 export class MigManualComponent {
 
   @Input() mapa!: Map<string, string>;
-  displayedColumns: string[] = ['clienteOrigen', 'clienteDestino','fechaHoraInicioOperacion','fechaHoraFinOperacion','operacion','resultado','descripcion'];
+  displayedColumns: string[] = ['id','clienteOrigen', 'clienteDestino','fechaHoraInicioOperacion','fechaHoraFinOperacion','operacion','resultado','descripcion'];
   dataSource = new MatTableDataSource<Migracion>(ELEMENT_DATA);
   private _liveAnnouncer = inject(LiveAnnouncer); //para ordenar tabla con Matsort
 
@@ -47,7 +49,9 @@ export class MigManualComponent {
 
     //guarda los clicks
    migraciones = signal<Migracion[]>([]);
-  
+
+  clienteId = computed(() => this.misignalService.objetoCliente()?.id?.toString() ?? '');
+
    nombrerol=this.misignalService.nombrerol();
    rol = this.misignalService.rol;
 
@@ -89,7 +93,38 @@ export class MigManualComponent {
     this.dataSource.sort = this.sort;
   }
 
+  //   constructor(private dialog: MatDialog) {
+  //   effect(() => {
+  //     //const actualizar=this.misignalService.actualizarBackup();
+  //     const cliente = this.misignalService.objetoCliente();
+  //     if (cliente && cliente.id !== undefined && cliente.id !== null) {
+  //       this.cargarBackups();
+
+  //     }
+  //   });
+  // }
+  // cambiarLaura(){
+  //   this.misignalService.mostrarTablaTotales.set(!this.mostrarTablaTotales());
+  // }
+
+  constructor(private dialog: MatDialog) {
+    effect(() => {
+      const cliente = this.misignalService.objetoCliente();
+       if (cliente && cliente.id !== undefined && cliente.id !== null) {
+         this.cargarMigraciones();
+         this.misignalService.clickedRows.clear();
+          this.misignalService.filaSeleccionada.set(0);
+       }
+    });
+  }
+
   ngOnInit() {
+    this.cargarMigraciones();
+  }
+
+  ngOnChanges(){
+    this.misignalService.clickedRows.clear();
+    this.misignalService.filaSeleccionada.set(0);
     this.cargarMigraciones();
   }
 
@@ -103,7 +138,7 @@ export class MigManualComponent {
   }
   cargarMigraciones() {
     setTimeout(() => {
-    this.jsonDatoService.getMigraciones().subscribe({
+    this.jsonDatoService.getMigraciones(this.clienteId()).subscribe({
       next: (migraciones) => {
           this.migraciones.set(migraciones);
           this.dataSource.data = migraciones;
@@ -149,6 +184,8 @@ export class MigManualComponent {
       this.cargarMigraciones();
     },300);
 
+    this.misignalService.clickedRows.clear();
+    this.misignalService.filaSeleccionada.set(0);
 
   }
 
@@ -176,7 +213,7 @@ export class MigManualComponent {
 
     let eliminadas = 0;
     rowsToDelete.forEach(row => {
-      this.jsonDatoService.eliminarMigracion(row.clienteOrigen.trim(), row.fechaHoraInicioOperacion.trim()).subscribe({
+      this.jsonDatoService.eliminarMigracion(row.id).subscribe({
         next: () => {
           // Elimina del array local
           this.migraciones.set(
@@ -199,8 +236,10 @@ export class MigManualComponent {
         }
       });
 
+
+
       // Log de eliminación (opcional)
-     
+
   });
 }
 
@@ -210,8 +249,9 @@ export class MigManualComponent {
       if(!row.operacion.includes("Restauración")) {
         if (!confirm(`¿Seguro que quieres restaurar la migración seleccionada?`)) return;
         alert("Migracion restaurada a fecha de: " + row.fechaHoraInicioOperacion.trim());
-        this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim()).subscribe((resp: Migracion) => {
-                console.log(resp);
+        this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim(), row.id.toString().trim()).subscribe((resp: Migracion) => {
+          console.log("ROOOOOOW: "+row.id)
+          console.log(resp);
                 // Actualiza la lista de migraciones agregando la respuesta
                 this.migraciones.update((prev) => [...prev, resp]);
               // alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
@@ -222,14 +262,16 @@ export class MigManualComponent {
         setTimeout(() => {
           this.cargarMigraciones();
         }, 400);
-        this.mandaLogBruto(row,"Migración restaurada");
+       // this.mandaLogBruto(row,"Migración restaurada");    <-----
 
     }
     else {
       alert("No se puede restaurar una migración restaurada.");
     }
+    this.misignalService.clickedRows.clear();
+            this.misignalService.filaSeleccionada.set(0);
   }
-  
+
 
     seleccionarTodos()
     {
@@ -245,6 +287,7 @@ export class MigManualComponent {
       }
 
       const data = rowsToExport.map(row => ({
+        'ID':row.id,
         'Usuario Origen': row.clienteOrigen,
         'Usuario Destino': row.clienteDestino,
         'Fecha Inicio': row.fechaHoraInicioOperacion,
@@ -269,6 +312,7 @@ export class MigManualComponent {
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
       // alert("mandando log");
         const logBruto= {
+
                 fechaInicio: row.fechaHoraInicioOperacion,
                 fechaFin: row.fechaHoraFinOperacion,
                 usuario: this.nombrerol,

@@ -14,8 +14,9 @@
 
 
 
-<button class="mat-flat-button-form boton-azul btn-mig" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button> 
+<button class="mat-flat-button-form boton-azul btn-mig" mat-flat-button [matTooltip]="mapa.get('migrar')" (click)="crearMigracion(idClienteOrigen.value,idClienteDestino.value)">Migrar usuario</button>
 </div>
+@if(rol()==1){
 <div class="buscador-migracion">
   <mat-form-field   id="buscador-migraciones">
       <mat-label>Buscar migración</mat-label>
@@ -26,10 +27,11 @@
       </button>
     </mat-form-field>
   </div>
+}
 </div>
 
 
-
+@if(rol()==1){
 <div class="encabezado">
     <div class="tituloTxt">
       <h5 class="title">Listado de migraciones</h5>
@@ -39,15 +41,22 @@
 <!-- <mat-divider></mat-divider> -->
 
 <!-- TABLA HISTORICO MIGRACIONES (Solo para Admin) -->
-@if(rol()==1){
+
 <div class="tablaCopias">
 
   <!-- Input de búsqueda -->
- 
+
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
 
     <!--asocio en matcolumnDef el campo de displayedColumns-->
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+      ID
+    </th>
+    <td mat-cell *matCellDef="let elemento"> {{elemento.id}} </td>
+  </ng-container>
 
   <ng-container matColumnDef="clienteOrigen">
     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
