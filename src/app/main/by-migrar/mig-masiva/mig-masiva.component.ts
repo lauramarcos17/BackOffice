@@ -24,7 +24,7 @@ export class MigMasivaComponent {
 
   @Input() mapa!: Map<string, string>;
 
-  data: { col1: any; col2: any }[] = [];
+  data: { col1: any; col2: any; col3:any }[] = [];
 
   exitReader = false;
 
@@ -51,7 +51,8 @@ export class MigMasivaComponent {
 
         this.data = jsonData.slice(1).map(row => ({
           col1: row[0],
-          col2: row[1]
+          col2: row[1],
+          col3: row[2]
         }));
 
         try {
@@ -73,21 +74,21 @@ export class MigMasivaComponent {
       reader.readAsArrayBuffer(target.files[0]);
     }
 
-    async procesarMigracionesSecuencialmente(data: { col1: any; col2: any }[]) {
-      for (const { col1, col2 } of data) {
-        await this.crearMigracionAsync(col1, col2);
+    async procesarMigracionesSecuencialmente(data: { col1: any; col2: any,col3:any }[]) {
+      for (const { col1, col2 ,col3} of data) {
+        await this.crearMigracionAsync(col1, col2, col3);
       }
     }
 
 
-    crearMigracionAsync(clienteOrigen: string, clienteDestino: string): Promise<any> {
+    crearMigracionAsync(clienteOrigen: string, clienteDestino: string, claveForzar:string): Promise<any> {
       return new Promise((resolve, reject) => {
       this.jsonDatoService.getMigraciones(clienteDestino).subscribe({
         next: (migraciones) => {
         const existeDestino = migraciones.some(m => 
           String(m.clienteDestino).trim() === String(clienteDestino).trim()
         );
-        if (existeDestino) {
+        if (existeDestino && claveForzar!='C') {
           if (!confirm('Ya existe una migración con cliente destino '+clienteDestino+'. ¿Reescribir la migración con el cliente origen '+clienteOrigen+'?')) {
           // Si el usuario cancela, resolvemos sin crear la migración
           return resolve(null);
