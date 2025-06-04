@@ -35,7 +35,7 @@ export class ConsultasLogsComponent {
   jsonDatoService=inject(JsonDatoService);
   rol=this.misignalService.rol;
 
-  displayedColumns: string[] = ['id','fechaInicio','fechaFin','usuario','operacion','cuaderno','cliente'];
+  displayedColumns: string[] = ['id','fechaInicio','fechaFin','usuario','rol','operacion','cuaderno','cliente'];
   dataSource = new MatTableDataSource<Log>(ELEMENT_DATA);
 
   private _liveAnnouncer = inject(LiveAnnouncer);
@@ -105,18 +105,18 @@ export class ConsultasLogsComponent {
     const clienteobjeto = this.misignalService.objetoCliente();
     const cliente = clienteobjeto?.id?.toString() ?? '';
 
-    console.log('Cliente ID usado para buscar logs:', cliente);
-    this.jsonDatoService.getLogs(cliente).subscribe({
-      next: (resp) => {
-       this.logs.set(resp);
-       console.log("hola");
-       console.log(resp);
-       // Aquí se rellena la tabla asignando los datos recibidos al dataSource
-       this.dataSource.data = resp;
+    console.log('Cliente ID usado para buscar logs:', this.misignalService.nombrerol().toString());
 
+    this.jsonDatoService.getLogs(cliente, this.misignalService.nombrerol().toString()).subscribe({
+      next: (resp) => {
+      this.logs.set(resp);
+      console.log("hola");
+      console.log(resp);
+      // Aquí se rellena la tabla asignando los datos recibidos al dataSource
+      this.dataSource.data = resp;
       },
       error: (err) => {
-       console.error('Error cargando logs', err);
+      console.error('Error cargando logs', err);
       }
     });
    }

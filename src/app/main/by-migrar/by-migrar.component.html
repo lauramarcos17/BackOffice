@@ -29,10 +29,13 @@
 [value]="tipoMigracion()"
 (change)="tipoMigracion.set($event.value)">
 
-
+  
     <mat-radio-button value="1" [matTooltip]="textosGuiaFacil.get('manual')">Manual</mat-radio-button>
-    <mat-radio-button value="2" [matTooltip]="textosGuiaFacil.get('masiva')" [disabled]="!rolEsAdmin()">Masiva</mat-radio-button>
+    @if (rolEsAdmin()){
+    <mat-radio-button value="2" [matTooltip]="textosGuiaFacil.get('masiva')">Masiva</mat-radio-button>
+    }
   </mat-radio-group>
+  
 </section>
 
 

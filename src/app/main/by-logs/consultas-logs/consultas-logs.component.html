@@ -40,10 +40,17 @@
         <!-- Quien realiza la acción (ROL) solo es visible para ADMIN-->
 
         <ng-container matColumnDef="usuario">
-          <th mat-header-cell [matTooltip]="mapa.get('rol')" *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+          <th mat-header-cell [matTooltip]="mapa.get('usuario')" *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
             Usuario
           </th>
-          <td mat-cell *matCellDef="let elemento"> @if (rol()==1){{{elemento.usuario}}}@else{<i>Campo oculto</i>} </td>
+          <td mat-cell *matCellDef="let elemento"> {{elemento.usuario}} </td>
+        </ng-container>
+
+          <ng-container matColumnDef="rol">
+          <th mat-header-cell [matTooltip]="mapa.get('rol')" *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+            Rol
+          </th>
+          <td mat-cell *matCellDef="let elemento"> {{elemento.rol}} </td>
         </ng-container>
 
         <ng-container matColumnDef="operacion">
