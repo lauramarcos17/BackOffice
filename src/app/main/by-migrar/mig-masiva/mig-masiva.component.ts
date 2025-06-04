@@ -58,7 +58,7 @@ export class MigMasivaComponent {
           // Procesa las migraciones de forma secuencial para evitar bucles o sobrecarga en el backend (evita el bucle de error en servidor)
           this.procesarMigracionesSecuencialmente(this.data).then(() => {
 
-            alert('Migración masiva creada con éxito');
+            alert('Migración finalizada');
             this.misignalService.tipoMigracion.set(1);
           }
         ).catch(err => {
@@ -82,24 +82,40 @@ export class MigMasivaComponent {
 
     crearMigracionAsync(clienteOrigen: string, clienteDestino: string): Promise<any> {
       return new Promise((resolve, reject) => {
+      this.jsonDatoService.getMigraciones(clienteDestino).subscribe({
+        next: (migraciones) => {
+        const existeDestino = migraciones.some(m => 
+          String(m.clienteDestino).trim() === String(clienteDestino).trim()
+        );
+        if (existeDestino) {
+          if (!confirm('Ya existe una migración con cliente destino '+clienteDestino+'. ¿Reescribir la migración con el cliente origen '+clienteOrigen+'?')) {
+          // Si el usuario cancela, resolvemos sin crear la migración
+          return resolve(null);
+          }
+        }
+        // Si no existe o el usuario acepta, creamos la migración
         this.jsonDatoService.crearMigracion(clienteOrigen, clienteDestino).subscribe({
           next: (nuevaMigracion) => {
-            console.log(nuevaMigracion);
-            this.mandaLogBruto(nuevaMigracion, "Migración masiva realizada desde fichero");
-            resolve(nuevaMigracion);
-
+          console.log(nuevaMigracion);
+          this.mandaLogBruto(nuevaMigracion, "Migración masiva realizada desde fichero");
+          resolve(nuevaMigracion);
           },
           error: (err) => {
-            console.error('Error creando migración', err);
-            //alert("Error al crear la migración: " + err);
-            reject(err);
+          console.error('Error creando migración', err);
+          reject(err);
           }
         });
+        },
+        error: (err) => {
+        console.error('Error obteniendo migraciones', err);
+        reject(err);
+        }
+      });
       });
     }
 
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
-          //  alert("mandando log desde masivo");
+      
             const logBruto= {
                     id:0,
                     fechaInicio: row.fechaHoraInicioOperacion,

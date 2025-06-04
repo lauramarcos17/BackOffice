@@ -152,57 +152,57 @@ export class MigManualComponent {
     }, 300);
   }
 
-  /*
-     this.jsonDatoService.getBackups(cliente).subscribe({
-        next: (backups) => {
-          this.backups.set(backups);
 
-  */
 
   crearMigracion(clienteOrigen: string, clienteDestino: string) {
-    this.jsonDatoService.crearMigracion(clienteOrigen.trim(), clienteDestino.trim()).subscribe({
-      next: (nuevaMigracion) => {
+    // Comprobar si ya existe una migración con ese clienteDestino
+    this.jsonDatoService.getMigraciones(clienteDestino).subscribe({
+      next: (migraciones) => {
 
+        //comparamos campo de la base datos migracion con el cliente destino que introducimos por teclado 
+        const existeDestino = migraciones.some(m => m.clienteDestino.trim() === clienteDestino.trim());
+        if (existeDestino) {
+         if (!confirm('Ya existe una migración con ese cliente destino. ¿Reescribir la migración?'))
+          return;
+        }
+       
+        // Si no existe, crear la migración
+        this.jsonDatoService.crearMigracion(clienteOrigen.trim(), clienteDestino.trim()).subscribe({
+          next: (nuevaMigracion) => {
+            console.log(nuevaMigracion); //objeto que recibimos al crear una migración desde spring
+            this.mandaLogBruto(nuevaMigracion, "Migración creada");
 
-        console.log(nuevaMigracion); //objeto que recibimos al crear una migración desde spring
-        this.mandaLogBruto(nuevaMigracion, "Migración creada");
+            // Recarga la tabla tras crear
+            setTimeout(() => {
+              this.cargarMigraciones();
+            }, 300);
+          },
+          error: (err) => {
+            console.error('Error creando migración', err);
+            alert("Error al crear la migración: " + err);
+          }
+        });
 
-        // Recarga la tabla tras crear
-        setTimeout(() => {
-          this.cargarMigraciones();
-
-        }, 300);
-
-
+        this.misignalService.clickedRows.clear();
+        this.misignalService.filaSeleccionada.set(0);
       },
       error: (err) => {
-        console.error('Error creando migración', err);
-        alert("Error al crear la migración: "+err);
+        console.error('Error comprobando migraciones', err);
+        alert("Error al comprobar migraciones: " + err);
       }
     });
-    setTimeout(() => {
-      this.cargarMigraciones();
-    },300);
-
-    this.misignalService.clickedRows.clear();
-    this.misignalService.filaSeleccionada.set(0);
-
   }
 
-
-   seleccionarMigracion(row: any){
-        if(!this.misignalService.clickedRows.has(row)){ //cambio de selección
-          /*this.clickedRows.clear();*/
-          this.misignalService.clickedRows.add(row)
-          this.misignalService.filaSeleccionada.update(value=>value+1);
-        }else{ //Dejamos de seleccionar
-          /*this.clickedRows.clear();*/
-          this.misignalService.clickedRows.delete(row);
-          this.misignalService.filaSeleccionada.update(value=>value-1);
-        }
-        // alert(row.fechaHora);
-
-      }
+  seleccionarMigracion(row: any){
+    if(!this.misignalService.clickedRows.has(row)){ //cambio de selección
+      this.misignalService.clickedRows.add(row)
+      this.misignalService.filaSeleccionada.update(value=>value+1);
+    }else{ //Dejamos de seleccionar
+      this.misignalService.clickedRows.delete(row);
+      this.misignalService.filaSeleccionada.update(value=>value-1);
+    }
+    // alert(row.fechaHora);
+  }
 
   eliminarMigracion() {
     const rowsToDelete = Array.from(this.misignalService.clickedRows);
@@ -249,12 +249,13 @@ export class MigManualComponent {
       if(!row.operacion.includes("Restauración")) {
         if (!confirm(`¿Seguro que quieres restaurar la migración seleccionada?`)) return;
         alert("Migracion restaurada a fecha de: " + row.fechaHoraInicioOperacion.trim());
-        this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim(), row.id.toString().trim()).subscribe((resp: Migracion) => {
+        this.jsonDatoService.restaurarMigracion(row.clienteOrigen.trim(), row.clienteDestino.trim(), 
+        row.id.toString().trim()).subscribe((resp: Migracion) => {
           console.log("ROOOOOOW: "+row.id)
           console.log(resp);
                 // Actualiza la lista de migraciones agregando la respuesta
                 this.migraciones.update((prev) => [...prev, resp]);
-              // alert("Esto es el objeto resp --> " + JSON.stringify(resp, null, 2));
+            
                 // Al crear una copia cambio la señal para que se ejecute el efecto
 
           });
@@ -310,7 +311,7 @@ export class MigManualComponent {
     }
 
     mandaLogBruto(row : Migracion, operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
-      // alert("mandando log");
+     
         const logBruto= {
                 id:0,
                 fechaInicio: row.fechaHoraInicioOperacion,

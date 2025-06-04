@@ -249,7 +249,7 @@ export class TablaCopiaComponent {
             this.dataSource.data = this.backupsFiltrados();
             this.clickedRows.clear();
             this.filaSeleccionada.set(false);
-            alert ("manda log de eliminar");
+        
             this.mandaLogBruto(row,"Copia de seguridad eliminada");
           },
           error: err => {
@@ -266,11 +266,11 @@ export class TablaCopiaComponent {
                 console.log(resp),
                 this.misignalService.copiaSeguridad.set(resp);
 
-                // alert("Esto es el objeto resp --> "+ JSON.stringify(resp, null, 2));
+               
 
                 //Al crear una copia cambio la señal para que se ejecute el efecto
                 this.misignalService.actualizarBackup.set(true);
-                alert ("manda log de restaurar");
+             
                 this.mandaLogBruto(row,"Copia de seguridad restaurada");
 
             });
@@ -282,7 +282,7 @@ export class TablaCopiaComponent {
       }
 
        mandaLogBruto(row : CopiaSeguridadJson,operacion:string){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
-                // alert("mandando log");
+                
                   const logBruto= {
                           id:0,
                           fechaInicio: row.fechaHora,

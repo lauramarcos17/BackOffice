@@ -150,7 +150,7 @@ export class JsonDatoService {
       timeout(3000), // tiempo para que saque el alert si hay error de conexión
       catchError(error => {
         console.error("error de conexion al servidor ", error);
-        //alert("Error de conexion al servidor. Vuelve a intentarlo en unos minutos.");
+        
         return throwError(() => new Error("No se pudo conectar al serv"));
       })
     );
