@@ -70,41 +70,35 @@ export class MainPageComponent {
     this.misignalService.clickedRows.clear(); //limpio lo seleccionado en migrar 
   }
 
-  cargarClienteDesdeMain(idClienteMain:string){
+  cargarClienteDesdeMain(idClienteMain: string) {
     this.misignalService.cuadernoSeleccionado.set(false);
     this.misignalService.setClienteEncontradoDeMain(false);
     this.misignalService.tipoCuadernoSignal.set('');
 
-    
-    if (Number(idClienteMain)==1||Number(idClienteMain)==0){ //debería cambiar a un array que controle los usuarios que sí existen
-     
-      this.jsonDatoService.buscarPorCliente(idClienteMain).subscribe((resp:ClienteJsonInterface)=>
-              {console.log(resp),
-
-
-                this.misignalService.objetoCliente.set(resp);//enviamos el objeto obtenido del json a la señal
-                this.misignalService.setClienteEncontradoDeMain(true);
-              });
-             this.mandaLogBruto();
-    }else{
+    if (Number(idClienteMain) == 1 || Number(idClienteMain) == 0) { //debería cambiar a un array que controle los usuarios que sí existen
+      setTimeout(() => {
+        this.jsonDatoService.buscarPorCliente(idClienteMain).subscribe((resp: ClienteJsonInterface) => {
+          console.log(resp);
+          this.misignalService.objetoCliente.set(resp); //enviamos el objeto obtenido del json a la señal
+          this.misignalService.setClienteEncontradoDeMain(true);
+        });
+        this.mandaLogBruto();
+      }, 300); 
+    } else {
       // Asegura que el componente ByAdministrar esté visible comprobando si la ruta activa incluye 'by-administrar'
       this.selectedTab.set(0); //redirige a la primera pestaña
       this.misignalService.setClienteEncontradoDeMain(false);
 
-      if(idClienteMain=='2'){
+      if (idClienteMain == '2') {
         this.misignalService.setTipoError("404 Not Found: Usuario no encontrado.");
-      }else{
-        if(isNaN(Number(idClienteMain))){ //comprueba que no es numerico
+      } else {
+        if (isNaN(Number(idClienteMain))) { //comprueba que no es numerico
           this.misignalService.setTipoError("500 Internal Server Error: ID no numérica.");
-        }else{
+        } else {
           this.misignalService.setTipoError("400 Bad Request: El usuario no existe.");
         }
-
       }
-
-
     }
-
   }
    mandaLogBruto(){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
        
