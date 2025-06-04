@@ -15,6 +15,7 @@ import { ClienteJsonInterface } from 'app/shared/interfaces/ClienteJson.interfac
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
+import { Log } from 'app/shared/interfaces/Log.interface';
 
 @Component({
   selector: 'app-main-page',
@@ -74,7 +75,9 @@ export class MainPageComponent {
     this.misignalService.setClienteEncontradoDeMain(false);
     this.misignalService.tipoCuadernoSignal.set('');
 
+    
     if (Number(idClienteMain)==1||Number(idClienteMain)==0){ //debería cambiar a un array que controle los usuarios que sí existen
+     
       this.jsonDatoService.buscarPorCliente(idClienteMain).subscribe((resp:ClienteJsonInterface)=>
               {console.log(resp),
 
@@ -82,7 +85,7 @@ export class MainPageComponent {
                 this.misignalService.objetoCliente.set(resp);//enviamos el objeto obtenido del json a la señal
                 this.misignalService.setClienteEncontradoDeMain(true);
               });
-
+             this.mandaLogBruto();
     }else{
       // Asegura que el componente ByAdministrar esté visible comprobando si la ruta activa incluye 'by-administrar'
       this.selectedTab.set(0); //redirige a la primera pestaña
@@ -103,5 +106,28 @@ export class MainPageComponent {
     }
 
   }
+   mandaLogBruto(){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
+       
+            const formatFechaHora = (fecha: Date) => {
+            const pad = (n: number) => n.toString().padStart(2, '0');
+            return `${pad(fecha.getDate())}/${pad(fecha.getMonth() + 1)}/${fecha.getFullYear()} - ${pad(fecha.getHours())}:${pad(fecha.getMinutes())}:${pad(fecha.getSeconds())}`;
+            };
+
+            const logBruto = {
+            id: 0,
+            fechaInicio: formatFechaHora(new Date()),
+            fechaFin: formatFechaHora(new Date()),
+            usuario: this.misignalService.mensaje().toString(),
+            rol: this.misignalService.nombrerol().toString(),
+            cuaderno: 'Todos',
+            operacion: "Consulta de datos",
+            descripcion: "Consulta de datos",
+            cliente: this.misignalService.objetoCliente()!.id.toString()
+            };
+  
+         this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
+                console.log(resp);
+      },
+   )}
 
 }
