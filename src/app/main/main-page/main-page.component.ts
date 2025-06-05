@@ -41,7 +41,7 @@ export class MainPageComponent {
   textosGuiaFacil = new Map<string, string>([
     ['guia', 'Este menú permite administrar los datos de un cliente en AEBWeb, accediendo a todas las funciones disponibles en el front-end. Debe usarse con precaución ya que permite modificar y eliminar los datos introducidos por el cliente.\n Para acceder a AEBWeb con la cuenta de un cliente, introduzca un identificador de usuario y pulse el botón, posteriormente elija un cuaderno.\n No se permite el acceso simultáneo del cliente cuando se está administrando su cuenta desde back-office.\n Si el cliente está conectado a AEBWeb, se interrumpirá su sesión. Si el cliente intenta acceder mientras se le está administrando se le redirigirá a una pantalla explicativa. No olvide salir de forma controlada de la sesión de administración. Para ello debe usar el botón "Salir" que verá en la parte superior de la pantalla. En otro caso el usuario no podrá acceder hasta que la sesión de administración caduque.\n Cada vez que acceda a administrar un usuario se le ofrecerá la posibilidad de crear una copia de seguridad completa de los datos del usuario. Esta copia le permitirá restaurar, en caso necesario, los datos originales del cliente tras la sesión de administración. Recuerde que sólo se mantiene una copia de seguridad por cliente. Si crea una nueva copia se machacará la existente.'],
     ['Buscar','Introduzca un identificador de usuario y pulse el botón para que se muestren los cuadernos'],
-    
+
   ]);
 
   controlPestana(event: number) {
@@ -51,6 +51,7 @@ export class MainPageComponent {
     this.misignalService.tipoCuadernoSignal.set('');
     this.misignalService.filaSeleccionada.set(0);
     this.misignalService.clickedRows.clear();
+    this.misignalService.tipoMigracion.set(1);
 
   }
 
@@ -67,13 +68,15 @@ export class MainPageComponent {
     this.misignalService.tipoCuadernoSignal.set('');
     this.selectedTab.set(0);
     this.misignalService.filaSeleccionada.set(0);
-    this.misignalService.clickedRows.clear(); //limpio lo seleccionado en migrar 
+    this.misignalService.clickedRows.clear(); //limpio lo seleccionado en migrar
+    this.misignalService.tipoMigracion.set(1);
   }
 
   cargarClienteDesdeMain(idClienteMain: string) {
     this.misignalService.cuadernoSeleccionado.set(false);
     this.misignalService.setClienteEncontradoDeMain(false);
     this.misignalService.tipoCuadernoSignal.set('');
+    this.misignalService.tipoMigracion.set(1);
 
     if (Number(idClienteMain) == 1 || Number(idClienteMain) == 0) { //debería cambiar a un array que controle los usuarios que sí existen
       setTimeout(() => {
@@ -83,7 +86,7 @@ export class MainPageComponent {
           this.misignalService.setClienteEncontradoDeMain(true);
         });
         this.mandaLogBruto();
-      }, 300); 
+      }, 300);
     } else {
       // Asegura que el componente ByAdministrar esté visible comprobando si la ruta activa incluye 'by-administrar'
       this.selectedTab.set(0); //redirige a la primera pestaña
@@ -101,7 +104,7 @@ export class MainPageComponent {
     }
   }
    mandaLogBruto(){ //TIENE QUE RECIBIR UN LOG QUE SE GENERE EN CADA ACCIÓN
-       
+
             const formatFechaHora = (fecha: Date) => {
             const pad = (n: number) => n.toString().padStart(2, '0');
             return `${pad(fecha.getDate())}/${pad(fecha.getMonth() + 1)}/${fecha.getFullYear()} - ${pad(fecha.getHours())}:${pad(fecha.getMinutes())}:${pad(fecha.getSeconds())}`;
@@ -118,7 +121,7 @@ export class MainPageComponent {
             descripcion: "Consulta de datos",
             cliente: this.misignalService.objetoCliente()!.id.toString()
             };
-  
+
          this.jsonDatoService.crearLog(logBruto).subscribe((resp: Log) => {
                 console.log(resp);
       },

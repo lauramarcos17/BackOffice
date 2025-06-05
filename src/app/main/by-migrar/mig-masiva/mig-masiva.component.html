@@ -1,22 +1,22 @@
- 
+
  <div class="subir-fichero">
-<mat-label> Selecciona un fichero :
-<input type="file" class="file-input"
-       (change)="onFileSelected($event)" #fileUpload
-       style="display:none"  accept=".xlsx, .xls">
+    <mat-label class="select-file"> Selecciona un fichero
+    <input type="file" class="file-input"
+          (change)="onFileSelected($event)" #fileUpload
+          style="display:none"  accept=".xlsx, .xls">
 
-<div class="file-upload">
+    <div class="file-upload">
 
-   
-    
-    <button mat-mini-fab color="primary" class="upload-btn"
-      (click)="fileUpload.click()"
-      (change)="onFileSelected($event)">
-        <mat-icon>attach_file</mat-icon>
-    </button>
-    <mat-label>{{fileName || " "}}</mat-label>
-</div>
 
-</mat-label>
+
+      <button mat-mini-fab color="primary" class="upload-btn"
+        (click)="fileUpload.click()"
+        (change)="onFileSelected($event)">
+          <mat-icon>attach_file</mat-icon>
+      </button>
+
+      <mat-label class="file-name">{{fileName || " "}}</mat-label>
+    </div>
+    </mat-label>
 </div>
 

@@ -1,10 +1,23 @@
 .subir-fichero{
   margin-left:16px;
- 
-  
+  display:flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: row;
+
+
 }
 .upload-btn{
   margin-top: 16px;
   margin-bottom: 16px;
   margin-right: 16px;
+  background-color: rgb(90,133,215);
+  color: white;
+  box-shadow: none;
+  border-radius: 100%;
 }
+
+.upload-btn:hover{
+  opacity:0.92 !important;
+}
+
