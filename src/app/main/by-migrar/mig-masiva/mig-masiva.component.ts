@@ -1,6 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { Log } from 'app/shared/interfaces/Log.interface';
@@ -11,12 +12,13 @@ import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-mig-masiva',
-  imports: [MatLabel,MatInputModule,MatFormFieldModule,MatButtonModule],
+  imports: [MatLabel,MatIcon,MatInputModule,MatFormFieldModule,MatButtonModule],
   templateUrl: './mig-masiva.component.html',
   styleUrl: 'mig-masivo.component.css',
 })
 export class MigMasivaComponent {
-
+  
+  fileName = '';
   jsonDatoService = inject(JsonDatoService);
   misignalService = inject(MiSignalService);
 
@@ -29,6 +31,12 @@ export class MigMasivaComponent {
   exitReader = false;
 
   onFileSelected(event: any): void {
+     const file:File = event.target.files[0];
+
+        if (file) {
+
+            this.fileName = file.name;
+        }
       const target: DataTransfer = <DataTransfer>(event.target);
 
       if (target.files.length !== 1) {

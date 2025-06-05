@@ -1,5 +1,7 @@
 
-
+.sin-scroll{
+  overflow: hidden;
+}
 .encabezado{
   display:flex;
   align-items: center;
