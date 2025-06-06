@@ -1,5 +1,3 @@
-
-
 import { Validators, FormControl,FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
 import { merge } from 'rxjs';
@@ -72,41 +70,34 @@ export class LoginPageComponent {
   }
 
   onSubmit() {
+  this.nombre.markAsTouched();
+  this.contrasena.markAsTouched();
+  this.updateErrorMessage();
 
-    this.nombre.markAsTouched();
-    this.contrasena.markAsTouched();
-    this.updateErrorMessage();
+  this.http.post('http://localhost:8080/api/login', {
+    nombre: this.nombre.value,
+    contrasena: this.contrasena.value
+  }).subscribe((response: any) => {
+    this.errorMessageFinal.set(response.errorMsg);
 
+    if (response.success) {
+      this.rol.set(response.rol);
+      this.nombreRol.set(response.rolnombre);
 
-        this.http.post('http://localhost:8080/api/login', {
+      if(this.nombreusuario !==null) {
+        this.nombreusuario.set(this.nombre.value ?? '' );
+      }
 
-          nombre: this.nombre.value,
+      // Guarda el token en localStorage
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+      }
 
-          contrasena: this.contrasena.value
-        }).subscribe((response: any) => {
-
-          this.errorMessageFinal.set(response.errorMsg);
-          //obtiene la info de spring de la base de datos y la guarda en las señales
-          if (response.success) {
-            this.rol.set(response.rol);
-            this.nombreRol.set(response.rolnombre);
-
-            if(this.nombreusuario !==null)
-            {
-              this.nombreusuario.set(this.nombre.value ?? '' );
-            }
-            console.log(this.nombreusuario());
-
-            // alert('Login correcto');
-
-            //PASAR A SIGUIENTE PANTALLA (llevar el rol (this.rol()) que ha recogido y lo envia al servicio para utilizarlo en la siguientes pantalla)
-            this.misignalService.setMensaje(this.nombreusuario());
-            this.misignalService.setNumRol(Number(this.rol()));
-            this.misignalService.setNombrerol(this.nombreRol());
-            this.router.navigate(['/main']);  //usuario correcto por lo que llevo a la siguiente pantalla de main
-
-          }
-        });
-
- }
+      this.misignalService.setMensaje(this.nombreusuario());
+      this.misignalService.setNumRol(Number(this.rol()));
+      this.misignalService.setNombrerol(this.nombreRol());
+      this.router.navigate(['/main']);
+    }
+  });
+}
 }
