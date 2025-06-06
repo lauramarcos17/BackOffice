@@ -70,6 +70,11 @@ export class MainPageComponent {
     this.misignalService.filaSeleccionada.set(0);
     this.misignalService.clickedRows.clear(); //limpio lo seleccionado en migrar
     this.misignalService.tipoMigracion.set(1);
+
+    /*Borrar cliente erroneo*/
+    this.misignalService.setTipoError("");
+
+    /***/
   }
 
   cargarClienteDesdeMain(idClienteMain: string) {
