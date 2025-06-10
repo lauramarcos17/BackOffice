@@ -82,6 +82,8 @@ export class MainPageComponent {
     this.misignalService.setClienteEncontradoDeMain(false);
     this.misignalService.tipoCuadernoSignal.set('');
     this.misignalService.tipoMigracion.set(1);
+     this.misignalService.setTipoError("");
+
 
     if (Number(idClienteMain) == 1 || Number(idClienteMain) == 0) { //debería cambiar a un array que controle los usuarios que sí existen
       setTimeout(() => {
